@@ -7,6 +7,7 @@ namespace K_K.Models
 {
     public class Pice
     {
-        
+        public Velicina velicina { get; set; }
+        public VrstaPica vrsta { get; set; }
     }
 }
