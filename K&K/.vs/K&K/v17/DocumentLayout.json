@@ -1,5 +1,6 @@
 {
   "Version": 1,
+<<<<<<< HEAD
   "WorkspaceRootPath": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\",
   "Documents": [
     {
@@ -7,6 +8,14 @@
       "RelativeMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|solutionrelative:k\u0026k\\models\\errorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
+=======
+<<<<<<< HEAD
+  "WorkspaceRootPath": "C:\\Users\\korisnik\\source\\repos\\Grupa8-Tim2\\K\u0026K\\",
+=======
+  "WorkspaceRootPath": "C:\\Users\\HP\\source\\repos\\Grupa8-Tim2\\K\u0026K\\",
+>>>>>>> 3eede16a04b1fad94d8902ae468c95448d0f9423
+  "Documents": [],
+>>>>>>> dcae76021a1b98f5e1894d85a6affc85754370cb
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -14,6 +23,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
+<<<<<<< HEAD
           "SelectedChildIndex": 0,
           "Children": [
             {
@@ -28,6 +38,13 @@
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-22T12:12:54.901Z",
               "EditorCaption": ""
+=======
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+>>>>>>> dcae76021a1b98f5e1894d85a6affc85754370cb
             }
           ]
         }
