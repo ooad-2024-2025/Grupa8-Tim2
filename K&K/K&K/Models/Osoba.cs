@@ -9,13 +9,13 @@ namespace K_K.Models
     public class Osoba
     {
         [Key]
-        public int id { get; set; }
-        public String ime { get; set; }
-        public String prezime { get; set; }
-        public String email { get; set; }
-        public String korisnickoIme { get; set; }
-        public String lozinka { get; set; }
-        Uloga uloga { get; set; }
+        public int Id { get; set; }
+        public String Ime { get; set; }
+        public String Prezime { get; set; }
+        public String Email { get; set; }
+        public String KorisnickoIme { get; set; }
+        public String Lozinka { get; set; }
+        public Uloga Uloga { get; set; }
 
     }
 }

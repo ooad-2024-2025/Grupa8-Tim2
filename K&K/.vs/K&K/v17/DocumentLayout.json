@@ -7,20 +7,52 @@
       "RelativeMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|solutionrelative:k\u0026k\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|c:\\users\\user\\source\\repos\\grupa8-tim2\\k\u0026k\\k\u0026k\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|solutionrelative:k\u0026k\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Data\\Migrations\\20250602135035_Migracija1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:K\u0026K\\Data\\Migrations\\20250602135035_Migracija1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|c:\\users\\user\\source\\repos\\grupa8-tim2\\k\u0026k\\k\u0026k\\models\\narudzba.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|solutionrelative:k\u0026k\\models\\narudzba.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|c:\\users\\user\\source\\repos\\grupa8-tim2\\k\u0026k\\k\u0026k\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|solutionrelative:k\u0026k\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|c:\\users\\user\\source\\repos\\grupa8-tim2\\k\u0026k\\k\u0026k\\models\\stavkanarudzbe.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|solutionrelative:k\u0026k\\models\\stavkanarudzbe.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|c:\\users\\user\\source\\repos\\grupa8-tim2\\k\u0026k\\k\u0026k\\models\\karticnoplacanje.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|solutionrelative:k\u0026k\\models\\karticnoplacanje.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|c:\\users\\user\\source\\repos\\grupa8-tim2\\k\u0026k\\k\u0026k\\models\\vrstapreuzimanja.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|solutionrelative:k\u0026k\\models\\vrstapreuzimanja.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|c:\\users\\user\\source\\repos\\grupa8-tim2\\k\u0026k\\k\u0026k\\models\\vrstaplacanja.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|solutionrelative:k\u0026k\\models\\vrstaplacanja.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|c:\\users\\user\\source\\repos\\grupa8-tim2\\k\u0026k\\k\u0026k\\models\\vrstapica.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|solutionrelative:k\u0026k\\models\\vrstapica.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|c:\\users\\user\\source\\repos\\grupa8-tim2\\k\u0026k\\k\u0026k\\models\\vrstahrane.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|solutionrelative:k\u0026k\\models\\vrstahrane.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|c:\\users\\user\\source\\repos\\grupa8-tim2\\k\u0026k\\k\u0026k\\models\\velicina.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|solutionrelative:k\u0026k\\models\\velicina.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|c:\\users\\user\\source\\repos\\grupa8-tim2\\k\u0026k\\k\u0026k\\models\\uloga.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|solutionrelative:k\u0026k\\models\\uloga.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|c:\\users\\user\\source\\repos\\grupa8-tim2\\k\u0026k\\k\u0026k\\models\\statusnarudzbe.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|solutionrelative:k\u0026k\\models\\statusnarudzbe.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|c:\\users\\user\\source\\repos\\grupa8-tim2\\k\u0026k\\k\u0026k\\models\\stavkanarudzbe.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|solutionrelative:k\u0026k\\models\\stavkanarudzbe.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|c:\\users\\user\\source\\repos\\grupa8-tim2\\k\u0026k\\k\u0026k\\models\\recenzija.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -43,22 +75,6 @@
       "RelativeMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|solutionrelative:k\u0026k\\models\\obavijest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|c:\\users\\user\\source\\repos\\grupa8-tim2\\k\u0026k\\k\u0026k\\models\\narudzba.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|solutionrelative:k\u0026k\\models\\narudzba.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|c:\\users\\user\\source\\repos\\grupa8-tim2\\k\u0026k\\k\u0026k\\models\\vrstapreuzimanja.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|solutionrelative:k\u0026k\\models\\vrstapreuzimanja.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|c:\\users\\user\\source\\repos\\grupa8-tim2\\k\u0026k\\k\u0026k\\models\\vrstaplacanja.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|solutionrelative:k\u0026k\\models\\vrstaplacanja.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|c:\\users\\user\\source\\repos\\grupa8-tim2\\k\u0026k\\k\u0026k\\models\\karticnoplacanje.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|solutionrelative:k\u0026k\\models\\karticnoplacanje.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|c:\\users\\user\\source\\repos\\grupa8-tim2\\k\u0026k\\k\u0026k\\models\\lokacijakafica.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|solutionrelative:k\u0026k\\models\\lokacijakafica.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -67,20 +83,8 @@
       "RelativeMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|solutionrelative:k\u0026k\\models\\hrana.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|c:\\users\\user\\source\\repos\\grupa8-tim2\\k\u0026k\\k\u0026k\\models\\vrstapica.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|solutionrelative:k\u0026k\\models\\vrstapica.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|c:\\users\\user\\source\\repos\\grupa8-tim2\\k\u0026k\\k\u0026k\\models\\vrstahrane.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|solutionrelative:k\u0026k\\models\\vrstahrane.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|c:\\users\\user\\source\\repos\\grupa8-tim2\\k\u0026k\\k\u0026k\\models\\velicina.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|solutionrelative:k\u0026k\\models\\velicina.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|c:\\users\\user\\source\\repos\\grupa8-tim2\\k\u0026k\\k\u0026k\\models\\uloga.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|solutionrelative:k\u0026k\\models\\uloga.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|c:\\users\\user\\source\\repos\\grupa8-tim2\\k\u0026k\\k\u0026k\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|solutionrelative:k\u0026k\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|c:\\users\\user\\source\\repos\\grupa8-tim2\\k\u0026k\\k\u0026k\\models\\errorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -94,8 +98,46 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "20250602135035_Migracija1.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Data\\Migrations\\20250602135035_Migracija1.cs",
+              "RelativeDocumentMoniker": "K\u0026K\\Data\\Migrations\\20250602135035_Migracija1.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Data\\Migrations\\20250602135035_Migracija1.cs",
+              "RelativeToolTip": "K\u0026K\\Data\\Migrations\\20250602135035_Migracija1.cs",
+              "ViewState": "AgIAAF4AAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-02T13:50:35.648Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "VrstaPreuzimanja.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\VrstaPreuzimanja.cs",
+              "RelativeDocumentMoniker": "K\u0026K\\Models\\VrstaPreuzimanja.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\VrstaPreuzimanja.cs",
+              "RelativeToolTip": "K\u0026K\\Models\\VrstaPreuzimanja.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-29T12:16:23.809Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Narudzba.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\Narudzba.cs",
+              "RelativeDocumentMoniker": "K\u0026K\\Models\\Narudzba.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\Narudzba.cs",
+              "RelativeToolTip": "K\u0026K\\Models\\Narudzba.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAcwBMAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-29T12:14:16.158Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -104,185 +146,194 @@
               "RelativeDocumentMoniker": "K\u0026K\\Data\\ApplicationDbContext.cs",
               "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Data\\ApplicationDbContext.cs",
               "RelativeToolTip": "K\u0026K\\Data\\ApplicationDbContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABsAAAAAAAAAAAAwwC0AAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-29T12:44:54.254Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Program.cs",
-              "RelativeDocumentMoniker": "K\u0026K\\Program.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Program.cs",
-              "RelativeToolTip": "K\u0026K\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-29T12:43:11.276Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\appsettings.json",
-              "RelativeDocumentMoniker": "K\u0026K\\appsettings.json",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\appsettings.json",
-              "RelativeToolTip": "K\u0026K\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAACdAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-05-29T12:42:06.48Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "VrstaPreuzimanja.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\VrstaPreuzimanja.cs",
-              "RelativeDocumentMoniker": "K\u0026K\\Models\\VrstaPreuzimanja.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\VrstaPreuzimanja.cs",
-              "RelativeToolTip": "K\u0026K\\Models\\VrstaPreuzimanja.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-29T12:16:23.809Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "StatusNarudzbe.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\StatusNarudzbe.cs",
-              "RelativeDocumentMoniker": "K\u0026K\\Models\\StatusNarudzbe.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\StatusNarudzbe.cs",
-              "RelativeToolTip": "K\u0026K\\Models\\StatusNarudzbe.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-29T12:16:05.026Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "Narudzba.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\Narudzba.cs",
-              "RelativeDocumentMoniker": "K\u0026K\\Models\\Narudzba.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\Narudzba.cs",
-              "RelativeToolTip": "K\u0026K\\Models\\Narudzba.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAQwBgAAAArAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-29T12:14:16.158Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Obavijest.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\Obavijest.cs",
-              "RelativeDocumentMoniker": "K\u0026K\\Models\\Obavijest.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\Obavijest.cs",
-              "RelativeToolTip": "K\u0026K\\Models\\Obavijest.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA4AAAAdAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-29T12:14:25.943Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Osoba.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\Osoba.cs",
-              "RelativeDocumentMoniker": "K\u0026K\\Models\\Osoba.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\Osoba.cs",
-              "RelativeToolTip": "K\u0026K\\Models\\Osoba.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAHAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-29T11:45:50.414Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Pice.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\Pice.cs",
-              "RelativeDocumentMoniker": "K\u0026K\\Models\\Pice.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\Pice.cs",
-              "RelativeToolTip": "K\u0026K\\Models\\Pice.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-29T12:15:04.16Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 6,
-              "Title": "Proizvod.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\Proizvod.cs",
-              "RelativeDocumentMoniker": "K\u0026K\\Models\\Proizvod.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\Proizvod.cs",
-              "RelativeToolTip": "K\u0026K\\Models\\Proizvod.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-29T12:15:54.031Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Recenzija.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\Recenzija.cs",
-              "RelativeDocumentMoniker": "K\u0026K\\Models\\Recenzija.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\Recenzija.cs",
-              "RelativeToolTip": "K\u0026K\\Models\\Recenzija.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABQAAAAdAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-29T12:15:59.916Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "StavkaNarudzbe.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\StavkaNarudzbe.cs",
-              "RelativeDocumentMoniker": "K\u0026K\\Models\\StavkaNarudzbe.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\StavkaNarudzbe.cs",
-              "RelativeToolTip": "K\u0026K\\Models\\StavkaNarudzbe.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAABQAAAAuAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-29T12:16:10.137Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
               "Title": "VrstaPlacanja.cs",
               "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\VrstaPlacanja.cs",
               "RelativeDocumentMoniker": "K\u0026K\\Models\\VrstaPlacanja.cs",
               "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\VrstaPlacanja.cs",
               "RelativeToolTip": "K\u0026K\\Models\\VrstaPlacanja.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-29T12:16:23.004Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 7,
+              "Title": "VrstaPica.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\VrstaPica.cs",
+              "RelativeDocumentMoniker": "K\u0026K\\Models\\VrstaPica.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\VrstaPica.cs",
+              "RelativeToolTip": "K\u0026K\\Models\\VrstaPica.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-29T12:16:21.681Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\appsettings.json",
+              "RelativeDocumentMoniker": "K\u0026K\\appsettings.json",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\appsettings.json",
+              "RelativeToolTip": "K\u0026K\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAACUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-05-29T12:42:06.48Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "VrstaHrane.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\VrstaHrane.cs",
+              "RelativeDocumentMoniker": "K\u0026K\\Models\\VrstaHrane.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\VrstaHrane.cs",
+              "RelativeToolTip": "K\u0026K\\Models\\VrstaHrane.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-29T12:16:20.423Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Velicina.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\Velicina.cs",
+              "RelativeDocumentMoniker": "K\u0026K\\Models\\Velicina.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\Velicina.cs",
+              "RelativeToolTip": "K\u0026K\\Models\\Velicina.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-29T12:16:19.595Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Uloga.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\Uloga.cs",
+              "RelativeDocumentMoniker": "K\u0026K\\Models\\Uloga.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\Uloga.cs",
+              "RelativeToolTip": "K\u0026K\\Models\\Uloga.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-29T12:16:10.709Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "StatusNarudzbe.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\StatusNarudzbe.cs",
+              "RelativeDocumentMoniker": "K\u0026K\\Models\\StatusNarudzbe.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\StatusNarudzbe.cs",
+              "RelativeToolTip": "K\u0026K\\Models\\StatusNarudzbe.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-29T12:16:05.026Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "KarticnoPlacanje.cs",
               "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\KarticnoPlacanje.cs",
               "RelativeDocumentMoniker": "K\u0026K\\Models\\KarticnoPlacanje.cs",
               "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\KarticnoPlacanje.cs",
               "RelativeToolTip": "K\u0026K\\Models\\KarticnoPlacanje.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAAA4AAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABAAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-29T11:41:08.014Z"
             },
             {
               "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "StavkaNarudzbe.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\StavkaNarudzbe.cs",
+              "RelativeDocumentMoniker": "K\u0026K\\Models\\StavkaNarudzbe.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\StavkaNarudzbe.cs",
+              "RelativeToolTip": "K\u0026K\\Models\\StavkaNarudzbe.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-29T12:16:10.137Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Recenzija.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\Recenzija.cs",
+              "RelativeDocumentMoniker": "K\u0026K\\Models\\Recenzija.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\Recenzija.cs",
+              "RelativeToolTip": "K\u0026K\\Models\\Recenzija.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAuwBQAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-29T12:15:59.916Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 14,
+              "Title": "Proizvod.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\Proizvod.cs",
+              "RelativeDocumentMoniker": "K\u0026K\\Models\\Proizvod.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\Proizvod.cs",
+              "RelativeToolTip": "K\u0026K\\Models\\Proizvod.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-29T12:15:54.031Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "Pice.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\Pice.cs",
+              "RelativeDocumentMoniker": "K\u0026K\\Models\\Pice.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\Pice.cs",
+              "RelativeToolTip": "K\u0026K\\Models\\Pice.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-29T12:15:04.16Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Osoba.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\Osoba.cs",
+              "RelativeDocumentMoniker": "K\u0026K\\Models\\Osoba.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\Osoba.cs",
+              "RelativeToolTip": "K\u0026K\\Models\\Osoba.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-29T11:45:50.414Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Obavijest.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\Obavijest.cs",
+              "RelativeDocumentMoniker": "K\u0026K\\Models\\Obavijest.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\Obavijest.cs",
+              "RelativeToolTip": "K\u0026K\\Models\\Obavijest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-29T12:14:25.943Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
               "Title": "LokacijaKafica.cs",
               "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\LokacijaKafica.cs",
               "RelativeDocumentMoniker": "K\u0026K\\Models\\LokacijaKafica.cs",
               "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\LokacijaKafica.cs",
               "RelativeToolTip": "K\u0026K\\Models\\LokacijaKafica.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-29T12:14:09.339Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 19,
               "Title": "Hrana.cs",
               "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\Hrana.cs",
               "RelativeDocumentMoniker": "K\u0026K\\Models\\Hrana.cs",
@@ -294,55 +345,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "VrstaPica.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\VrstaPica.cs",
-              "RelativeDocumentMoniker": "K\u0026K\\Models\\VrstaPica.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\VrstaPica.cs",
-              "RelativeToolTip": "K\u0026K\\Models\\VrstaPica.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-29T12:16:21.681Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "VrstaHrane.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\VrstaHrane.cs",
-              "RelativeDocumentMoniker": "K\u0026K\\Models\\VrstaHrane.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\VrstaHrane.cs",
-              "RelativeToolTip": "K\u0026K\\Models\\VrstaHrane.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-29T12:16:20.423Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "Velicina.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\Velicina.cs",
-              "RelativeDocumentMoniker": "K\u0026K\\Models\\Velicina.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\Velicina.cs",
-              "RelativeToolTip": "K\u0026K\\Models\\Velicina.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-29T12:16:19.595Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "Uloga.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\Uloga.cs",
-              "RelativeDocumentMoniker": "K\u0026K\\Models\\Uloga.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\Uloga.cs",
-              "RelativeToolTip": "K\u0026K\\Models\\Uloga.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-29T12:16:10.709Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 20,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Program.cs",
+              "RelativeDocumentMoniker": "K\u0026K\\Program.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Program.cs",
+              "RelativeToolTip": "K\u0026K\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-29T12:43:11.276Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
               "Title": "ErrorViewModel.cs",
               "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\ErrorViewModel.cs",
               "RelativeDocumentMoniker": "K\u0026K\\Models\\ErrorViewModel.cs",

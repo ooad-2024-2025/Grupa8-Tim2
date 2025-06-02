@@ -10,17 +10,17 @@ namespace K_K.Models
     public class StavkaNarudzbe
     {
         [Key]
-        public int id { get; set; }
+        public int Id { get; set; }
 
         [ForeignKey("Proizvod")]
-        public int proizvodId { get; set; }
+        public int ProizvodId { get; set; }
 
         [ForeignKey("Narudzba")]
-        public int narudzbaId { get; set; }
-        public int kolicina { get; set; }
-        public Proizvod proizvod { get; set; }
-        public Double cijena { get; set; }
-        public Narudzba narudzba { get; set; }
+        public int NarudzbaId { get; set; }
+        public int Kolicina { get; set; }
+        public Proizvod Proizvod { get; set; }
+        public Double Cijena { get; set; }
+        public Narudzba Narudzba { get; set; }
 
     }
 }

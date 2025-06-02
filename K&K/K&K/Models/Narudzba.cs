@@ -12,24 +12,20 @@ namespace K_K.Models
     {
 
         [Key]
-        public int id { get; set; }
+        public int Id { get; set; }
 
         [ForeignKey("Osoba")]
-        public int korisnikId { get; set; }
+        public int KorisnikId { get; set; }
 
         [ForeignKey("Osoba")]
-        public int radnikId { get; set; }
-
-        [ForeignKey("KarticnoPlacanje")]
-        public int karticnoPlacanjeId { get; set; }
-        public Osoba korisnik { get; set; }
-        public Osoba radnik { get; set; }
-        public StatusNarudzbe statusNarudzbe { get; set; }
-        public VrstaPlacanja nacinPlacanja { get; set; }
-        public VrstaPreuzimanja nacinPreuzimanja { get; set; }
-        public DateTime datumNarudzbe { get; set; }
-        public String? adresaDostave { get; set; }
-        public KarticnoPlacanje? karticnoPlacanje { get; set; }
+        public int RadnikId { get; set; }
+        public Osoba Korisnik { get; set; }
+        public Osoba Radnik { get; set; }
+        public StatusNarudzbe StatusNarudzbe { get; set; }
+        public VrstaPlacanja NacinPlacanja { get; set; }
+        public VrstaPreuzimanja NacinPreuzimanja { get; set; }
+        public DateTime DatumNarudzbe { get; set; }
+        public String? AdresaDostave { get; set; }
 
     }
 }

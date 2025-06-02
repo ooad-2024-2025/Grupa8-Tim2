@@ -10,14 +10,14 @@ namespace K_K.Models
     public class Obavijest
     {
         [Key]
-        public int id { get; set; }
+        public int Id { get; set; }
 
         [ForeignKey("Osoba")]
-        public int korisnikId { get; set; }
-        public int statusNarudzbeId { get; set; }
-        public Osoba korisnik { get; set; }
-        public String sadrzaj { get; set; }
-        public DateTime datum { get; set; }
-        public StatusNarudzbe statusNarudzbe { get; set; }
+        public int KorisnikId { get; set; }
+        public int StatusNarudzbeId { get; set; }
+        public Osoba Korisnik { get; set; }
+        public String Sadrzaj { get; set; }
+        public DateTime Datum { get; set; }
+        public StatusNarudzbe StatusNarudzbe { get; set; }
     }
 }

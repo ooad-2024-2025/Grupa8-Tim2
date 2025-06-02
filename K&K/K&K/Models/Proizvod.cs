@@ -9,10 +9,10 @@ namespace K_K.Models
     public class Proizvod
     {
         [Key]
-        public int id { get; set; }
-        public String naziv { get; set; }
-        public String opis { get; set; }
-        public String slika { get; set; }
-        double cijena { get; set; }
+        public int Id { get; set; }
+        public String Naziv { get; set; }
+        public String Opis { get; set; }
+        public String Slika { get; set; }
+        public double Cijena { get; set; }
     }
 }

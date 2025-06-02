@@ -9,10 +9,10 @@ namespace K_K.Models
     public class LokacijaKafica
     {
         [Key]
-        public int id { get; set; }
-        public String adresa { get; set; }
-        public String grad { get; set; }
-        public double geografskaSirina { get; set; }
-        public double geografskaDuzina { get; set; }
+        public int Id { get; set; }
+        public String Adresa { get; set; }
+        public String Grad { get; set; }
+        public double GeografskaSirina { get; set; }
+        public double GeografskaDuzina { get; set; }
     }
 }

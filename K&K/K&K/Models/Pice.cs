@@ -10,7 +10,7 @@ namespace K_K.Models
     {
         [Key]
         public int Id { get; set; }
-        public Velicina velicina { get; set; }
-        public VrstaPica vrsta { get; set; }
+        public Velicina Velicina { get; set; }
+        public VrstaPica Vrsta { get; set; }
     }
 }
