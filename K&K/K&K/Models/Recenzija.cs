@@ -20,6 +20,8 @@ namespace K_K.Models
 
         [ForeignKey("Narudzba")]
         public int NarudzbaId { get; set; }
+
+        [Required]
         public int Ocjena { get; set; }
         public Proizvod Proizvod { get; set; }
         public Osoba Korisnik { get; set; }

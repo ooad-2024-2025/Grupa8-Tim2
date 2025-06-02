@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,11 +15,22 @@ namespace K_K.Models
         [ForeignKey("Narudzba")]
         public int NarudzbaId { get; set; }
         public Narudzba Narudzba { get; set; }
+
+        [Required]
         public String ImeNaKartici { get; set; }
+
+        [Required]
         public String BrojKartice { get; set; }
+
+        [Required]
+        [StringLength(maximumLength: 3, MinimumLength = 3, ErrorMessage = "CVV mora sadržavati 3 cifre!")]
+        [RegularExpression(@"[0-9]", ErrorMessage = "CVV smije sadržavati isključivo brojeve!")]
         public String CVV { get; set; }
+
         public DateTime DatumIsteka { get; set; }
+
         public DateTime VrijemePlacanja { get; set; }
+
         public bool Uspjesno { get; set; }
     }
 }
