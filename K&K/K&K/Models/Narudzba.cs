@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,19 +10,22 @@ namespace K_K.Models
 {
     public class Narudzba
     {
-        public int id { get; set; }
-        public int korisnikId { get; set; }
-        public int radnikId { get; set; }
-        public int statusNarudzbeId { get; set; }
-        public int karticnoPlacanjeId { get; set; }
-        public Osoba korisnik { get; set; }
-        public Osoba radnik { get; set; }
-        public StatusNarudzbe statusNarudzbe { get; set; }
-        public VrstaPlacanja nacinPlacanja { get; set; }
-        public VrstaPreuzimanja nacinPreuzimanja { get; set; }
-        public DateTime datumNarudzbe { get; set; }
-        public String? adresaDostave { get; set; }
-        public KarticnoPlacanje? karticnoPlacanje { get; set; }
+
+        [Key]
+        public int Id { get; set; }
+
+        [ForeignKey("Osoba")]
+        public int KorisnikId { get; set; }
+
+        [ForeignKey("Osoba")]
+        public int RadnikId { get; set; }
+        public Osoba Korisnik { get; set; }
+        public Osoba Radnik { get; set; }
+        public StatusNarudzbe StatusNarudzbe { get; set; }
+        public VrstaPlacanja NacinPlacanja { get; set; }
+        public VrstaPreuzimanja NacinPreuzimanja { get; set; }
+        public DateTime DatumNarudzbe { get; set; }
+        public String? AdresaDostave { get; set; }
 
     }
 }

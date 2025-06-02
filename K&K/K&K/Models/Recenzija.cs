@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,14 +9,23 @@ namespace K_K.Models
 {
     public class Recenzija
     {
-        public int id { get; set; }
-        public int proizvodId { get; set; }
-        public int korisnikId { get; set; }
-        public int narudzbaId { get; set; }
-        public int ocjena { get; set; }
-        public Proizvod proizvod { get; set; }
-        public Osoba korisnik { get; set; }
-        public Narudzba narudzba { get; set; }
+        [Key]
+        public int Id { get; set; }
+
+        [ForeignKey("Proizvod")]
+        public int ProizvodId { get; set; }
+
+        [ForeignKey("Osoba")]
+        public int KorisnikId { get; set; }
+
+        [ForeignKey("Narudzba")]
+        public int NarudzbaId { get; set; }
+
+        [Required]
+        public int Ocjena { get; set; }
+        public Proizvod Proizvod { get; set; }
+        public Osoba Korisnik { get; set; }
+        public Narudzba Narudzba { get; set; }
 
     }
 }

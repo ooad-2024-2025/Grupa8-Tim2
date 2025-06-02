@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,10 +8,21 @@ namespace K_K.Models
 {
     public class Proizvod
     {
-        public int id { get; set; }
-        public String naziv { get; set; }
-        public String opis { get; set; }
-        public String slika { get; set; }
-        double cijena { get; set; }
+        [Key]
+        public int Id { get; set; }
+
+        [Required]
+        [StringLength(maximumLength: 30, MinimumLength = 3, ErrorMessage = "Naziv mora imati 3 karaktera.")]
+        [RegularExpression(@"[A-Z| |a-z|]+", ErrorMessage = "Naziv smije sadržavati samo slova i razmake!")]
+        public String Naziv { get; set; }
+
+        [Required]
+        public String Opis { get; set; }
+
+        [Required]
+        public String Slika { get; set; }
+
+        [Required]
+        public double Cijena { get; set; }
     }
 }
