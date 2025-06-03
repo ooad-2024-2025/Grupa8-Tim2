@@ -24,7 +24,8 @@ namespace K_K.Models
 
         [Required]
         [StringLength(maximumLength: 3, MinimumLength = 3, ErrorMessage = "CVV mora sadržavati 3 cifre!")]
-        [RegularExpression(@"[0-9]", ErrorMessage = "CVV smije sadržavati isključivo brojeve!")]
+        [RegularExpression(@"^\d{3}$", ErrorMessage = "CVV mora sadržavati tačno 3 cifre!")]
+
         public String CVV { get; set; }
 
         public DateTime DatumIsteka { get; set; }
