@@ -1,0 +1,6 @@
+# Ignoriši Visual Studio fajlove
+.vs/
+
+# Ignoriši build direktorijume
+bin/
+obj/
