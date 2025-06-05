@@ -13,24 +13,40 @@ namespace K_K.Controllers
     public class KorpaController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly List<StavkaKorpe> listaStavki;
 
         public KorpaController(ApplicationDbContext context)
         {
             _context = context;
         }
-
+        
         [HttpPost]
-        public async Task<IActionResult> DodajUkorpu(int proizvodId, int korisnikId)
+        public async Task<IActionResult> dodajUkorpu(int proizvodId)
         {
+            // Dobavi korisnika iz baze na osnovu trenutnog User.Identity.Name (email ili username)
+             var korisnik = await _context.Osoba.FirstOrDefaultAsync(u => u.Email == User.Identity.Name); 
+            //var korisnik = await _context.Osoba.FirstOrDefaultAsync(u => u.Email == "test@example.com");
+            if (korisnik == null)
+            {
+             return Unauthorized(); // ili neka greška ako korisnik nije ulogovan
+            }
+            
+
             var korpa = await _context.Korpa
                 .Include(k => k.Stavke)
-                .FirstOrDefaultAsync(k => k.KorisnikId == korisnikId);
+                .FirstOrDefaultAsync(k => k.KorisnikId == korisnik.Id && !k.Kupljeno);
 
             if (korpa == null)
             {
-                korpa = new Korpa { KorisnikId = korisnikId, Stavke = new List<StavkaKorpe>() };
+                korpa = new Korpa
+                {
+                    KorisnikId = korisnik.Id,
+                    Stavke = new List<StavkaKorpe>(),
+                    Kupljeno = false
+                   
+                };
                 _context.Korpa.Add(korpa);
-                await _context.SaveChangesAsync(); // Save to get korpa.Id
+                await _context.SaveChangesAsync(); // Save da dobiješ korpa.Id
             }
 
             var stavka = korpa.Stavke.FirstOrDefault(s => s.ProizvodId == proizvodId);
@@ -41,6 +57,10 @@ namespace K_K.Controllers
             else
             {
                 var proizvod = await _context.Proizvod.FindAsync(proizvodId);
+                if (proizvod == null)
+                {
+                    return NotFound(); // Proizvod ne postoji
+                }
                 korpa.Stavke.Add(new StavkaKorpe
                 {
                     ProizvodId = proizvodId,
@@ -50,8 +70,10 @@ namespace K_K.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index", "Proizvod"); // ili na prikaz korpe
+             return RedirectToAction("Index", "Proizvod");
+            
         }
+    //pregled korpe za ulogovanog korisnika
         public async Task<IActionResult> Pregled(int korisnikId)
         {
             var korpa = await _context.Korpa
@@ -64,13 +86,43 @@ namespace K_K.Controllers
 
             return View(korpa);
         }
+        //ovo mozda ne treba
         // GET: Korpa
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Korpa.Include(k => k.Korisnik);
-            return View(await applicationDbContext.ToListAsync());
+
+            
+            var user = await _context.Osoba.FirstOrDefaultAsync(u => u.Email == User.Identity.Name);
+            var korpa = await _context.Korpa.FirstOrDefaultAsync(k => k.KorisnikId == user.Id && !k.Kupljeno);
+
+            if (korpa == null)
+            {
+                TempData["Poruka"] = "Korpa je trenutno prazna!";
+                return RedirectToAction("PraznaKorpa");
+            }
+
+            var stavke = await _context.StavkaKorpe
+                .Include(sk => sk.Proizvod)
+                .Where(sk => sk.KorpaId == korpa.Id)
+                .ToListAsync();
+
+            if (!stavke.Any())
+            {
+                TempData["Poruka"] = "Korpa je trenutno prazna!";
+                return RedirectToAction("PraznaKorpa");
+            }
+
+            return View(stavke);
+        }
+        
+
+        public IActionResult PraznaKorpa()
+        {
+            ViewBag.Poruka = TempData["Poruka"];
+            return View();
         }
 
+        // mozda treba izbrisati jer pregled korpe treba omoguciti samo po id
         // GET: Korpa/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -90,10 +142,15 @@ namespace K_K.Controllers
             return View(korpa);
         }
 
+
         // GET: Korpa/Create
         public IActionResult Create()
         {
             ViewData["KorisnikId"] = new SelectList(_context.Osoba, "Id", "Email");
+
+            // Nabavi proizvode iz baze za prikaz u formi
+            var proizvodi = _context.Proizvod.ToList();
+            ViewData["Proizvodi"] = new SelectList(proizvodi, "Id", "Naziv");
             return View();
         }
 
@@ -110,6 +167,8 @@ namespace K_K.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            var proizvodi = _context.Proizvod.ToList();
+            ViewData["Proizvodi"] = new SelectList(proizvodi, "Id", "Naziv");
             ViewData["KorisnikId"] = new SelectList(_context.Osoba, "Id", "Email", korpa.KorisnikId);
             return View(korpa);
         }
@@ -205,5 +264,52 @@ namespace K_K.Controllers
         {
             return _context.Korpa.Any(e => e.Id == id);
         }
+        public async Task<IActionResult> EditStavka(int? id)
+        {
+            if (id == null)
+                return NotFound();
+
+            var stavka = await _context.StavkaKorpe
+                .Include(s => s.Proizvod)
+                .FirstOrDefaultAsync(s => s.Id == id);
+
+            if (stavka == null)
+                return NotFound();
+
+            return View(stavka);
+        }
+
+        // POST: Korpa/EditStavka/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditStavka(int id, [Bind("Id,Kolicina,ProizvodId, KorpaId")] StavkaKorpe stavka)
+        {
+            if (id != stavka.Id)
+                return NotFound();
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(stavka);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!StavkaKorpeExists(stavka.Id))
+                        return NotFound();
+                    else
+                        throw;
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(stavka);
+        }
+
+        private bool StavkaKorpeExists(int id)
+        {
+            return _context.StavkaKorpe.Any(e => e.Id == id);
+        }
     }
 }
+
