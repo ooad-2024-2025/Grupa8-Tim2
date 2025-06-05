@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace K_K.Models
 {
-    public class Hrana
+    public class Hrana : Proizvod
     {
-        [Key]
-        public int Id { get; set; }
-        public Velicina Velicina { get; set; }
-        public VrstaHrane Vrsta { get; set; }
+        [Required]
+        public VrstaHrane VrstaHrane { get; set; }
 
     }
 }

@@ -4,35 +4,51 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
 
+<h1>Edit</h1>
 <h4>Proizvod</h4>
 <hr />
+
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
+
             <div class="form-group">
                 <label asp-for="Naziv" class="control-label"></label>
                 <input asp-for="Naziv" class="form-control" />
                 <span asp-validation-for="Naziv" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Opis" class="control-label"></label>
-                <input asp-for="Opis" class="form-control" />
+                <textarea asp-for="Opis" class="form-control" rows="4"></textarea>
                 <span asp-validation-for="Opis" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="Slika" class="control-label"></label>
-                <input asp-for="Slika" class="form-control" />
-                <span asp-validation-for="Slika" class="text-danger"></span>
+                <label asp-for="Velicina" class="control-label"></label>
+                <select asp-for="Velicina" class="form-control">
+                    <option value="0">Mala</option>
+                    <option value="1">Velika</option>
+                </select>
+                <span asp-validation-for="Velicina" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <label class="control-label">Nova slika (opcionalno)</label>
+                <input type="file" name="slikaFile" class="form-control" accept="image/*" />
+                <small class="form-text text-muted">Ostavite prazno da zadržite trenutnu sliku</small>
+                <input asp-for="Slika" type="hidden" />
+            </div>
+
             <div class="form-group">
                 <label asp-for="Cijena" class="control-label"></label>
-                <input asp-for="Cijena" class="form-control" />
+                <input asp-for="Cijena" class="form-control" type="number" step="0.01" min="0" />
                 <span asp-validation-for="Cijena" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
@@ -45,5 +61,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

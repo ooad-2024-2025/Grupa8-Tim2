@@ -4,6 +4,7 @@ using K_K.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace K_K.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250604144344_Migracija2")]
+    partial class Migracija2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -224,12 +227,9 @@ namespace K_K.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Velicina")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Proizvod", (string)null);
+                    b.ToTable("Proizvod");
 
                     b.HasDiscriminator().HasValue("Proizvod");
 
@@ -502,8 +502,17 @@ namespace K_K.Data.Migrations
                 {
                     b.HasBaseType("K_K.Models.Proizvod");
 
+                    b.Property<int>("Velicina")
+                        .HasColumnType("int");
+
                     b.Property<int>("VrstaHrane")
                         .HasColumnType("int");
+
+                    b.ToTable("Proizvod", t =>
+                        {
+                            t.Property("Velicina")
+                                .HasColumnName("Hrana_Velicina");
+                        });
 
                     b.HasDiscriminator().HasValue("Hrana");
                 });
@@ -511,6 +520,9 @@ namespace K_K.Data.Migrations
             modelBuilder.Entity("K_K.Models.Pice", b =>
                 {
                     b.HasBaseType("K_K.Models.Proizvod");
+
+                    b.Property<int>("Velicina")
+                        .HasColumnType("int");
 
                     b.Property<int>("VrstaPica")
                         .HasColumnType("int");
