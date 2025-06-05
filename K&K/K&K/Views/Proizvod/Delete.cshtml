@@ -4,42 +4,144 @@
     ViewData["Title"] = "Delete";
 }
 
-<h1>Delete</h1>
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-exclamation-triangle"></i> Obriši Proizvod
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <!-- Upozorenje -->
+                    <div class="alert alert-danger">
+                        <i class="fas fa-warning"></i>
+                        <strong>Upozorenje!</strong> Ovaj proizvod će biti trajno obrisan. Ova akcija se ne može poništiti.
+                    </div>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Proizvod</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Naziv)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Naziv)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Opis)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Opis)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Slika)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Slika)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Cijena)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Cijena)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+                    <!-- Pregled proizvoda koji se briše -->
+                    <div class="row">
+                        <!-- Slika proizvoda -->
+                        <div class="col-md-4 mb-3">
+                            @if (!string.IsNullOrEmpty(Model.Slika))
+                            {
+                                <img src="~/images/proizvodi/@Model.Slika"
+                                     class="img-fluid rounded shadow-sm"
+                                     alt="@Model.Naziv"
+                                     style="width: 100%; max-height: 200px; object-fit: cover;" />
+                            }
+                            else
+                            {
+                                <div class="bg-light d-flex align-items-center justify-content-center rounded"
+                                     style="height: 200px;">
+                                    <i class="fas fa-image fa-3x text-muted"></i>
+                                </div>
+                            }
+                        </div>
+
+                        <!-- Informacije o proizvodu -->
+                        <div class="col-md-8">
+                            <h3 class="text-danger mb-3">@Model.Naziv</h3>
+
+                            <!-- Tip i kategorija -->
+                            <div class="mb-2">
+                                <strong>Tip:</strong>
+                                @if (Model is Hrana hrana)
+                                {
+                                    <span class="badge bg-success me-1">Hrana</span>
+                                    @switch (hrana.VrstaHrane)
+                                    {
+                                        case VrstaHrane.Pecivo:
+                                            <span class="badge bg-info">Pečivo</span>
+                                            break;
+                                        case VrstaHrane.Kolac:
+                                            <span class="badge bg-info">Kolač</span>
+                                            break;
+                                    }
+                                }
+                                else if (Model is Pice pice)
+                                {
+                                    <span class="badge bg-primary me-1">Piće</span>
+                                    @switch (pice.VrstaPica)
+                                    {
+                                        case VrstaPica.Kafa:
+                                            <span class="badge bg-info">Kafa</span>
+                                            break;
+                                        case VrstaPica.Caj:
+                                            <span class="badge bg-info">Čaj</span>
+                                            break;
+                                        case VrstaPica.Ostalo:
+                                            <span class="badge bg-info">Ostalo</span>
+                                            break;
+                                    }
+                                }
+                            </div>
+
+                            <!-- Veličina -->
+                            <div class="mb-2">
+                                <strong>Veličina:</strong>
+                                <span class="badge bg-secondary">
+                                    @if (Model.Velicina == Velicina.Mala)
+                                    {
+                                        <text>Mala</text>
+                                    }
+                                    else
+                                    {
+                                        <text>Velika</text>
+                                    }
+                                </span>
+                            </div>
+
+                            <!-- Cijena -->
+                            <div class="mb-3">
+                                <strong>Cijena:</strong>
+                                <span class="h5 text-primary">@Model.Cijena.ToString("F2") KM</span>
+                            </div>
+
+                            <!-- Opis -->
+                            <div class="mb-3">
+                                <strong>Opis:</strong>
+                                <p class="text-muted mt-1">@Model.Opis</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Potvrda brisanja -->
+                    <div class="mt-4 pt-3 border-top">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6 class="text-danger">Da li ste sigurni da želite obrisati ovaj proizvod?</h6>
+                                <ul class="text-muted small">
+                                    <li>Proizvod će biti trajno uklonjen iz baze podataka</li>
+                                    <li>Sve povezane informacije će biti izgubljene</li>
+                                    <li>Ova akcija se ne može poništiti</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <form asp-action="Delete" method="post" class="d-inline">
+                                    <input asp-for="Id" type="hidden" />
+
+                                    <div class="d-flex justify-content-end gap-2">
+                                        <a asp-action="Index" class="btn btn-secondary">
+                                            <i class="fas fa-arrow-left"></i> Odustani
+                                        </a>
+                                        <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-info">
+                                            <i class="fas fa-eye"></i> Pregled
+                                        </a>
+                                        <button type="submit" class="btn btn-danger"
+                                                onclick="return confirm('Da li ste stvarno sigurni da želite obrisati ovaj proizvod?')">
+                                            <i class="fas fa-trash"></i> Obriši definitvno
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+           
+        </div>
+    </div>
 </div>
