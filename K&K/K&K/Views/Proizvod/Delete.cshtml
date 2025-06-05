@@ -14,15 +14,15 @@
                     </h4>
                 </div>
                 <div class="card-body">
-                    <!-- Upozorenje -->
+                    @*Upozorenje*@
                     <div class="alert alert-danger">
                         <i class="fas fa-warning"></i>
                         <strong>Upozorenje!</strong> Ovaj proizvod će biti trajno obrisan. Ova akcija se ne može poništiti.
                     </div>
 
-                    <!-- Pregled proizvoda koji se briše -->
+                    @*Pregled proizvida*@
                     <div class="row">
-                        <!-- Slika proizvoda -->
+                        @*SLIKA PROIZVDA*@
                         <div class="col-md-4 mb-3">
                             @if (!string.IsNullOrEmpty(Model.Slika))
                             {
@@ -40,11 +40,11 @@
                             }
                         </div>
 
-                        <!-- Informacije o proizvodu -->
+                        @*INFO O PROIZVIDU*@
                         <div class="col-md-8">
                             <h3 class="text-danger mb-3">@Model.Naziv</h3>
 
-                            <!-- Tip i kategorija -->
+                            @*TIP, KATEGORIJA*@
                             <div class="mb-2">
                                 <strong>Tip:</strong>
                                 @if (Model is Hrana hrana)
@@ -93,13 +93,12 @@
                                 </span>
                             </div>
 
-                            <!-- Cijena -->
                             <div class="mb-3">
                                 <strong>Cijena:</strong>
                                 <span class="h5 text-primary">@Model.Cijena.ToString("F2") KM</span>
                             </div>
 
-                            <!-- Opis -->
+                            @*OPIS*@
                             <div class="mb-3">
                                 <strong>Opis:</strong>
                                 <p class="text-muted mt-1">@Model.Opis</p>
@@ -107,7 +106,7 @@
                         </div>
                     </div>
 
-                    <!-- Potvrda brisanja -->
+                    @*POTVRDA I BRISANJE*@
                     <div class="mt-4 pt-3 border-top">
                         <div class="row">
                             <div class="col-md-6">

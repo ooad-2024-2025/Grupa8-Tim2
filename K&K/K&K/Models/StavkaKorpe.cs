@@ -13,7 +13,6 @@ namespace K_K.Models
 
         [ForeignKey("Proizvod")]
         public int ProizvodId { get; set; }
-
         public int Kolicina { get; set; }
         public double Cijena { get; set; }
 

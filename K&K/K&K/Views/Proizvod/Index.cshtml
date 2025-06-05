@@ -21,7 +21,7 @@
         </div>
         <div class="card-body">
             <form method="get" class="row g-3">
-                <!-- Pretraga -->
+                @*pretraga*@
                 <div class="col-md-3">
                     <label for="searchTerm" class="form-label">Pretraži</label>
                     <input type="text"
@@ -272,12 +272,12 @@
             }
         </div>
 
-        <!-- Paginacija -->
+        @*paginacija vjrv ne treba*@
         @if (ViewBag.TotalPages > 1)
         {
             <nav aria-label="Navigacija stranica" class="mt-4">
                 <ul class="pagination justify-content-center">
-                    <!-- Prethodna stranica -->
+                    @*prethodna str.*@
                     @if (ViewBag.CurrentPage > 1)
                     {
                         <li class="page-item">
@@ -297,7 +297,7 @@
                         </li>
                     }
 
-                    <!-- Brojevi stranica -->
+                    @*brojevi stranica*@
                     @for (int i = Math.Max(1, ViewBag.CurrentPage - 2); i <= Math.Min(ViewBag.TotalPages, ViewBag.CurrentPage + 2); i++)
                     {
                         <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
@@ -317,7 +317,7 @@
                         </li>
                     }
 
-                    <!-- Sljedeća stranica -->
+                    @*sljedeca str.*@
                     @if (ViewBag.CurrentPage < ViewBag.TotalPages)
                     {
                         <li class="page-item">
@@ -342,7 +342,7 @@
     }
     else
     {
-        <!-- Nema proizvoda -->
+        @*NEMA PROIZVODA*@
         <div class="text-center py-5">
             <i class="fas fa-search fa-4x text-muted mb-3"></i>
             <h4 class="text-muted">Nema proizvoda koji odgovaraju vašoj pretrazi</h4>
@@ -356,11 +356,11 @@
 @section Scripts {
     <script>
         function dodajUKorpu(proizvodId) {
-            // TODO: Implementirati dodavanje u korpu
+
             alert('Dodavanje u korpu - Proizvod ID: ' + proizvodId);
         }
 
-        // Auto-submit forme nakon 500ms kada korisnik prestane tipkati
+        //SUMBIT NAKON 500ms ako korisnik prestane tipkat
         let timeout;
         document.getElementById('searchTerm').addEventListener('input', function() {
             clearTimeout(timeout);
@@ -369,18 +369,18 @@
             }, 500);
         });
 
-        // Dinamička promjena kategorija ovisno o tipu proizvoda
+        //kategorije ovisno o proizvodu
         document.getElementById('tipProizvoda').addEventListener('change', function() {
             const podkategorija = document.getElementById('podkategorija');
             const tipValue = this.value;
             
-            // Sakrij sve optgroup
+            
             const optgroups = podkategorija.querySelectorAll('optgroup');
             optgroups.forEach(group => {
                 group.style.display = 'none';
             });
             
-            // Prikaži odgovarajući optgroup
+            
             if (tipValue === 'Hrana') {
                 podkategorija.querySelector('optgroup[label="Hrana"]').style.display = 'block';
             } else if (tipValue === 'Pice') {
@@ -392,7 +392,7 @@
                 });
             }
             
-            // Resetuj odabir kategorije
+            // Reset odabira kategorije
             podkategorija.value = '';
         });
 

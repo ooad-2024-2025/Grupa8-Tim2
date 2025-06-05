@@ -139,7 +139,7 @@
     <partial name="_ValidationScriptsPartial" />
 
     <script>
-        // Dinamično prikazivanje kategorija
+        // Dinamicno prikazivanje kategorija
         document.querySelectorAll('input[name="tipProizvoda"]').forEach(radio => {
             radio.addEventListener('change', function() {
                 const hranaDiv = document.getElementById('hranaKategorija');
@@ -158,7 +158,7 @@
             });
         });
 
-        // Preview uploaded slike
+        //Uploadovana slika prikaz
         document.querySelector('input[name="slikaFile"]').addEventListener('change', function(e) {
             const file = e.target.files[0];
             const preview = document.getElementById('imagePreview');
@@ -176,7 +176,7 @@
             }
         });
 
-        // Form validacija prije slanja
+        //Validacija, popraviti mozda
         document.querySelector('form').addEventListener('submit', function(e) {
             const tipProizvoda = document.querySelector('input[name="tipProizvoda"]:checked');
 

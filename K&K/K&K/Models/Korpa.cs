@@ -14,8 +14,6 @@ namespace K_K.Models
         
         public int Kolicina { get; set; }
         public double Cijena { get; set; }
-        public Boolean Kupljeno { get; set; }
-
         public ICollection<StavkaKorpe> Stavke { get; set; }
         public Korpa() { }
     }
