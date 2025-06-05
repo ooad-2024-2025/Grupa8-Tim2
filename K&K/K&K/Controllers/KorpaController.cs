@@ -33,7 +33,7 @@ namespace K_K.Controllers
             var korpa = new Korpa
             {
                 Stavke = stavke,
-                Cijena = stavke.Sum(x => x.Proizvod.Cijena * x.Kolicina)
+                ukupnaCijena = stavke.Sum(x => x.Proizvod.Cijena * x.Kolicina)
 
             };
             return View(korpa);
