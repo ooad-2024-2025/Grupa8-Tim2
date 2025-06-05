@@ -16,7 +16,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("K&K")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ec51037279bc0dd58a122ba38f56d7c2020780d5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+28fed98af4b7a57b32a55b26cfe409d3c5a91035")]
 [assembly: System.Reflection.AssemblyProductAttribute("K&K")]
 [assembly: System.Reflection.AssemblyTitleAttribute("K&K")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

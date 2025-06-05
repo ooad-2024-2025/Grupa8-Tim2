@@ -19,7 +19,7 @@ namespace K_K.Controllers
         {
             _context = context;
         }
-        
+        /*
         [HttpPost]
         public async Task<IActionResult> dodajUkorpu(int proizvodId)
         {
@@ -73,6 +73,7 @@ namespace K_K.Controllers
              return RedirectToAction("Index", "Proizvod");
             
         }
+        *
     //pregled korpe za ulogovanog korisnika
         public async Task<IActionResult> Pregled(int korisnikId)
         {
@@ -87,6 +88,7 @@ namespace K_K.Controllers
             return View(korpa);
         }
         //ovo mozda ne treba
+        */
         // GET: Korpa
         public async Task<IActionResult> Index()
         {
@@ -111,7 +113,7 @@ namespace K_K.Controllers
                 TempData["Poruka"] = "Korpa je trenutno prazna!";
                 return RedirectToAction("PraznaKorpa");
             }
-
+             
             return View(stavke);
         }
         
@@ -264,6 +266,7 @@ namespace K_K.Controllers
         {
             return _context.Korpa.Any(e => e.Id == id);
         }
+        /*
         public async Task<IActionResult> EditStavka(int? id)
         {
             if (id == null)
@@ -309,7 +312,8 @@ namespace K_K.Controllers
         private bool StavkaKorpeExists(int id)
         {
             return _context.StavkaKorpe.Any(e => e.Id == id);
-        }
+        }*/
+
     }
 }
 
