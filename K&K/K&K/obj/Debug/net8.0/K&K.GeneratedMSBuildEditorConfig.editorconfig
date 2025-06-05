@@ -52,6 +52,26 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS2FydGljbm9QbGFjYW5qZVxVbm9zLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/Korpa/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS29ycGFcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/Korpa/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS29ycGFcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/Korpa/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS29ycGFcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/Korpa/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS29ycGFcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/Korpa/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS29ycGFcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/Narudzba/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmFydWR6YmFcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
