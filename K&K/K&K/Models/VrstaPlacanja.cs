@@ -1,7 +1,12 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace K_K.Models
 {
     public enum VrstaPlacanja
     {
-        Gotovina, Kartica
+        [Display(Name = "Gotovina")]
+        Gotovina,
+        [Display(Name = "Karticno placanje")]
+        Kartica
     }
 }

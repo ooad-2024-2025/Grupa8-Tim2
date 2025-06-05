@@ -48,5 +48,6 @@ namespace K_K.Data
 
             base.OnModelCreating(modelBuilder);
         }
+        public DbSet<K_K.Models.Korpa> Korpa { get; set; } = default!;
     }
 }

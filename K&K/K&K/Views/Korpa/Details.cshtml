@@ -1,0 +1,37 @@
+﻿@model K_K.Models.Korpa
+
+@{
+    ViewData["Title"] = "Details";
+}
+<h2>Moja korpa</h2>
+
+@if (Model?.Stavke?.Any() == true)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Proizvod</th>
+                <th>Količina</th>
+                <th>Cijena</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var stavka in Model.Stavke)
+            {
+                <tr>
+                    <td>@stavka.Proizvod?.Naziv</td>
+                    <td>@stavka.Kolicina</td>
+                    <td>@(stavka.Cijena* stavka.Kolicina) KM</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Korpa je prazna.</p>
+}
+
+
+
+

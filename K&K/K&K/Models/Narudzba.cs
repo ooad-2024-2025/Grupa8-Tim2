@@ -14,15 +14,19 @@ namespace K_K.Models
         [Key]
         public int Id { get; set; }
 
-        [ForeignKey("Osoba")]
+        [ForeignKey(nameof(Korisnik))]
         public int KorisnikId { get; set; }
 
-        [ForeignKey("Osoba")]
+
+        [ForeignKey(nameof(Radnik))]
         public int RadnikId { get; set; }
         public Osoba Korisnik { get; set; }
         public Osoba Radnik { get; set; }
         public StatusNarudzbe StatusNarudzbe { get; set; }
+         [EnumDataType(typeof(VrstaPlacanja))] 
         public VrstaPlacanja NacinPlacanja { get; set; }
+
+        [EnumDataType(typeof(VrstaPreuzimanja))]
         public VrstaPreuzimanja NacinPreuzimanja { get; set; }
         public DateTime DatumNarudzbe { get; set; }
         public String? AdresaDostave { get; set; }
