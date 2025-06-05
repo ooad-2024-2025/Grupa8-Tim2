@@ -1,9 +1,9 @@
-﻿@model IEnumerable<K_K.Models.Korpa>
+﻿@model IEnumerable<K_K.Models.Recenzija>
 
 @{
     ViewData["Title"] = "Index";
 }
-<h1>Vasa korpa</h1>
+
 <h1>Index</h1>
 
 <p>
@@ -13,7 +13,16 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.Ocjena)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Proizvod)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Korisnik)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Narudzba)
             </th>
             <th></th>
         </tr>
@@ -22,7 +31,14 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.Ocjena)
+            </td>
+            
+            <td>
                 @Html.DisplayFor(modelItem => item.Korisnik.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Narudzba.Id)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
