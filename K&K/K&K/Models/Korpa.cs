@@ -11,7 +11,8 @@ namespace K_K.Models
         [ForeignKey("Korisnik")]
         public int KorisnikId { get; set; }
         public Osoba Korisnik { get; set; }
-
         public ICollection<StavkaKorpe> Stavke { get; set; }
+        public int brojProizvoda { get; set; }
+        public double ukupnaCijena { get; set; }
     }
 }

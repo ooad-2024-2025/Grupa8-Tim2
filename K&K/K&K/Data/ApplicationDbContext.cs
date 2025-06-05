@@ -21,6 +21,8 @@ namespace K_K.Data
         public DbSet<Osoba> Osoba  { get; set; }
         public DbSet<Recenzija> Recenzija { get; set; }
         public DbSet<StavkaNarudzbe> StavkaNarudzbe { get; set; }
+        public DbSet<StavkaKorpe> StavkaKorpe { get; set; }
+        public DbSet<Korpa> Korpa { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -37,6 +39,8 @@ namespace K_K.Data
             modelBuilder.Entity<Osoba>().ToTable("Osoba");
             modelBuilder.Entity<Recenzija>().ToTable("Recenzija");
             modelBuilder.Entity<StavkaNarudzbe>().ToTable("StavkaNarudzbe");
+            modelBuilder.Entity<StavkaKorpe>().ToTable("StavkaKorpe");
+            modelBuilder.Entity<Korpa>().ToTable("Korpa");
 
             modelBuilder.Entity<Narudzba>()
               .HasOne(n => n.Korisnik)
@@ -52,6 +56,5 @@ namespace K_K.Data
 
             base.OnModelCreating(modelBuilder);
         }
-        public DbSet<K_K.Models.Korpa> Korpa { get; set; } = default!;
     }
 }
