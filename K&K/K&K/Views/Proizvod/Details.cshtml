@@ -1,42 +1,232 @@
 ﻿@model K_K.Models.Proizvod
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalji proizvoda";
 }
+<div class="container mt-4">
+    <div class="row">
+        
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">
+                        <i class="fas fa-info-circle"></i> @Model.Naziv
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        @*SLIKA, PROVJERITI JOS*@
+                        <div class="col-md-5 mb-4">
+                            <div class="product-image-container">
+                                @if (!string.IsNullOrEmpty(Model.Slika))
+                                {
+                                    <img src="~/images/proizvodi/@Model.Slika"
+                                         class="img-fluid rounded shadow-sm"
+                                         alt="@Model.Naziv"
+                                         style="width: 100%; max-height: 300px; object-fit: cover;" />
+                                }
+                                else
+                                {
+                                    <div class="bg-light d-flex align-items-center justify-content-center rounded"
+                                         style="height: 300px;">
+                                        <i class="fas fa-image fa-4x text-muted"></i>
+                                    </div>
+                                }
+                            </div>
+                        </div>
 
-<h1>Details</h1>
+                        @*INFO O PROIZVIDU*@
+                        <div class="col-md-7">
+                            <div class="product-details">
+                                
+                                <div class="mb-3">
+                                    @if (Model is Hrana hrana)
+                                    {
+                                        <span class="badge bg-success fs-6 me-2">
+                                            <i class="fas fa-bread-slice"></i> Hrana
+                                        </span>
+                                        <span class="badge bg-info fs-6">
+                                            @switch (hrana.VrstaHrane)
+                                            {
+                                                case VrstaHrane.Pecivo:
+                                                    <text><i class="fas fa-cookie-bite"></i> Pecivo</text>
+                                                    break;
+                                                case VrstaHrane.Kolac:
+                                                    <text><i class="fas fa-birthday-cake"></i> Kolač</text>
+                                                    break;
+                                            }
+                                        </span>
+                                    }
+                                    else if (Model is Pice pice)
+                                    {
+                                        <span class="badge bg-primary fs-6 me-2">
+                                            <i class="fas fa-mug-hot"></i> Piće
+                                        </span>
+                                        <span class="badge bg-info fs-6">
+                                            @switch (pice.VrstaPica)
+                                            {
+                                                case VrstaPica.Kafa:
+                                                    <text><i class="fas fa-coffee"></i> Kafa</text>
+                                                    break;
+                                                case VrstaPica.Caj:
+                                                    <text><i class="fas fa-leaf"></i> Čaj</text>
+                                                    break;
+                                                case VrstaPica.Ostalo:
+                                                    <text><i class="fas fa-glass-whiskey"></i> Ostalo</text>
+                                                    break;
+                                            }
+                                        </span>
+                                    }
+                                </div>
 
-<div>
-    <h4>Proizvod</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Naziv)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Naziv)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Opis)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Opis)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Slika)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Slika)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Cijena)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Cijena)
-        </dd>
-    </dl>
+                                <div class="mb-3">
+                                    <h6 class="text-muted">Veličina:</h6>
+                                    <span class="badge bg-secondary fs-6">
+                                        @if (Model.Velicina == Velicina.Mala)
+                                        {
+                                            <text><i class="fas fa-circle" style="font-size: 0.7em;"></i> Mala</text>
+                                        }
+                                        else
+                                        {
+                                            <text><i class="fas fa-circle"></i> Velika</text>
+                                        }
+                                    </span>
+                                </div>
+
+                                
+                                <div class="mb-4">
+                                    <h6 class="text-muted">Cijena:</h6>
+                                    <h2 class="text-primary fw-bold">@Model.Cijena.ToString("F2") KM</h2>
+                                </div>
+
+                                
+                                <div class="mb-4">
+                                    <h6 class="text-muted">Opis:</h6>
+                                    <p class="text-dark">@Model.Opis</p>
+                                </div>
+
+                                @*DUGMAD DODAJ, DELETE, EDIT*@
+                                <div class="d-flex flex-wrap gap-2">
+
+                                    <a asp-controller="Korpa"
+                                       asp-action="DodajUKorpu"
+                                       asp-route-id="@Model.Id"
+                                       class="btn btn-success btn-lg">
+                                        <i class="fas fa-shopping-cart"></i> Dodaj u korpu
+                                    </a>
+                                    
+                                    @*SAMO ADMINISTRATOR CE MOCI DA VIDI UREDI I OBRISI*@
+                                    @*@if (User.IsInRole("Admin"))*@
+                                    
+                                        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">
+                                            <i class="fas fa-edit"></i> Uredi
+                                        </a>
+                                        <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">
+                                            <i class="fas fa-trash"></i> Obriši
+                                        </a>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @*PORED RECENZIJE, NAVIGACIJA ITD*@
+        <div class="col-lg-4">
+            @*NAVIGACIJA*@
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-light">
+                    <h6 class="mb-0"><i class="fas fa-compass"></i> Navigacija</h6>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a asp-action="Index" class="btn btn-outline-secondary">
+                            <i class="fas fa-list"></i> Svi proizvodi
+                        </a>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a asp-action="Create" class="btn btn-outline-success">
+                                <i class="fas fa-plus"></i> Dodaj novi proizvod
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            @*RECENZIJE PREGLED*@
+            @if (ViewBag.Recenzije != null)
+            {
+                <div class="card shadow-sm">
+                    <div class="card-header bg-light">
+                        <h6 class="mb-0">
+                            <i class="fas fa-star"></i> Recenzije
+                            <span class="badge bg-primary">@ViewBag.BrojRecenzija</span>
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        @if (ViewBag.BrojRecenzija > 0)
+                        {
+                            <div class="mb-3">
+                                <h5 class="text-warning">
+                                    @for (int i = 1; i <= 5; i++)
+                                    {
+                                        if (i <= ViewBag.ProsjecnaOcjena)
+                                        {
+                                            <i class="fas fa-star"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="far fa-star"></i>
+                                        }
+                                    }
+                                    <small class="text-muted">(@ViewBag.ProsjecnaOcjena.ToString("F1"))</small>
+                                </h5>
+                            </div>
+
+                            <div class="latest-reviews">
+                                @foreach (var recenzija in ViewBag.Recenzije.Take(3))
+                                {
+                                    <div class="border-bottom pb-2 mb-2">
+                                        <div class="d-flex justify-content-between">
+                                            <small class="fw-bold">@recenzija.Korisnik?.UserName</small>
+                                            <small class="text-muted">
+                                                @for (int i = 1; i <= recenzija.Ocjena; i++)
+                                                {
+                                                    <i class="fas fa-star text-warning"></i>
+                                                }
+                                            </small>
+                                        </div>
+                                        @if (!string.IsNullOrEmpty(recenzija.Komentar))
+                                        {
+                                            <small class="text-muted">@recenzija.Komentar</small>
+                                        }
+                                    </div>
+                                }
+                            </div>
+
+                            @if (ViewBag.BrojRecenzija > 3)
+                            {
+                                <small class="text-muted">i još @(ViewBag.BrojRecenzija - 3) recenzija...</small>
+                            }
+                        }
+                        else
+                        {
+                            <p class="text-muted">Nema recenzija za ovaj proizvod.</p>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+@section Scripts {
+    <script>
+        function dodajUKorpu(proizvodId) {
+            
+            alert('Proizvod je dodan u korpu! ID: ' + proizvodId);
+        }
+    </script>
+}

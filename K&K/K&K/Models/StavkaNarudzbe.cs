@@ -20,6 +20,7 @@ namespace K_K.Models
         public int Kolicina { get; set; }
         public Proizvod Proizvod { get; set; }
         public Double Cijena { get; set; }
+       
         public Narudzba Narudzba { get; set; }
 
     }

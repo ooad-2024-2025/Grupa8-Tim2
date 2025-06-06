@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace K_K.Models
 {
-    public class Pice
+    public class Pice : Proizvod
     {
-        [Key]
-        public int Id { get; set; }
-        public Velicina Velicina { get; set; }
-        public VrstaPica Vrsta { get; set; }
+        [Required]
+        public VrstaPica VrstaPica { get; set; }
     }
 }

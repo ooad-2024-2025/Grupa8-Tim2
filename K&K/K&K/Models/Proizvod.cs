@@ -11,6 +11,8 @@ namespace K_K.Models
         [Key]
         public int Id { get; set; }
 
+        public Velicina Velicina { get; set; }
+
         [Required]
         [StringLength(maximumLength: 30, MinimumLength = 3, ErrorMessage = "Naziv mora imati 3 karaktera.")]
         [RegularExpression(@"[A-Z| |a-z|]+", ErrorMessage = "Naziv smije sadržavati samo slova i razmake!")]
@@ -23,6 +25,8 @@ namespace K_K.Models
         public String Slika { get; set; }
 
         [Required]
+        [Range(0.0, 100.0, ErrorMessage = "Cijena mora biti validna!")]
         public double Cijena { get; set; }
+        //public string Discriminator { get; set; } = "Proizvod";
     }
 }

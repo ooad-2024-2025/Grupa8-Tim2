@@ -1,15 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using K_K.Data;
+using K_K.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using K_K.Data;
-using K_K.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace K_K.Controllers
 {
+
+    //[Authorize(Roles = "Administrator,User")]
     public class NarudzbaController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -42,6 +45,8 @@ namespace K_K.Controllers
             {
                 return NotFound();
             }
+            double ukupnaCijena = IzracunajUkupnuCijenuNarudzbe(narudzba.Id);
+            ViewBag.UkupnaCijena = ukupnaCijena;
 
             return View(narudzba);
         }
@@ -51,6 +56,9 @@ namespace K_K.Controllers
         {
             ViewData["KorisnikId"] = new SelectList(_context.Osoba, "Id", "Email");
             ViewData["RadnikId"] = new SelectList(_context.Osoba, "Id", "Email");
+
+            ViewData["NacinPreuzimanja"] = new SelectList(Enum.GetValues(typeof(VrstaPreuzimanja)));
+            ViewData["NacinPlacanja"] = new SelectList(Enum.GetValues(typeof(VrstaPlacanja)));
             return View();
         }
 
@@ -69,6 +77,8 @@ namespace K_K.Controllers
             }
             ViewData["KorisnikId"] = new SelectList(_context.Osoba, "Id", "Email", narudzba.KorisnikId);
             ViewData["RadnikId"] = new SelectList(_context.Osoba, "Id", "Email", narudzba.RadnikId);
+            ViewData["NacinPreuzimanja"] = new SelectList(Enum.GetValues(typeof(VrstaPreuzimanja)), narudzba.NacinPreuzimanja);
+            ViewData["NacinPlacanja"] = new SelectList(Enum.GetValues(typeof(VrstaPlacanja)), narudzba.NacinPlacanja);
             return View(narudzba);
         }
 
@@ -85,8 +95,11 @@ namespace K_K.Controllers
             {
                 return NotFound();
             }
+           
             ViewData["KorisnikId"] = new SelectList(_context.Osoba, "Id", "Email", narudzba.KorisnikId);
             ViewData["RadnikId"] = new SelectList(_context.Osoba, "Id", "Email", narudzba.RadnikId);
+            ViewData["NacinPlacanja"] = new SelectList(Enum.GetValues(typeof(VrstaPlacanja)), narudzba.NacinPlacanja);
+
             return View(narudzba);
         }
 
@@ -101,6 +114,7 @@ namespace K_K.Controllers
             {
                 return NotFound();
             }
+
 
             if (ModelState.IsValid)
             {
@@ -124,6 +138,8 @@ namespace K_K.Controllers
             }
             ViewData["KorisnikId"] = new SelectList(_context.Osoba, "Id", "Email", narudzba.KorisnikId);
             ViewData["RadnikId"] = new SelectList(_context.Osoba, "Id", "Email", narudzba.RadnikId);
+            ViewData["NacinPlacanja"] = new SelectList(Enum.GetValues(typeof(VrstaPlacanja)), narudzba.NacinPlacanja);
+            ViewData["NacinPreuzimanja"] = new SelectList(Enum.GetValues(typeof(VrstaPreuzimanja)), narudzba.NacinPreuzimanja);
             return View(narudzba);
         }
 
@@ -166,7 +182,31 @@ namespace K_K.Controllers
         {
             return _context.Narudzba.Any(e => e.Id == id);
         }
+<<<<<<< HEAD
 
 
+=======
+        public double IzracunajUkupnuCijenuNarudzbe(int narudzbaId)
+        {
+            var stavke = _context.StavkaNarudzbe
+                .Where(s => s.NarudzbaId == narudzbaId)
+                .ToList();
+
+            var narudzba = _context.Narudzba.Find(narudzbaId);
+
+            if (narudzba == null)
+                throw new Exception("Narudžba nije pronađena.");
+
+            double ukupno = stavke.Sum(s => s.Cijena * s.Kolicina);
+
+            // Dodaj cijenu dostave ako je potrebno
+            if (narudzba.NacinPreuzimanja == VrstaPreuzimanja.Dostava)
+            {
+                ukupno += 5.0; // fiksna cijena dostave
+            }
+
+            return ukupno;
+        }
+>>>>>>> cf77c554c283aa17c7c8eb98be8892ac50e8b120
     }
 }

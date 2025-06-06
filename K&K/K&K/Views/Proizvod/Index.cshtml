@@ -1,53 +1,407 @@
 ﻿@model IEnumerable<K_K.Models.Proizvod>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Proizvodi - K&K";
 }
 
-<h1>Index</h1>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-4">
+                <i class="fas fa-coffee"></i> Naša Ponuda
+                <small class="text-muted">(@ViewBag.TotalCount proizvoda)</small>
+            </h2>
+        </div>
+    </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Naziv)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Opis)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Slika)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cijena)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Naziv)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Opis)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Slika)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cijena)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+    @* Filteri i pretraga *@
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5><i class="fas fa-search"></i> Pretraga i Filteri</h5>
+        </div>
+        <div class="card-body">
+            <form method="get" class="row g-3">
+                @*pretraga*@
+                <div class="col-md-3">
+                    <label for="searchTerm" class="form-label">Pretraži</label>
+                    <input type="text"
+                           name="searchTerm"
+                           id="searchTerm"
+                           value="@ViewBag.SearchTerm"
+                           placeholder="Naziv ili opis proizvoda..."
+                           class="form-control" />
+                </div>
+
+                @*Tip proizvoda*@
+                <div class="col-md-2">
+                    <label for="tipProizvoda" class="form-label">Tip proizvoda</label>
+                    <select name="tipProizvoda" id="tipProizvoda" class="form-select">
+                        <option value="">Svi tipovi</option>
+                        <option value="Hrana" selected="@(ViewBag.TipProizvoda == "Hrana")">Hrana</option>
+                        <option value="Pice" selected="@(ViewBag.TipProizvoda == "Pice")">Piće</option>
+                    </select>
+                </div>
+
+                @*Podkategorija*@
+                <div class="col-md-2">
+                    <label for="podkategorija" class="form-label">Kategorija</label>
+                    <select name="podkategorija" id="podkategorija" class="form-select">
+                        <option value="">Sve kategorije</option>
+                        <optgroup label="Hrana">
+                            <option value="pecivo" selected="@(ViewBag.Podkategorija == "pecivo")">Pecivo</option>
+                            <option value="kolaci" selected="@(ViewBag.Podkategorija == "kolaci")">Kolači</option>
+                        </optgroup>
+                        <optgroup label="Piće">
+                            <option value="kafa" selected="@(ViewBag.Podkategorija == "kafa")">Kafa</option>
+                            <option value="caj" selected="@(ViewBag.Podkategorija == "caj")">Čaj</option>
+                            <option value="ostalo" selected="@(ViewBag.Podkategorija == "ostalo")">Ostalo</option>
+                        </optgroup>
+                    </select>
+                </div>
+
+                @*Velicina*@
+                <div class="col-md-2">
+                    <label for="velicina" class="form-label">Veličina</label>
+                    <select name="velicina" id="velicina" class="form-select">
+                        <option value="">Sve veličine</option>
+                        <option value="mala" selected="@(ViewBag.Velicina == "mala")">Mala</option>
+                        <option value="velika" selected="@(ViewBag.Velicina == "velika")">Velika</option>
+                    </select>
+                </div>
+
+                @*Minimalna cijena*@
+                <div class="col-md-1">
+                    <label for="minPrice" class="form-label">Min KM</label>
+                    <input type="number"
+                           name="minPrice"
+                           id="minPrice"
+                           value="@ViewBag.MinPrice"
+                           placeholder="0.00"
+                           class="form-control"
+                           step="0.01"
+                           min="0" />
+                </div>
+
+                @*Maksimalna cijena*@
+                <div class="col-md-1">
+                    <label for="maxPrice" class="form-label">Max KM</label>
+                    <input type="number"
+                           name="maxPrice"
+                           id="maxPrice"
+                           value="@ViewBag.MaxPrice"
+                           placeholder="100.00"
+                           class="form-control"
+                           step="0.01"
+                           min="0" />
+                </div>
+
+                @*Sortiranje*@
+                <div class="col-md-2">
+                    <label for="sortOrder" class="form-label">Sortiranje</label>
+                    <select name="sortOrder" id="sortOrder" class="form-select">
+                        <option value="">Naziv A-Z</option>
+                        <option value="naziv_desc" selected="@(ViewBag.CurrentSort == "naziv_desc")">Naziv Z-A</option>
+                        <option value="cijena" selected="@(ViewBag.CurrentSort == "cijena")">Cijena ↑</option>
+                        <option value="cijena_desc" selected="@(ViewBag.CurrentSort == "cijena_desc")">Cijena ↓</option>
+                    </select>
+                </div>
+
+                @*Dugmad*@
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary me-2">
+                        <i class="fas fa-search"></i> Filtriraj
+                    </button>
+                    <a href="@Url.Action("Index")" class="btn btn-outline-secondary">
+                        <i class="fas fa-times"></i> Resetuj
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    @*Admin dugme za dodavanje proizvoda*@
+    @*@if (User.IsInRole("Admin"))*@
+    
+        <div class="mb-3">
+            <a asp-action="Create" class="btn btn-success">
+                <i class="fas fa-plus"></i> Dodaj Novi Proizvod
+            </a>
+
+        </div>
+    
+
+    @*Tempdata poruke*@
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle"></i> @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-circle"></i> @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @*lista proizvoda*@
+    @if (Model.Any())
+    {
+        <div class="row">
+            @foreach (var proizvod in Model)
+            {
+                <div class="col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        @*slika*@
+                        <div class="card-img-top-wrapper" style="height: 200px; overflow: hidden;">
+                            @if (!string.IsNullOrEmpty(proizvod.Slika))
+                            {
+                                <img src="~/images/proizvodi/@proizvod.Slika"
+                                     class="card-img-top"
+                                     alt="@proizvod.Naziv"
+                                     style="width: 100%; height: 100%; object-fit: cover;" />
+                            }
+                            else
+                            {
+                                <div class="bg-light d-flex align-items-center justify-content-center h-100">
+                                    <i class="fas fa-image fa-3x text-muted"></i>
+                                </div>
+                            }
+                        </div>
+
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">@proizvod.Naziv</h5>
+                            
+                            @*Prikaz tipa i kategorije proizvoda*@
+                            <div class="mb-2">
+                                @if (proizvod is Hrana hrana)
+                                {
+                                    <span class="badge bg-success me-1">
+                                        <i class="fas fa-bread-slice"></i> Hrana
+                                    </span>
+                                    <span class="badge bg-info">
+                                        @switch (hrana.VrstaHrane)
+                                        {
+                                            case VrstaHrane.Pecivo:
+                                                <text><i class="fas fa-cookie-bite"></i> Pečivo</text>
+                                                break;
+                                            case VrstaHrane.Kolac:
+                                                <text><i class="fas fa-birthday-cake"></i> Kolač</text>
+                                                break;
+                                        }
+                                    </span>
+                                }
+                                else if (proizvod is Pice pice)
+                                {
+                                    <span class="badge bg-primary me-1">
+                                        <i class="fas fa-mug-hot"></i> Piće
+                                    </span>
+                                    <span class="badge bg-info">
+                                        @switch (pice.VrstaPica)
+                                        {
+                                            case VrstaPica.Kafa:
+                                                <text><i class="fas fa-coffee"></i> Kafa</text>
+                                                break;
+                                            case VrstaPica.Caj:
+                                                <text><i class="fas fa-leaf"></i> Čaj</text>
+                                                break;
+                                            case VrstaPica.Ostalo:
+                                                <text><i class="fas fa-glass-whiskey"></i> Ostalo</text>
+                                                break;
+                                        }
+                                    </span>
+                                }
+                                
+                                @*prikaz velicine*@
+                                <span class="badge bg-secondary">
+                                    @if (proizvod.Velicina == Velicina.Mala)
+                                    {
+                                        <text><i class="fas fa-circle" style="font-size: 0.7em;"></i> Mala</text>
+                                    }
+                                    else
+                                    {
+                                        <text><i class="fas fa-circle"></i> Velika</text>
+                                    }
+                                </span>
+                            </div>
+
+                            <p class="card-text text-muted small flex-grow-1">
+                                @(proizvod.Opis.Length > 100 ? proizvod.Opis.Substring(0, 100) + "..." : proizvod.Opis)
+                            </p>
+
+                            <div class="d-flex justify-content-between align-items-center mt-auto">
+                                <span class="h5 text-primary mb-0">@proizvod.Cijena.ToString("F2") KM</span>
+
+                                <div class="btn-group" role="group">
+                                    <a asp-action="Details" asp-route-id="@proizvod.Id"
+                                       class="btn btn-outline-primary btn-sm"
+                                       title="Detalji">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+
+                                    @*@if (User.IsInRole("Admin"))*@
+                                    
+                                        <a asp-action="Edit" asp-route-id="@proizvod.Id"
+                                           class="btn btn-outline-warning btn-sm"
+                                           title="Uredi">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a asp-action="Delete" asp-route-id="@proizvod.Id"
+                                           class="btn btn-outline-danger btn-sm"
+                                           title="Obriši">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    
+
+                                    @*@if (User.Identity.IsAuthenticated)*@
+
+                                    <a asp-controller="Korpa"
+                                       asp-action="DodajUKorpu"
+                                       asp-route-id="@proizvod.Id"
+                                       class="btn btn-primary btn-sm"
+                                       title="Dodaj u korpu">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </a>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        @*paginacija vjrv ne treba*@
+        @if (ViewBag.TotalPages > 1)
+        {
+            <nav aria-label="Navigacija stranica" class="mt-4">
+                <ul class="pagination justify-content-center">
+                    @*prethodna str.*@
+                    @if (ViewBag.CurrentPage > 1)
+                    {
+                        <li class="page-item">
+                            <a class="page-link"
+                               href="@Url.Action("Index", new {
+                                   searchTerm = ViewBag.SearchTerm,
+                                   sortOrder = ViewBag.CurrentSort,
+                                   tipProizvoda = ViewBag.TipProizvoda,
+                                   podkategorija = ViewBag.Podkategorija,
+                                   velicina = ViewBag.Velicina,
+                                   minPrice = ViewBag.MinPrice,
+                                   maxPrice = ViewBag.MaxPrice,
+                                   page = ViewBag.CurrentPage - 1
+                               })">
+                                <i class="fas fa-chevron-left"></i> Prethodna
+                            </a>
+                        </li>
+                    }
+
+                    @*brojevi stranica*@
+                    @for (int i = Math.Max(1, ViewBag.CurrentPage - 2); i <= Math.Min(ViewBag.TotalPages, ViewBag.CurrentPage + 2); i++)
+                    {
+                        <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                            <a class="page-link"
+                               href="@Url.Action("Index", new {
+                                   searchTerm = ViewBag.SearchTerm,
+                                   sortOrder = ViewBag.CurrentSort,
+                                   tipProizvoda = ViewBag.TipProizvoda,
+                                   podkategorija = ViewBag.Podkategorija,
+                                   velicina = ViewBag.Velicina,
+                                   minPrice = ViewBag.MinPrice,
+                                   maxPrice = ViewBag.MaxPrice,
+                                   page = i
+                               })">
+                                @i
+                            </a>
+                        </li>
+                    }
+
+                    @*sljedeca str.*@
+                    @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+                    {
+                        <li class="page-item">
+                            <a class="page-link"
+                               href="@Url.Action("Index", new {
+                                   searchTerm = ViewBag.SearchTerm,
+                                   sortOrder = ViewBag.CurrentSort,
+                                   tipProizvoda = ViewBag.TipProizvoda,
+                                   podkategorija = ViewBag.Podkategorija,
+                                   velicina = ViewBag.Velicina,
+                                   minPrice = ViewBag.MinPrice,
+                                   maxPrice = ViewBag.MaxPrice,
+                                   page = ViewBag.CurrentPage + 1
+                               })">
+                                Sljedeća <i class="fas fa-chevron-right"></i>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </nav>
+        }
+    }
+    else
+    {
+        @*NEMA PROIZVODA*@
+        <div class="text-center py-5">
+            <i class="fas fa-search fa-4x text-muted mb-3"></i>
+            <h4 class="text-muted">Nema proizvoda koji odgovaraju vašoj pretrazi</h4>
+            <p class="text-muted">Pokušajte sa drugim kriterijima pretrage.</p>
+            <a href="@Url.Action("Index")" class="btn btn-primary">Prikaži sve proizvode</a>
+        </div>
+    }
+</div>
+
+
+@section Scripts {
+    <script>
+        function dodajUKorpu(proizvodId) {
+
+            alert('Dodavanje u korpu - Proizvod ID: ' + proizvodId);
+        }
+
+        //SUMBIT NAKON 500ms ako korisnik prestane tipkat
+        let timeout;
+        document.getElementById('searchTerm').addEventListener('input', function() {
+            clearTimeout(timeout);
+            timeout = setTimeout(function() {
+                document.querySelector('form').submit();
+            }, 500);
+        });
+
+        //kategorije ovisno o proizvodu
+        document.getElementById('tipProizvoda').addEventListener('change', function() {
+            const podkategorija = document.getElementById('podkategorija');
+            const tipValue = this.value;
+            
+            
+            const optgroups = podkategorija.querySelectorAll('optgroup');
+            optgroups.forEach(group => {
+                group.style.display = 'none';
+            });
+            
+            
+            if (tipValue === 'Hrana') {
+                podkategorija.querySelector('optgroup[label="Hrana"]').style.display = 'block';
+            } else if (tipValue === 'Pice') {
+                podkategorija.querySelector('optgroup[label="Piće"]').style.display = 'block';
+            } else {
+                // Prikaži sve ako nije odabran tip
+                optgroups.forEach(group => {
+                    group.style.display = 'block';
+                });
+            }
+            
+            // Reset odabira kategorije
+            podkategorija.value = '';
+        });
+
+        // Inicijalno sakrivanje/prikazivanje kategorija
+        document.addEventListener('DOMContentLoaded', function() {
+            const tipProizvoda = document.getElementById('tipProizvoda');
+            tipProizvoda.dispatchEvent(new Event('change'));
+        });
+    </script>
 }
-    </tbody>
-</table>

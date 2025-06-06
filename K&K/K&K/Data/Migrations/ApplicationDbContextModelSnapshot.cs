@@ -22,25 +22,6 @@ namespace K_K.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("K_K.Models.Hrana", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Velicina")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Vrsta")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Hrana", (string)null);
-                });
-
             modelBuilder.Entity("K_K.Models.KarticnoPlacanje", b =>
                 {
                     b.Property<int>("Id")
@@ -55,7 +36,8 @@ namespace K_K.Data.Migrations
 
                     b.Property<string>("CVV")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(3)
+                        .HasColumnType("nvarchar(3)");
 
                     b.Property<DateTime>("DatumIsteka")
                         .HasColumnType("datetime2");
@@ -78,6 +60,30 @@ namespace K_K.Data.Migrations
                     b.HasIndex("NarudzbaId");
 
                     b.ToTable("KarticnoPlacanje", (string)null);
+                });
+
+            modelBuilder.Entity("K_K.Models.Korpa", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("KorisnikId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("brojProizvoda")
+                        .HasColumnType("int");
+
+                    b.Property<double>("ukupnaCijena")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("KorisnikId");
+
+                    b.ToTable("Korpa", (string)null);
                 });
 
             modelBuilder.Entity("K_K.Models.LokacijaKafica", b =>
@@ -198,7 +204,8 @@ namespace K_K.Data.Migrations
 
                     b.Property<string>("Lozinka")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("Prezime")
                         .IsRequired()
@@ -212,25 +219,6 @@ namespace K_K.Data.Migrations
                     b.ToTable("Osoba", (string)null);
                 });
 
-            modelBuilder.Entity("K_K.Models.Pice", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Velicina")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Vrsta")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Pice", (string)null);
-                });
-
             modelBuilder.Entity("K_K.Models.Proizvod", b =>
                 {
                     b.Property<int>("Id")
@@ -242,9 +230,15 @@ namespace K_K.Data.Migrations
                     b.Property<double>("Cijena")
                         .HasColumnType("float");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)");
+
                     b.Property<string>("Naziv")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("Opis")
                         .IsRequired()
@@ -254,9 +248,16 @@ namespace K_K.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Velicina")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("Proizvod", (string)null);
+
+                    b.HasDiscriminator().HasValue("Proizvod");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("K_K.Models.Recenzija", b =>
@@ -288,6 +289,35 @@ namespace K_K.Data.Migrations
                     b.HasIndex("ProizvodId");
 
                     b.ToTable("Recenzija", (string)null);
+                });
+
+            modelBuilder.Entity("K_K.Models.StavkaKorpe", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<double>("Cijena")
+                        .HasColumnType("float");
+
+                    b.Property<int>("Kolicina")
+                        .HasColumnType("int");
+
+                    b.Property<int>("KorpaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProizvodId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("KorpaId");
+
+                    b.HasIndex("ProizvodId");
+
+                    b.ToTable("StavkaKorpe", (string)null);
                 });
 
             modelBuilder.Entity("K_K.Models.StavkaNarudzbe", b =>
@@ -521,6 +551,26 @@ namespace K_K.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("K_K.Models.Hrana", b =>
+                {
+                    b.HasBaseType("K_K.Models.Proizvod");
+
+                    b.Property<int>("VrstaHrane")
+                        .HasColumnType("int");
+
+                    b.HasDiscriminator().HasValue("Hrana");
+                });
+
+            modelBuilder.Entity("K_K.Models.Pice", b =>
+                {
+                    b.HasBaseType("K_K.Models.Proizvod");
+
+                    b.Property<int>("VrstaPica")
+                        .HasColumnType("int");
+
+                    b.HasDiscriminator().HasValue("Pice");
+                });
+
             modelBuilder.Entity("K_K.Models.KarticnoPlacanje", b =>
                 {
                     b.HasOne("K_K.Models.Narudzba", "Narudzba")
@@ -530,6 +580,17 @@ namespace K_K.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Narudzba");
+                });
+
+            modelBuilder.Entity("K_K.Models.Korpa", b =>
+                {
+                    b.HasOne("K_K.Models.Osoba", "Korisnik")
+                        .WithMany()
+                        .HasForeignKey("KorisnikId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Korisnik");
                 });
 
             modelBuilder.Entity("K_K.Models.Narudzba", b =>
@@ -585,6 +646,25 @@ namespace K_K.Data.Migrations
                     b.Navigation("Korisnik");
 
                     b.Navigation("Narudzba");
+
+                    b.Navigation("Proizvod");
+                });
+
+            modelBuilder.Entity("K_K.Models.StavkaKorpe", b =>
+                {
+                    b.HasOne("K_K.Models.Korpa", "Korpa")
+                        .WithMany("Stavke")
+                        .HasForeignKey("KorpaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("K_K.Models.Proizvod", "Proizvod")
+                        .WithMany()
+                        .HasForeignKey("ProizvodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Korpa");
 
                     b.Navigation("Proizvod");
                 });
@@ -657,6 +737,11 @@ namespace K_K.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("K_K.Models.Korpa", b =>
+                {
+                    b.Navigation("Stavke");
                 });
 #pragma warning restore 612, 618
         }
