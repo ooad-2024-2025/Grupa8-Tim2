@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "ScKkEzbDNBM=",
+  "dgSpecHash": "UWf+kiz93SM=",
   "success": true,
   "projectFilePath": "C:\\Users\\HP\\Source\\Repos\\Grupa8-Tim2\\K&K\\K&K\\K&K.csproj",
   "expectedPackageFiles": [
@@ -179,12 +179,5 @@
     "C:\\Users\\HP\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\system.windows.extensions\\7.0.0\\system.windows.extensions.7.0.0.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file C:\\Users\\HP\\Source\\Repos\\Grupa8-Tim2\\K&K\\K&K\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    }
-  ]
+  "logs": []
 }
