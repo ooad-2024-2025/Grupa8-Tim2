@@ -1,47 +1,7 @@
-﻿@model K_K.Models.KarticnoPlacanje
-
+﻿
 @{
-    ViewData["Title"] = "Unos kartičnog plaćanja";
+    ViewData["Title"] = "KarticnoPlacanje";
 }
 
-<h2>Unesite podatke o kartici</h2>
+<h1>KarticnoPlacanje</h1>
 
-<form asp-action="IzvrsiUplatu" asp-controller="KarticnoPlacanje" method="post">
-    <div class="form-group">
-        <label>Ime na kartici</label>
-        <input asp-for="ImeNaKartici" class="form-control" />
-        <span asp-validation-for="ImeNaKartici" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label>Broj kartice</label>
-        <input asp-for="BrojKartice" class="form-control" />
-        <span asp-validation-for="BrojKartice" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label>CVV</label>
-        <input asp-for="CVV" class="form-control" />
-        <span asp-validation-for="CVV" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label>Datum isteka</label>
-        <input asp-for="DatumIsteka" type="date" class="form-control" />
-        <span asp-validation-for="DatumIsteka" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label>ID narudžbe</label>
-        <input asp-for="NarudzbaId" class="form-control" />
-        <span asp-validation-for="NarudzbaId" class="text-danger"></span>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Plati</button>
-</form>
-
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}
