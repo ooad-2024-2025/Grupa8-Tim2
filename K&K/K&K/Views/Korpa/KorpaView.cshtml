@@ -1,41 +1,27 @@
-﻿@model IEnumerable<K_K.Models.Korpa>
+﻿@model K_K.Models.Korpa
+<h2>Korpa korisnika:</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Korisnik)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.brojProizvoda)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ukupnaCijena)
-            </th>
-            <th></th>
+            <th>Proizvod</th>
+            <th>Količina</th>
+            <th>Cijena</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Korisnik.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.brojProizvoda)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ukupnaCijena)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var stavka in Model.Stavke)
+        {
+            <tr>
+                <td>@stavka.Proizvod.Naziv</td>
+                <td>@stavka.Kolicina</td>
+                <td>@stavka.Cijena</td>
+            </tr>
+        }
     </tbody>
 </table>
+
+<p>
+    Ukupno proizvoda: @Model.brojProizvoda<br />
+    Ukupna cijena: @Model.ukupnaCijena
+</p>
