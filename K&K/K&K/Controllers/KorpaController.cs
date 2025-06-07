@@ -30,10 +30,10 @@ namespace K_K.Controllers
             // return View(await applicationDbContext.ToListAsync());
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             int korisnikId = int.Parse(userId);
-            var korpa = await _context.Korpa
+            /*var korpa = await _context.Korpa
                 .Include(k => k.Korisnik)
-                .FirstOrDefaultAsync(k => k.KorisnikId == korisnikId);
-     return View(await applicationDbContext.ToListAsync());
+                .FirstOrDefaultAsync(k => k.KorisnikId == korisnikId);*/
+            return View(await applicationDbContext.ToListAsync());
             
         }
         /*
@@ -71,18 +71,18 @@ namespace K_K.Controllers
                 return RedirectToAction("Login", "Account");
             }
 
-            var korpa = await _context.Korpa
+            /*var korpa = await _context.Korpa
                 .Include(k => k.Stavke)
                     .ThenInclude(s => s.Proizvod)
-                .FirstOrDefaultAsync(c => c.KorisnikId == user.Id);
+                .FirstOrDefaultAsync(c => c.KorisnikId == user.Id); 
 
             if (korpa == null || korpa.Stavke == null || !korpa.Stavke.Any())
             {
                 TempData["CartMessage"] = "Korpa je trenutno prazna!";
                 return RedirectToAction("PraznaKorpa");
-            }
+            }*/
 
-            return View(korpa);
+            return View(); //bilo u view korpa 
         }
 
         public async Task<IActionResult> DodajUKorpu(int proizvodId)
@@ -207,7 +207,7 @@ namespace K_K.Controllers
         [HttpPost]
         public async Task<IActionResult> OcistiKorpu(int korisnikId)
         {
-            var korpa = await _context.Korpa
+            /*var korpa = await _context.Korpa
                 .Include(k => k.Stavke)
                 .FirstOrDefaultAsync(k => k.KorisnikId == korisnikId);
 
@@ -217,7 +217,7 @@ namespace K_K.Controllers
                 korpa.brojProizvoda = 0;
                 korpa.ukupnaCijena = 0;
                 await _context.SaveChangesAsync();
-            }
+            }*/
 
             return Ok();
         }

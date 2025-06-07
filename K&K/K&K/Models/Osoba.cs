@@ -11,7 +11,7 @@ namespace K_K.Models
     {
         [Required]
         public String Ime { get; set; }
-        
+
         [Required]
         public String Prezime { get; set; }
         public string? Adresa { get; set; }

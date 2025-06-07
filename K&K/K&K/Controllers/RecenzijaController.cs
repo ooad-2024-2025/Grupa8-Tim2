@@ -41,14 +41,14 @@ public class RecenzijaController : Controller
         var korisnik = await GetTrenutniKorisnikAsync();
         if (korisnik == null) return Unauthorized();
 
-        var vecPostoji = await dataContext.Recenzija
-            .AnyAsync(r => r.ProizvodId == proizvodId && r.KorisnikId == korisnik.Id);
+        //var vecPostoji = await dataContext.Recenzija
+          //  .AnyAsync(r => r.ProizvodId == proizvodId && r.KorisnikId == korisnik.Id);
 
-        if (vecPostoji)
+        /*if (vecPostoji)
         {
             TempData["Poruka"] = "Već ste ostavili recenziju za ovaj proizvod.";
             return RedirectToAction("PrikaziRecenziju", new { proizvodId });
-        }
+        }*/
 
         return View(new Recenzija { ProizvodId = proizvodId });
     }
@@ -61,16 +61,16 @@ public class RecenzijaController : Controller
         var korisnik = await GetTrenutniKorisnikAsync();
         if (korisnik == null) return Unauthorized();
 
-        recenzija.KorisnikId = korisnik.Id;
+        //recenzija.KorisnikId = korisnik.Id;
 
-        var vecPostoji = await dataContext.Recenzija
-            .AnyAsync(r => r.ProizvodId == recenzija.ProizvodId && r.KorisnikId == korisnik.Id);
+        //var vecPostoji = await dataContext.Recenzija
+            //.AnyAsync(r => r.ProizvodId == recenzija.ProizvodId && r.KorisnikId == korisnik.Id);
 
-        if (vecPostoji)
+        /*if (vecPostoji)
         {
             TempData["Poruka"] = "Već ste ostavili recenziju za ovaj proizvod.";
             return RedirectToAction("PrikaziRecenziju", new { proizvodId = recenzija.ProizvodId });
-        }
+        }*/
 
         if (ModelState.IsValid)
         {
@@ -91,8 +91,8 @@ public class RecenzijaController : Controller
         if (recenzija == null || korisnik == null)
             return NotFound();
 
-        if (recenzija.KorisnikId != korisnik.Id)
-            return Unauthorized();
+        //if (recenzija.KorisnikId != korisnik.Id)
+            //return Unauthorized();
 
         return View(recenzija);
     }
@@ -108,8 +108,8 @@ public class RecenzijaController : Controller
         if (original == null || korisnik == null)
             return NotFound();
 
-        if (original.KorisnikId != korisnik.Id)
-            return Unauthorized();
+        //if (original.KorisnikId != korisnik.Id)
+          //  return Unauthorized();
 
         original.Ocjena = r.Ocjena;
 
@@ -129,10 +129,10 @@ public class RecenzijaController : Controller
             return NotFound();
 
         bool jeAdmin = korisnik.Uloga == Uloga.Admin;
-        bool jeVlasnik = recenzija.KorisnikId == korisnik.Id;
+        //bool jeVlasnik = recenzija.KorisnikId == korisnik.Id;
 
-        if (!jeAdmin && !jeVlasnik)
-            return Unauthorized();
+        //if (!jeAdmin && !jeVlasnik)
+            //return Unauthorized();
 
         dataContext.Recenzija.Remove(recenzija);
         await dataContext.SaveChangesAsync();

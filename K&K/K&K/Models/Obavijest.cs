@@ -13,7 +13,7 @@ namespace K_K.Models
         public int Id { get; set; }
 
         [ForeignKey("Osoba")]
-        public int KorisnikId { get; set; }
+        public String KorisnikId { get; set; }
         public int StatusNarudzbeId { get; set; }
         public Osoba Korisnik { get; set; }
         public String Sadrzaj { get; set; }

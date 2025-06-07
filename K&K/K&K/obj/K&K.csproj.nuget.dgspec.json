@@ -1,19 +1,6 @@
 {
   "format": 1,
   "restore": {
-<<<<<<< HEAD
-    "C:\\Users\\HP\\Source\\Repos\\Grupa8-Tim2\\K&K\\K&K\\K&K.csproj": {}
-  },
-  "projects": {
-    "C:\\Users\\HP\\Source\\Repos\\Grupa8-Tim2\\K&K\\K&K\\K&K.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "C:\\Users\\HP\\Source\\Repos\\Grupa8-Tim2\\K&K\\K&K\\K&K.csproj",
-        "projectName": "K&K",
-        "projectPath": "C:\\Users\\HP\\Source\\Repos\\Grupa8-Tim2\\K&K\\K&K\\K&K.csproj",
-        "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\HP\\Source\\Repos\\Grupa8-Tim2\\K&K\\K&K\\obj\\",
-=======
     "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\K&K.csproj": {}
   },
   "projects": {
@@ -25,13 +12,12 @@
         "projectPath": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\K&K.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\obj\\",
->>>>>>> b8d916d56e6ffd23ad0497a0136e6ca26b362b57
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -112,7 +98,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.201/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
