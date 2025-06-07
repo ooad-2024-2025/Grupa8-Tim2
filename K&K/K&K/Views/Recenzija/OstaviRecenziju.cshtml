@@ -1,40 +1,38 @@
 ﻿@model K_K.Models.Recenzija
+
 @{
-    ViewData["Title"] = "Ostavi Recenziju";
+    ViewData["Title"] = "Ostavi recenziju";
 }
 
-<h1>Ostavi Recenziju</h1>
+<h2>Ostavi recenziju za proizvod</h2>
 
-<h4>Za Proizvod ID: @Model.ProizvodId</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="OstaviRecenziju" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ProizvodId" /> @* Skriveno polje za ID proizvoda *@
-
-            <div class="form-group">
-                <label asp-for="Ocjena" class="control-label"></label>
-                <input asp-for="Ocjena" class="form-control" type="number" min="1" max="5" />
-                <span asp-validation-for="Ocjena" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Tekst" class="control-label"></label>
-                <textarea asp-for="Tekst" class="form-control"></textarea>
-                <span asp-validation-for="Tekst" class="text-danger"></span>
-            </div>
-            <br />
-            <div class="form-group">
-                <input type="submit" value="Ostavi Recenziju" class="btn btn-primary" />
-            </div>
-            @Html.AntiForgeryToken()
-        </form>
+<form asp-action="OstaviRecenziju" method="post">
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <label asp-for="Ocjena" class="control-label"></label>
+        <select asp-for="Ocjena" class="form-control">
+            <option value="">-- Odaberite ocjenu --</option>
+            @for (int i = 1; i <= 5; i++)
+            {
+                <option value="@i">@i</option>
+            }
+        </select>
+        <span asp-validation-for="Ocjena" class="text-danger"></span>
     </div>
-</div>
 
-<div>
-    <a asp-action="PrikaziRecenziju" asp-route-proizvodId="@Model.ProizvodId">Nazad na recenzije</a>
-</div>
+    <div class="form-group">
+        <label asp-for="Tekst" class="control-label"></label>
+        <textarea asp-for="Tekst" class="form-control" rows="4"></textarea>
+        <span asp-validation-for="Tekst" class="text-danger"></span>
+    </div>
+
+    @* Sakrivena polja *@
+    <input type="hidden" asp-for="ProizvodId" />
+    <input type="hidden" asp-for="NarudzbaId" />
+
+    <button type="submit" class="btn btn-primary">Pošalji recenziju</button>
+    <a asp-action="PrikaziRecenziju" asp-route-proizvodId="@Model.ProizvodId" class="btn btn-secondary">Nazad</a>
+</form>
 
 @section Scripts {
     @{
