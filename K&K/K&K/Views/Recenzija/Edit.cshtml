@@ -1,49 +1,75 @@
 ﻿@model K_K.Models.Recenzija
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Uredi Recenziju";
 }
 
-<h1>Edit</h1>
+<h2 class="text-center my-4">Uredi Detalje Recenzije</h2>
+<p class="text-center text-muted mb-4">
+    Izmijenite željene detalje recenzije i sačuvajte promjene.
+</p>
 
-<h4>Recenzija</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="ProizvodId" class="control-label"></label>
-                <select asp-for="ProizvodId" class="form-control" asp-items="ViewBag.ProizvodId"></select>
-                <span asp-validation-for="ProizvodId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="KorisnikId" class="control-label"></label>
-                <select asp-for="KorisnikId" class="form-control" asp-items="ViewBag.KorisnikId"></select>
-                <span asp-validation-for="KorisnikId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NarudzbaId" class="control-label"></label>
-                <select asp-for="NarudzbaId" class="form-control" asp-items="ViewBag.NarudzbaId"></select>
-                <span asp-validation-for="NarudzbaId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Ocjena" class="control-label"></label>
-                <input asp-for="Ocjena" class="form-control" />
-                <span asp-validation-for="Ocjena" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+<div class="row justify-content-center">
+    <div class="col-md-7 col-lg-6">
+        <div class="card shadow-sm p-4">
+            <h5 class="card-title text-center mb-4">Ažuriraj Recenziju</h5>
+            <form asp-action="Edit" method="post">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger mb-3" role="alert">
+                    Molimo ispravite sljedeće greške:
+                </div>
+
+                <input type="hidden" asp-for="Id" />
+
+                <div class="mb-3">
+                    <label asp-for="ProizvodId" class="form-label">Proizvod</label>
+                    <select asp-for="ProizvodId" class="form-select" asp-items="ViewBag.ProizvodId">
+                        <option value="">-- Odaberite Proizvod --</option>
+                    </select>
+                    <span asp-validation-for="ProizvodId" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="KorisnikId" class="form-label">Korisnik</label>
+                    <select asp-for="KorisnikId" class="form-select" asp-items="ViewBag.KorisnikId">
+                        <option value="">-- Odaberite Korisnika --</option>
+                    </select>
+                    <span asp-validation-for="KorisnikId" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="NarudzbaId" class="form-label">Narudžba</label>
+                    <select asp-for="NarudzbaId" class="form-select" asp-items="ViewBag.NarudzbaId">
+                        <option value="">-- Odaberite Narudžbu --</option>
+                    </select>
+                    <span asp-validation-for="NarudzbaId" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Ocjena" class="form-label">Ocjena (1-5)</label>
+                    <input asp-for="Ocjena" class="form-control" type="number" min="1" max="5" placeholder="Unesite ocjenu (1-5)" />
+                    <span asp-validation-for="Ocjena" class="text-danger"></span>
+                </div>
+
+                <div class="d-grid gap-2 mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="bi bi-save"></i> Sačuvaj Promjene
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
+---
+
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="btn btn-outline-secondary mt-4">
+        <i class="bi bi-arrow-left-circle"></i> Nazad na Listu Recenzija
+    </a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

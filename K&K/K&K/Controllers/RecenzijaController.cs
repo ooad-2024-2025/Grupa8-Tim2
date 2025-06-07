@@ -1,176 +1,142 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using K_K.Data;
+﻿using K_K.Data;
 using K_K.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
-namespace K_K.Controllers
+public class RecenzijaController : Controller
 {
-    public class RecenzijaController : Controller
+    private readonly ApplicationDbContext dataContext;
+
+    public RecenzijaController(ApplicationDbContext context)
     {
-        private readonly ApplicationDbContext _context;
+        dataContext = context;
+    }
 
-        public RecenzijaController(ApplicationDbContext context)
+    private async Task<Osoba> GetTrenutniKorisnikAsync()
+    {
+        var idClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (idClaim == null || !int.TryParse(idClaim, out int korisnikId))
+            return null;
+
+        return await dataContext.Osoba.FindAsync(korisnikId);
+    }
+
+    // Prikaz svih recenzija za proizvod
+    public async Task<IActionResult> PrikaziRecenziju(int proizvodId)
+    {
+        var recenzije = await dataContext.Recenzija
+            .Include(r => r.Korisnik)
+            .Where(r => r.ProizvodId == proizvodId)
+            .ToListAsync();
+
+        return View("RecenzijeView", recenzije);
+    }
+
+    // GET: Forma za ostavljanje recenzije
+    public async Task<IActionResult> OstaviRecenziju(int proizvodId)
+    {
+        var korisnik = await GetTrenutniKorisnikAsync();
+        if (korisnik == null) return Unauthorized();
+
+        var vecPostoji = await dataContext.Recenzija
+            .AnyAsync(r => r.ProizvodId == proizvodId && r.KorisnikId == korisnik.Id);
+
+        if (vecPostoji)
         {
-            _context = context;
+            TempData["Poruka"] = "Već ste ostavili recenziju za ovaj proizvod.";
+            return RedirectToAction("PrikaziRecenziju", new { proizvodId });
         }
 
-        // GET: Recenzija
-        public async Task<IActionResult> Index()
+        return View(new Recenzija { ProizvodId = proizvodId });
+    }
+
+    // POST: Snimi recenziju
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> OstaviRecenziju(Recenzija recenzija)
+    {
+        var korisnik = await GetTrenutniKorisnikAsync();
+        if (korisnik == null) return Unauthorized();
+
+        recenzija.KorisnikId = korisnik.Id;
+
+        var vecPostoji = await dataContext.Recenzija
+            .AnyAsync(r => r.ProizvodId == recenzija.ProizvodId && r.KorisnikId == korisnik.Id);
+
+        if (vecPostoji)
         {
-            var applicationDbContext = _context.Recenzija.Include(r => r.Korisnik).Include(r => r.Narudzba).Include(r => r.Proizvod);
-            return View(await applicationDbContext.ToListAsync());
+            TempData["Poruka"] = "Već ste ostavili recenziju za ovaj proizvod.";
+            return RedirectToAction("PrikaziRecenziju", new { proizvodId = recenzija.ProizvodId });
         }
 
-        // GET: Recenzija/Details/5
-        public async Task<IActionResult> Details(int? id)
+        if (ModelState.IsValid)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var recenzija = await _context.Recenzija
-                .Include(r => r.Korisnik)
-                .Include(r => r.Narudzba)
-                .Include(r => r.Proizvod)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (recenzija == null)
-            {
-                return NotFound();
-            }
-
-            return View(recenzija);
+            dataContext.Recenzija.Add(recenzija);
+            await dataContext.SaveChangesAsync();
+            return RedirectToAction("PrikaziRecenziju", new { proizvodId = recenzija.ProizvodId });
         }
 
-        // GET: Recenzija/Create
-        public IActionResult Create()
-        {
-            ViewData["KorisnikId"] = new SelectList(_context.Osoba, "Id", "Email");
-            ViewData["NarudzbaId"] = new SelectList(_context.Narudzba, "Id", "Id");
-            ViewData["ProizvodId"] = new SelectList(_context.Proizvod, "Id", "Discriminator");
-            return View();
-        }
+        return View(recenzija);
+    }
 
-        // POST: Recenzija/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ProizvodId,KorisnikId,NarudzbaId,Ocjena")] Recenzija recenzija)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(recenzija);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["KorisnikId"] = new SelectList(_context.Osoba, "Id", "Email", recenzija.KorisnikId);
-            ViewData["NarudzbaId"] = new SelectList(_context.Narudzba, "Id", "Id", recenzija.NarudzbaId);
-            ViewData["ProizvodId"] = new SelectList(_context.Proizvod, "Id", "Discriminator", recenzija.ProizvodId);
-            return View(recenzija);
-        }
+    // GET: Uredi recenziju
+    public async Task<IActionResult> UrediRecenziju(int id)
+    {
+        var korisnik = await GetTrenutniKorisnikAsync();
+        var recenzija = await dataContext.Recenzija.FindAsync(id);
 
-        // GET: Recenzija/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        if (recenzija == null || korisnik == null)
+            return NotFound();
 
-            var recenzija = await _context.Recenzija.FindAsync(id);
-            if (recenzija == null)
-            {
-                return NotFound();
-            }
-            ViewData["KorisnikId"] = new SelectList(_context.Osoba, "Id", "Email", recenzija.KorisnikId);
-            ViewData["NarudzbaId"] = new SelectList(_context.Narudzba, "Id", "Id", recenzija.NarudzbaId);
-            ViewData["ProizvodId"] = new SelectList(_context.Proizvod, "Id", "Discriminator", recenzija.ProizvodId);
-            return View(recenzija);
-        }
+        if (recenzija.KorisnikId != korisnik.Id)
+            return Unauthorized();
 
-        // POST: Recenzija/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ProizvodId,KorisnikId,NarudzbaId,Ocjena")] Recenzija recenzija)
-        {
-            if (id != recenzija.Id)
-            {
-                return NotFound();
-            }
+        return View(recenzija);
+    }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(recenzija);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!RecenzijaExists(recenzija.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["KorisnikId"] = new SelectList(_context.Osoba, "Id", "Email", recenzija.KorisnikId);
-            ViewData["NarudzbaId"] = new SelectList(_context.Narudzba, "Id", "Id", recenzija.NarudzbaId);
-            ViewData["ProizvodId"] = new SelectList(_context.Proizvod, "Id", "Discriminator", recenzija.ProizvodId);
-            return View(recenzija);
-        }
+    // POST: Uredi recenziju
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> UrediRecenziju(Recenzija r)
+    {
+        var korisnik = await GetTrenutniKorisnikAsync();
+        var original = await dataContext.Recenzija.FindAsync(r.Id);
 
-        // GET: Recenzija/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        if (original == null || korisnik == null)
+            return NotFound();
 
-            var recenzija = await _context.Recenzija
-                .Include(r => r.Korisnik)
-                .Include(r => r.Narudzba)
-                .Include(r => r.Proizvod)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (recenzija == null)
-            {
-                return NotFound();
-            }
+        if (original.KorisnikId != korisnik.Id)
+            return Unauthorized();
 
-            return View(recenzija);
-        }
+        original.Ocjena = r.Ocjena;
 
-        // POST: Recenzija/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var recenzija = await _context.Recenzija.FindAsync(id);
-            if (recenzija != null)
-            {
-                _context.Recenzija.Remove(recenzija);
-            }
+        await dataContext.SaveChangesAsync();
+        return RedirectToAction("PrikaziRecenziju", new { proizvodId = original.ProizvodId });
+    }
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+    // Brisanje recenzije
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> IzbrisiRecenziju(int id)
+    {
+        var korisnik = await GetTrenutniKorisnikAsync();
+        var recenzija = await dataContext.Recenzija.FindAsync(id);
 
-        private bool RecenzijaExists(int id)
-        {
-            return _context.Recenzija.Any(e => e.Id == id);
-        }
+        if (recenzija == null || korisnik == null)
+            return NotFound();
+
+        bool jeAdmin = korisnik.Uloga == Uloga.Admin;
+        bool jeVlasnik = recenzija.KorisnikId == korisnik.Id;
+
+        if (!jeAdmin && !jeVlasnik)
+            return Unauthorized();
+
+        dataContext.Recenzija.Remove(recenzija);
+        await dataContext.SaveChangesAsync();
+
+        return RedirectToAction("PrikaziRecenziju", new { proizvodId = recenzija.ProizvodId });
     }
 }
