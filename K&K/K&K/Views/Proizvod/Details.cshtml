@@ -107,10 +107,13 @@
 
                                 @*DUGMAD DODAJ, DELETE, EDIT*@
                                 <div class="d-flex flex-wrap gap-2">
-                                    
-                                        <button class="btn btn-success btn-lg" onclick="dodajUKorpu(@Model.Id)">
-                                            <i class="fas fa-shopping-cart"></i> Dodaj u korpu
-                                        </button>
+
+                                    <a asp-controller="Korpa"
+                                       asp-action="DodajUKorpu"
+                                       asp-route-id="@Model.Id"
+                                       class="btn btn-success btn-lg">
+                                        <i class="fas fa-shopping-cart"></i> Dodaj u korpu
+                                    </a>
                                     
                                     @*SAMO ADMINISTRATOR CE MOCI DA VIDI UREDI I OBRISI*@
                                     @*@if (User.IsInRole("Admin"))*@

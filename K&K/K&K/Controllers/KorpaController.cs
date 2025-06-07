@@ -26,12 +26,24 @@ namespace K_K.Controllers
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Korpa.Include(k => k.Korisnik);
+<<<<<<< HEAD
             // return View(await applicationDbContext.ToListAsync());
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             int korisnikId = int.Parse(userId);
             var korpa = await _context.Korpa
                 .Include(k => k.Korisnik)
                 .FirstOrDefaultAsync(k => k.KorisnikId == korisnikId);
+=======
+            return View(await applicationDbContext.ToListAsync());
+            
+        }
+        public IActionResult KorpaView()
+        {
+            var korpa = new Korpa
+            {
+                Stavke = stavke,
+                ukupnaCijena = stavke.Sum(x => x.Proizvod.Cijena * x.Kolicina)
+>>>>>>> 9025f26dd545d127d7157d78934cb622ab279438
 
             return View(korpa);
         }

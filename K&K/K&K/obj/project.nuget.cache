@@ -1,8 +1,20 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "kucS0vgERtk=",
   "success": true,
   "projectFilePath": "C:\\Users\\korisnik\\Source\\Repos\\Grupa8-Tim2\\K&K\\K&K\\K&K.csproj",
+=======
+<<<<<<< HEAD
+  "dgSpecHash": "/ICPMwnHAOM=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\HP\\Source\\Repos\\Grupa8-Tim2\\K&K\\K&K\\K&K.csproj",
+=======
+  "dgSpecHash": "JDNZANLkc7g=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\K&K.csproj",
+>>>>>>> cf77c554c283aa17c7c8eb98be8892ac50e8b120
+>>>>>>> 9025f26dd545d127d7157d78934cb622ab279438
   "expectedPackageFiles": [
     "C:\\Users\\korisnik\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\korisnik\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",
