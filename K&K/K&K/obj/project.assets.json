@@ -8351,6 +8351,7 @@
       "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore >= 8.0.14",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 8.0.14",
       "Microsoft.AspNetCore.Identity.UI >= 8.0.14",
+      "Microsoft.EntityFrameworkCore >= 8.0.14",
       "Microsoft.EntityFrameworkCore.SqlServer >= 8.0.14",
       "Microsoft.EntityFrameworkCore.Sqlite >= 8.0.11",
       "Microsoft.EntityFrameworkCore.Tools >= 8.0.14",
@@ -8419,6 +8420,10 @@
             "target": "Package",
             "version": "[8.0.14, )"
           },
+          "Microsoft.EntityFrameworkCore": {
+            "target": "Package",
+            "version": "[8.0.14, )"
+          },
           "Microsoft.EntityFrameworkCore.SqlServer": {
             "target": "Package",
             "version": "[8.0.14, )"
@@ -8458,5 +8463,13 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.201/PortableRuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }
