@@ -146,12 +146,12 @@ namespace K_K.Controllers
                 _context.StavkaKorpe.Add(novaStavka);
                 korpa.Stavke.Add(novaStavka); // Dodaj u lokalnu kolekciju
             }
-
-            // Izračunaj totale
-            korpa.brojProizvoda = korpa.Stavke.Sum(s => s.Kolicina);
-            korpa.ukupnaCijena = korpa.Stavke.Sum(s => s.Cijena);
-
             await _context.SaveChangesAsync();
+            // Izračunaj totale
+            //korpa.brojProizvoda = korpa.Stavke.Sum(s => s.Kolicina);
+            //korpa.ukupnaCijena = korpa.Stavke.Sum(s => s.Cijena);
+            await AzurirajKorpu(korpa.Id);
+            
 
             return RedirectToAction("KorpaView", new { korisnikId = korisnik.Id });
         }
@@ -164,20 +164,28 @@ namespace K_K.Controllers
         [HttpPost]
         public async Task<IActionResult> PromijeniKolicinu(int korpaId, int proizvodId, int kolicina)
         {
+            if(kolicina <= 0)
+            {
+                return await UkloniStavku(korpaId, proizvodId);
+            }
             var stavka = await _context.StavkaKorpe
                 .FirstOrDefaultAsync(s => s.KorpaId == korpaId && s.ProizvodId == proizvodId);
 
             if (stavka != null)
             {
                 var proizvod = await _context.Proizvod.FindAsync(proizvodId);
-                stavka.Kolicina = kolicina;
-                stavka.Cijena = kolicina * proizvod.Cijena;
+                if (proizvod != null)
+                {
 
-                await _context.SaveChangesAsync();
-                await AzurirajKorpu(korpaId);
+                    stavka.Kolicina = kolicina;
+                    stavka.Cijena = kolicina * proizvod.Cijena;
+
+                    await _context.SaveChangesAsync();
+                    await AzurirajKorpu(korpaId);
+                }
             }
 
-            return Ok();
+            return Json(new {success = true});
         }
 
         [HttpPost]
@@ -193,25 +201,25 @@ namespace K_K.Controllers
                 await AzurirajKorpu(korpaId);
             }
 
-            return Ok();
+            return Json(new { success = true });
         }
 
         [HttpPost]
-        public async Task<IActionResult> OcistiKorpu(int korisnikId)
+        public async Task<IActionResult> OcistiKorpu(int korpaId)
         {
-            /*var korpa = await _context.Korpa
+            var korpa = await _context.Korpa
                 .Include(k => k.Stavke)
-                .FirstOrDefaultAsync(k => k.KorisnikId == korisnikId);
+                .FirstOrDefaultAsync(k => k.Id == korpaId);
 
-            if (korpa != null)
+            if (korpa != null && korpa.Stavke.Any())
             {
                 _context.StavkaKorpe.RemoveRange(korpa.Stavke);
                 korpa.brojProizvoda = 0;
                 korpa.ukupnaCijena = 0;
                 await _context.SaveChangesAsync();
-            }*/
+            }
 
-            return Ok();
+            return Json(new { success = true });
         }
 
         private async Task AzurirajKorpu(int korpaId)
@@ -231,7 +239,37 @@ namespace K_K.Controllers
                 await _context.SaveChangesAsync();
             }
         }
+        [HttpGet]
+        public async Task<IActionResult> GetKorpaInfo(int korpaId)
+        {
+            var korpa = await _context.Korpa
+                .Include(k => k.Stavke)
+                .ThenInclude(s => s.Proizvod)
+                .FirstOrDefaultAsync(k => k.Id == korpaId);
 
+            if (korpa == null)
+            {
+                return Json(new { success = false });
+            }
+
+            var korpaInfo = new
+            {
+                success = true,
+                brojProizvoda = korpa.brojProizvoda,
+                ukupnaCijena = korpa.ukupnaCijena,
+                stavke = korpa.Stavke.Select(s => new
+                {
+                    id = s.Id,
+                    proizvodId = s.ProizvodId,
+                    naziv = s.Proizvod.Naziv,
+                    kolicina = s.Kolicina,
+                    cijena = s.Cijena,
+                    jedinicnaCijena = s.Proizvod.Cijena
+                }).ToList()
+            };
+
+            return Json(korpaInfo);
+        }
         // Pomoćna metoda za uklanjanje stavke
         public async Task<IActionResult> UkloniIzKorpe(int stavkaId, int korisnikId)
         {
