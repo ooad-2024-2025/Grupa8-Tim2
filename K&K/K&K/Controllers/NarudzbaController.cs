@@ -182,10 +182,9 @@ namespace K_K.Controllers
         {
             return _context.Narudzba.Any(e => e.Id == id);
         }
-<<<<<<< HEAD
 
 
-=======
+
         public double IzracunajUkupnuCijenuNarudzbe(int narudzbaId)
         {
             var stavke = _context.StavkaNarudzbe
@@ -207,6 +206,5 @@ namespace K_K.Controllers
 
             return ukupno;
         }
->>>>>>> cf77c554c283aa17c7c8eb98be8892ac50e8b120
     }
 }

@@ -1,9 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace K_K.Models
 {
@@ -22,10 +19,17 @@ namespace K_K.Models
         public int NarudzbaId { get; set; }
 
         [Required]
+        [Range(1, 5, ErrorMessage = "Ocjena mora biti izme?u 1 i 5.")]
         public int Ocjena { get; set; }
+
+        [Required]
+        [StringLength(1000)]
+        public string Tekst { get; set; }
+
+        public DateTime DatumDodavanja { get; set; } = DateTime.Now;
+
         public Proizvod Proizvod { get; set; }
         public Osoba Korisnik { get; set; }
         public Narudzba Narudzba { get; set; }
-
     }
 }
