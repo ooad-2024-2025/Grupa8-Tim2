@@ -37,6 +37,7 @@ namespace K_K.Controllers
                 return NotFound();
             }
 
+
             var narudzba = await _context.Narudzba
                 .Include(n => n.Korisnik)
                 .Include(n => n.Radnik)
@@ -182,10 +183,7 @@ namespace K_K.Controllers
         {
             return _context.Narudzba.Any(e => e.Id == id);
         }
-<<<<<<< HEAD
 
-
-=======
         public double IzracunajUkupnuCijenuNarudzbe(int narudzbaId)
         {
             var stavke = _context.StavkaNarudzbe
