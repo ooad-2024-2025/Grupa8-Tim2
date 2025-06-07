@@ -27,14 +27,14 @@ namespace K_K.Controllers
         {
             var applicationDbContext = _context.Korpa.Include(k => k.Korisnik);
 
-            // return View(await applicationDbContext.ToListAsync());
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            int korisnikId = int.Parse(userId);
-            var korpa = await _context.Korpa
+            var korpe = _context.Korpa
                 .Include(k => k.Korisnik)
-                .FirstOrDefaultAsync(k => k.KorisnikId == korisnikId);
-     return View(await applicationDbContext.ToListAsync());
-            
+                .Include(k => k.Stavke)
+                    .ThenInclude(s => s.Proizvod)
+                .ToList();
+
+            return View(korpe);
+
         }
         /*
         public async Task<IActionResult> KorpaView()
