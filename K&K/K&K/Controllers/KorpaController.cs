@@ -1,66 +1,275 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using K_K.Data;
+using K_K.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using K_K.Data;
-using K_K.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace K_K.Controllers
 {
     public class KorpaController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly List<StavkaKorpe> stavke;
+        
 
         public KorpaController(ApplicationDbContext context)
         {
             _context = context;
-            stavke = new List<StavkaKorpe>();
+            
         }
 
         // GET: Korpa
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Korpa.Include(k => k.Korisnik);
-            return View(await applicationDbContext.ToListAsync());
-            
-        }
-        public IActionResult KorpaView()
-        {
-            var korpa = new Korpa
-            {
-                Stavke = stavke,
-                ukupnaCijena = stavke.Sum(x => x.Proizvod.Cijena * x.Kolicina)
 
-            };
+            var korpe = _context.Korpa
+                .Include(k => k.Korisnik)
+                .Include(k => k.Stavke)
+                    .ThenInclude(s => s.Proizvod)
+                .ToList();
+
+            return View(korpe);
+
+        }
+        /*
+        public async Task<IActionResult> KorpaView()
+        {
+            var user = await _context.Osoba.FirstOrDefaultAsync(u => u.Email == User.Identity.Name);
+            var korpa = await _context.Korpa.FirstOrDefaultAsync(c => c.KorisnikId == user.Id );
+            if (korpa == null || !_context.Korpa.Any())
+            {
+                // Cart is empty or null, display a popup or redirect to a specific page
+                TempData["CartMessage"] = "Korpa je trenutno prazna!";
+                return RedirectToAction("PraznaKorpa");
+            }
+            var productCarts = _context.Korpa
+    .Include(k => k.Stavke)
+        .ThenInclude(s => s.Proizvod)
+    .Where(k => k.Id == korpa.Id)
+    .ToList();
+            return View(productCarts);
+        }*/
+        public async Task<IActionResult> KorpaView()
+        {
+            var username = User.Identity?.Name;
+
+            System.Diagnostics.Debug.WriteLine($"User.Identity.Name = {username}");
+
+            if (string.IsNullOrEmpty(username))
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            var user = await _context.Osoba.FirstOrDefaultAsync(u => u.Email == username);
+            if (user == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            var korpa = await _context.Korpa
+                .Include(k => k.Stavke)
+                    .ThenInclude(s => s.Proizvod)
+                .FirstOrDefaultAsync(c => c.KorisnikId == user.Id);
+
+            if (korpa == null || korpa.Stavke == null || !korpa.Stavke.Any())
+            {
+                TempData["CartMessage"] = "Korpa je trenutno prazna!";
+                return RedirectToAction("PraznaKorpa");
+            }
+
             return View(korpa);
         }
-        
-        public IActionResult dodajUKorpu(int id)
-        {
-            var dodaj = _context.Proizvod.Find(id);
-            var postoji = stavke.FirstOrDefault(item => item.Proizvod.Id == id);
-             if(postoji != null)
+
+        public async Task<IActionResult> DodajUKorpu(int proizvodId)
+        { /*
+            try
             {
-                postoji.Kolicina++;
-                
-            }
-            else
-            {
-                stavke.Add(new StavkaKorpe
+                // Dobij korisnički ID
+                var korisnikId = await GetKorisnikId();
+                if (!korisnikId.HasValue)
                 {
-                    Proizvod = dodaj,
-                    Kolicina = 1,
-                    Cijena=dodaj.Cijena
-                });
+                    return RedirectToAction("Login");
+               }
+
+                // Pronađi proizvod
+                var proizvod = await _context.Proizvod.FirstOrDefaultAsync(m => m.Id ==proizvodId);
+                if (proizvod == null)
+                {
+                    return NotFound("Proizvod nije pronađen");
+                }
+
+                // Pronađi ili kreiraj korpu
+                var korpa = await _context.Korpa
+                    .Include(k => k.Stavke)
+                    .FirstOrDefaultAsync(k => k.KorisnikId == korisnikId.Value);
+
+                if (korpa == null)
+                {
+                    korpa = new Korpa
+                    {
+                        KorisnikId = korisnikId.Value,
+                        brojProizvoda = 0,
+                        ukupnaCijena = 0,
+                        Stavke = new List<StavkaKorpe>()
+                    };
+                    _context.Korpa.Add(korpa);
+                    await _context.SaveChangesAsync(); // Sačuvaj da dobiješ ID
+                }
+
+                // Osiguraj da Stavke nisu null
+                if (korpa.Stavke == null)
+                    korpa.Stavke = new List<StavkaKorpe>();
+
+                // Provjeri da li stavka već postoji
+                var postojecaStavka = korpa.Stavke.FirstOrDefault(s => s.ProizvodId == proizvodId);
+
+                if (postojecaStavka != null)
+                {
+                    // Uvećaj količinu postojeće stavke
+                    postojecaStavka.Kolicina++;
+                    postojecaStavka.Cijena = postojecaStavka.Kolicina * proizvod.Cijena;
+                }
+                else
+                {
+                    // Kreiraj novu stavku
+                    var novaStavka = new StavkaKorpe
+                    {
+                        KorpaId = korpa.Id,
+                        ProizvodId = proizvodId,
+                        Kolicina = 1,
+                        Cijena = proizvod.Cijena
+                    };
+                    _context.StavkaKorpe.Add(novaStavka);
+                    korpa.Stavke.Add(novaStavka); // Dodaj u lokalnu kolekciju
+                }
+
+                // Izračunaj totale
+                korpa.brojProizvoda = korpa.Stavke.Sum(s => s.Kolicina);
+                korpa.ukupnaCijena = korpa.Stavke.Sum(s => s.Cijena);
+
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction("KorpaView", new { korisnikId = korisnikId.Value });
+            }
+            catch (Exception ex)
+            {
+                // Detaljnije logovanje
+                Console.WriteLine($"Greška pri dodavanju u korpu: {ex.Message}");
+                Console.WriteLine($"Stack trace: {ex.StackTrace}");
+                return StatusCode(500, "Greška pri dodavanju u korpu");
+            }
+            */
+            var applicationDbContext = _context.Korpa.Include(k => k.Korisnik);
+            return View(await applicationDbContext.ToListAsync());
+        }
+
+      
+        [HttpPost]
+        public async Task<IActionResult> PromijeniKolicinu(int korpaId, int proizvodId, int kolicina)
+        {
+            var stavka = await _context.StavkaKorpe
+                .FirstOrDefaultAsync(s => s.KorpaId == korpaId && s.ProizvodId == proizvodId);
+
+            if (stavka != null)
+            {
+                var proizvod = await _context.Proizvod.FindAsync(proizvodId);
+                stavka.Kolicina = kolicina;
+                stavka.Cijena = kolicina * proizvod.Cijena;
+
+                await _context.SaveChangesAsync();
+                await AzurirajKorpu(korpaId);
             }
 
-               return RedirectToAction("KorpaView");
+            return Ok();
         }
-       
+
+        [HttpPost]
+        public async Task<IActionResult> UkloniStavku(int korpaId, int proizvodId)
+        {
+            var stavka = await _context.StavkaKorpe
+                .FirstOrDefaultAsync(s => s.KorpaId == korpaId && s.ProizvodId == proizvodId);
+
+            if (stavka != null)
+            {
+                _context.StavkaKorpe.Remove(stavka);
+                await _context.SaveChangesAsync();
+                await AzurirajKorpu(korpaId);
+            }
+
+            return Ok();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> OcistiKorpu(int korisnikId)
+        {
+            var korpa = await _context.Korpa
+                .Include(k => k.Stavke)
+                .FirstOrDefaultAsync(k => k.KorisnikId == korisnikId);
+
+            if (korpa != null)
+            {
+                _context.StavkaKorpe.RemoveRange(korpa.Stavke);
+                korpa.brojProizvoda = 0;
+                korpa.ukupnaCijena = 0;
+                await _context.SaveChangesAsync();
+            }
+
+            return Ok();
+        }
+
+        private async Task AzurirajKorpu(int korpaId)
+        {
+            var korpa = await _context.Korpa.FindAsync(korpaId);
+            if (korpa != null)
+            {
+                var ukupnaKolicina = await _context.StavkaKorpe
+                    .Where(s => s.KorpaId == korpaId)
+                    .SumAsync(s => s.Kolicina);
+                var ukupnaCijena = await _context.StavkaKorpe
+                    .Where(s => s.KorpaId == korpaId)
+                    .SumAsync(s => s.Cijena);
+
+                korpa.brojProizvoda = ukupnaKolicina;
+                korpa.ukupnaCijena = ukupnaCijena;
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        // Pomoćna metoda za uklanjanje stavke
+        public async Task<IActionResult> UkloniIzKorpe(int stavkaId, int korisnikId)
+        {
+            var stavka = await _context.StavkaKorpe.FindAsync(stavkaId);
+            if (stavka != null)
+            {
+                _context.StavkaKorpe.Remove(stavka);
+
+                // Ažuriraj korpu
+                var korpa = await _context.Korpa.FindAsync(stavka.KorpaId);
+                if (korpa != null)
+                {
+                    var ukupnaKolicina = await _context.StavkaKorpe
+                        .Where(s => s.KorpaId == korpa.Id && s.Id != stavkaId)
+                        .SumAsync(s => s.Kolicina);
+
+                    var ukupnaCijena = await _context.StavkaKorpe
+                        .Where(s => s.KorpaId == korpa.Id && s.Id != stavkaId)
+                        .SumAsync(s => s.Cijena);
+
+                    korpa.brojProizvoda = ukupnaKolicina;
+                    korpa.ukupnaCijena = ukupnaCijena;
+                    _context.Update(korpa);
+                }
+
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction("KorpaView", new { korisnikId = korisnikId });
+        }
 
         // GET: Korpa/Details/5
         public async Task<IActionResult> Details(int? id)

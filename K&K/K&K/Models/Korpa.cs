@@ -14,6 +14,7 @@ namespace K_K.Models
         
         public int brojProizvoda { get; set; }
         public double ukupnaCijena { get; set; }
+
         public ICollection<StavkaKorpe> Stavke { get; set; }
         public Korpa() { }
     }

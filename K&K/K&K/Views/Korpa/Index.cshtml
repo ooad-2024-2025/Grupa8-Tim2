@@ -1,35 +1,54 @@
-﻿@model IEnumerable<K_K.Models.Korpa>
+﻿<ul class="navbar-nav flex-grow-1">
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Početna</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="Proizvod" asp-action="Index">Meni</a>
+    </li>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Korpa" asp-action="KorpaView">
+                <i class="fas fa-shopping-cart"></i> Moja Korpa
+            </a>
+        </li>
+    }
 
-@{
-    ViewData["Title"] = "Index";
-}
-<h1>Vasa korpa</h1>
-<h1>Index</h1>
+    @* Admin navigacija - uklonite komentar kada implementirate role *@
+    @*@if (User.IsInRole("Admin"))*@
+    @if (User.Identity.IsAuthenticated) @* Privremeno za testiranje *@
+    {
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-dark" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown">
+                <i class="fas fa-cog"></i> Admin
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <a class="dropdown-item" asp-controller="Korpa" asp-action="Index">
+                        <i class="fas fa-shopping-cart"></i> Upravljanje Korpama
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" asp-controller="Narudzba" asp-action="Index">
+                        <i class="fas fa-receipt"></i> Narudžbe
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" asp-controller="Recenzija" asp-action="Index">
+                        <i class="fas fa-star"></i> Recenzije
+                    </a>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                    <a class="dropdown-item" asp-controller="Proizvod" asp-action="Create">
+                        <i class="fas fa-plus"></i> Dodaj Proizvod
+                    </a>
+                </li>
+            </ul>
+        </li>
+    }
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Korisnik)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Korisnik.Email)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    </li>
+</ul>
