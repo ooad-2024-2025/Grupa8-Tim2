@@ -15,11 +15,11 @@ namespace K_K.Models
         public int Id { get; set; }
 
         [ForeignKey(nameof(Korisnik))]
-        public int KorisnikId { get; set; }
+        public String KorisnikId { get; set; }
 
 
         [ForeignKey(nameof(Radnik))]
-        public int RadnikId { get; set; }
+        public String RadnikId { get; set; }
         public Osoba Korisnik { get; set; }
         public Osoba Radnik { get; set; }
         public StatusNarudzbe StatusNarudzbe { get; set; }

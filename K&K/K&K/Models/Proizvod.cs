@@ -27,6 +27,6 @@ namespace K_K.Models
         [Required]
         [Range(0.0, 100.0, ErrorMessage = "Cijena mora biti validna!")]
         public double Cijena { get; set; }
-        //public string Discriminator { get; set; } = "Proizvod";
+        
     }
 }

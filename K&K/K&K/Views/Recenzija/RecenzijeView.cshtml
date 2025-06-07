@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<K_K.Models.Recenzija>
+
 @{
     ViewData["Title"] = "Recenzije Proizvoda";
     // Dohvaćamo ProizvodId ako je dostupan, pretpostavljamo da je to prvi element ili se šalje u ViewData
@@ -40,8 +41,8 @@ else
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Ocjena: @item.Ocjena / 5</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">@item.Korisnik?.KorisnickoIme (Id: @item.KorisnikId)</h6>
-                        <p class="card-text">@item.Komentar</p>
+                        @*<h6 class="card-subtitle mb-2 text-muted">@item.Korisnik?.KorisnickoIme (Id: @item.KorisnikId)</h6>
+                        <p class="card-text">@item.Komentar</p> DODAL U KOMENTAR*@
                         @* Opcionalno: Prikaz datuma kreiranja, ako postoji u modelu *@
                         @* <small class="text-muted">Datum: @item.DatumKreiranja.ToShortDateString()</small> *@
 
@@ -53,12 +54,12 @@ else
                             // Za sada, pretpostavljamo da je autorizacija već obrađena na backendu,
                             // i da samo sakrivamo/prikazujemo gumbe radi estetike.
                             // BOLJI PRISTUP: Poslati flag (npr. bool CanEdit, bool CanDelete) iz kontrolera u ViewModel.
-                            var currentUserIdClaim = Context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                            //var currentUserIdClaim = Context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
                             int currentUserId = 0;
-                            if (currentUserIdClaim != null)
-                            {
+                            @*if (currentUserIdClaim != null)
+                            { ZAKOMENTARISALA
                                 int.TryParse(currentUserIdClaim, out currentUserId);
-                            }
+                            }*@
 
                             // Pretpostavka da je Uloga u Recenzija.Korisnik dostupna i da se podudara sa prijavljenim korisnikom
                             // I da uloga.Admin radi.
@@ -67,14 +68,14 @@ else
 
                             // Ovo je pojednostavljena provjera SAMO na strani klijenta
                             // Stvarna autorizacija je na serveru u kontroleru!
-                            if (currentUserId > 0 && item.KorisnikId == currentUserId || isAdmin)
+                            /*if (currentUserId > 0 && item.KorisnikId == currentUserId || isAdmin)
                             {
                                 <a asp-action="UrediRecenziju" asp-route-id="@item.Id" class="btn btn-sm btn-primary">Uredi</a>
                                 <form asp-action="IzbrisiRecenziju" asp-route-id="@item.Id" method="post" class="d-inline">
                                     <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Jeste li sigurni da želite obrisati ovu recenziju?');">Obriši</button>
                                     @Html.AntiForgeryToken()
                                 </form>
-                            }
+                            }*/
                         }
                     </div>
                 </div>
