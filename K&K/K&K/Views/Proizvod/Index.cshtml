@@ -257,15 +257,17 @@
                                     
 
                                     @*@if (User.Identity.IsAuthenticated)*@
-
-                                    <a asp-controller="Korpa"
-                                       asp-action="DodajUKorpu"
-                                       asp-route-id="@proizvod.Id"
-                                       class="btn btn-primary btn-sm"
-                                       title="Dodaj u korpu">
-                                        <i class="fas fa-shopping-cart"></i>
-                                    </a>
-                                    
+                                    @*ovo sam dodala da popravim korpu popraviti cu*@
+                                  <form asp-controller="Korpa"
+      asp-action="DodajUKorpu"
+      asp-route-id="@proizvod.Id"
+      method="post"
+      class="d-inline">
+    
+    <button type="submit" class="btn btn-primary btn-sm" title="Dodaj u korpu">
+        <i class="fas fa-shopping-cart"></i>
+    </button>
+</form>   
                                 </div>
                             </div>
                         </div>

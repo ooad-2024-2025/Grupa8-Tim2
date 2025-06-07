@@ -205,6 +205,6 @@ namespace K_K.Controllers
 
             return ukupno;
         }
->>>>>>> cf77c554c283aa17c7c8eb98be8892ac50e8b120
+
     }
 }
