@@ -36,12 +36,18 @@ namespace K_K.Data
             modelBuilder.Entity<LokacijaKafica>().ToTable("LokacijaKafica");
             modelBuilder.Entity<Narudzba>().ToTable("Narudzba");
             modelBuilder.Entity<Obavijest>().ToTable("Obavijest");
-            modelBuilder.Entity<Osoba>().ToTable("Osoba");
             modelBuilder.Entity<Recenzija>().ToTable("Recenzija");
             modelBuilder.Entity<StavkaNarudzbe>().ToTable("StavkaNarudzbe");
             modelBuilder.Entity<StavkaKorpe>().ToTable("StavkaKorpe");
             modelBuilder.Entity<Korpa>().ToTable("Korpa");
 
+            modelBuilder.Entity<Osoba>(b =>
+            {
+                b.Property(u => u.Ime);
+                b.Property(u => u.Prezime);
+                b.Property(u => u.Adresa);
+                b.Property(u => u.Uloga);
+            });
             modelBuilder.Entity<Narudzba>()
               .HasOne(n => n.Korisnik)
               .WithMany()

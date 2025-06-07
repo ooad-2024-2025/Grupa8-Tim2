@@ -1,40 +1,66 @@
 ﻿@model K_K.Models.Recenzija
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalji Recenzije";
 }
 
-<h1>Details</h1>
+<h2 class="text-center my-4">Detalji Recenzije</h2>
 
-<div>
-    <h4>Recenzija</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Ocjena)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Ocjena)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Proizvod)
-        </dt>
-        
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Korisnik)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Korisnik.Email)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Narudzba)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Narudzba.Id)
-        </dd>
-    </dl>
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-7">
+            <div class="card shadow-sm p-4">
+                <h4 class="card-title text-center mb-4">Pregled Detalja Recenzije</h4>
+                <hr class="mb-4" />
+
+                <dl class="row">
+                    <dt class="col-sm-4 text-secondary">
+                        @Html.DisplayNameFor(model => model.Ocjena)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.Ocjena)
+                    </dd>
+
+                    <dt class="col-sm-4 text-secondary">
+                        @Html.DisplayNameFor(model => model.Proizvod)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @* Pretpostavljamo da `Proizvod` ima svojstvo `Naziv` ili `Ime` za prikaz *@
+                        @Html.DisplayFor(model => model.Proizvod.Naziv)
+                        @* Ako Proizvod nema `Naziv` ili `Ime`, možete koristiti drugi relevantni property, npr. Id: *@
+                        @* @Html.DisplayFor(model => model.Proizvod.Id) *@
+                    </dd>
+
+                    <dt class="col-sm-4 text-secondary">
+                        @Html.DisplayNameFor(model => model.Korisnik)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.Korisnik.Email)
+                    </dd>
+
+                    <dt class="col-sm-4 text-secondary">
+                        @Html.DisplayNameFor(model => model.Narudzba)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.Narudzba.Id)
+                    </dd>
+                </dl>
+                <hr class="mt-4" />
+                <div class="d-flex justify-content-center gap-3">
+                    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-warning">
+                        <i class="bi bi-pencil-square"></i> Uredi
+                    </a>
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left-circle"></i> Nazad na Listu
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
