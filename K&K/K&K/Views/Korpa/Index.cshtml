@@ -1,35 +1,308 @@
-﻿@model IEnumerable<K_K.Models.Korpa>
+﻿@model Korpa
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Moja Korpa";
 }
-<h1>Vasa korpa</h1>
-<h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Korisnik)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Korisnik.Email)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-4">
+                <i class="fas fa-shopping-cart"></i> Moja Korpa
+            </h2>
+
+            @if (Model?.Stavke?.Any() == true)
+            {
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Stavke u korpi (@Model.brojProizvoda proizvoda)</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Proizvod</th>
+                                        <th class="text-center">Količina</th>
+                                        <th class="text-end">Jedinična cijena</th>
+                                        <th class="text-end">Ukupno</th>
+                                        <th class="text-center">Akcije</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var stavka in Model.Stavke)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    @if (!string.IsNullOrEmpty(stavka.Proizvod?.Slika))
+                                                    {
+                                                        <img src="@stavka.Proizvod.Slika"
+                                                             alt="@stavka.Proizvod.Naziv"
+                                                             class="me-3 rounded"
+                                                             style="width: 60px; height: 60px; object-fit: cover;">
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="me-3 rounded bg-light d-flex align-items-center justify-content-center"
+                                                             style="width: 60px; height: 60px;">
+                                                            <i class="fas fa-image text-muted"></i>
+                                                        </div>
+                                                    }
+                                                    <div>
+                                                        <h6 class="mb-1">@stavka.Proizvod?.Naziv</h6>
+                                                        <small class="text-muted">@stavka.Proizvod?.Opis</small>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="text-center align-middle">
+                                                <div class="input-group input-group-sm" style="width: 120px; margin: 0 auto;">
+                                                    <button class="btn btn-outline-secondary" type="button"
+                                                            onclick="promijeniKolicinu(@stavka.KorpaId, @stavka.ProizvodId, @(stavka.Kolicina - 1))">
+                                                        <i class="fas fa-minus"></i>
+                                                    </button>
+                                                    <span class="input-group-text">@stavka.Kolicina</span>
+                                                    <button class="btn btn-outline-secondary" type="button"
+                                                            onclick="promijeniKolicinu(@stavka.KorpaId, @stavka.ProizvodId, @(stavka.Kolicina + 1))">
+                                                        <i class="fas fa-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                            <td class="text-end align-middle">
+                                                <strong>@((stavka.Proizvod?.Cijena ?? 0).ToString("C", new System.Globalization.CultureInfo("bs-BA")))</strong>
+                                            </td>
+                                            <td class="text-end align-middle">
+                                                <strong class="text-primary">@(stavka.Cijena.ToString("C", new System.Globalization.CultureInfo("bs-BA")))</strong>
+                                            </td>
+                                            <td class="text-center align-middle">
+                                                <button class="btn btn-sm btn-outline-danger"
+                                                        onclick="ukloniStavku(@stavka.KorpaId, @stavka.ProizvodId)"
+                                                        title="Ukloni iz korpe">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot class="table-light">
+                                    <tr>
+                                        <td colspan="3" class="text-end">
+                                            <strong>Ukupno za narudžbu:</strong>
+                                        </td>
+                                        <td class="text-end">
+                                            <h5 class="text-success mb-0">@Model.ukupnaCijena.ToString("C", new System.Globalization.CultureInfo("bs-BA"))</h5>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <a href="@Url.Action("Index", "Proizvod")" class="btn btn-outline-primary">
+                                    <i class="fas fa-arrow-left"></i> Nastavi kupovinu
+                                </a>
+                            </div>
+                            <div class="col-md-6 text-end">
+                                <button class="btn btn-outline-secondary me-2" onclick="ocistiKorpu()">
+                                    <i class="fas fa-trash"></i> Očisti korpu
+                                </button>
+                                <a href="@Url.Action("Checkout", "Narudžba", new { korisnikId = Model.KorisnikId })"
+                                   class="btn btn-success btn-lg">
+                                    <i class="fas fa-credit-card"></i> Nastavi na plaćanje
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-5">
+                    <div class="mb-4">
+                        <i class="fas fa-shopping-cart fa-5x text-muted"></i>
+                    </div>
+                    <h3 class="text-muted mb-3">Vaša korpa je prazna</h3>
+                    <p class="text-muted mb-4">Dodajte proizvode u korpu da biste nastavili sa kupovinom.</p>
+                    <a href="@Url.Action("Index", "Proizvod")" class="btn btn-primary btn-lg">
+                        <i class="fas fa-shopping-bag"></i> Počni kupovinu
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<!-- Modal za potvrdu brisanja -->
+<div class="modal fade" id="potvrdiModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Potvrda</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p id="potvrdaTekst"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Odustani</button>
+                <button type="button" class="btn btn-danger" id="potvrdiAkciju">Potvrdi</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function promijeniKolicinu(korpaId, proizvodId, novaKolicina) {
+            if (novaKolicina < 1) {
+                ukloniStavku(korpaId, proizvodId);
+                return;
+            }
+
+            fetch('@Url.Action("PromijeniKolicinu", "Korpa")', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                },
+                body: JSON.stringify({
+                    korpaId: korpaId,
+                    proizvodId: proizvodId,
+                    kolicina: novaKolicina
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    location.reload();
+                } else {
+                    alert('Greška pri ažuriranju količine');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Greška pri ažuriranju količine');
+            });
+        }
+
+        function ukloniStavku(korpaId, proizvodId) {
+            document.getElementById('potvrdaTekst').textContent = 'Da li ste sigurni da želite ukloniti ovu stavku iz korpe?';
+
+            document.getElementById('potvrdiAkciju').onclick = function() {
+                fetch('@Url.Action("UkloniStavku", "Korpa")', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                    },
+                    body: JSON.stringify({
+                        korpaId: korpaId,
+                        proizvodId: proizvodId
+                    })
+                })
+                .then(response => {
+                    if (response.ok) {
+                        location.reload();
+                    } else {
+                        alert('Greška pri uklanjanju stavke');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Greška pri uklanjanju stavke');
+                });
+
+                bootstrap.Modal.getInstance(document.getElementById('potvrdiModal')).hide();
+            };
+
+            new bootstrap.Modal(document.getElementById('potvrdiModal')).show();
+        }
+
+        function ocistiKorpu() {
+            document.getElementById('potvrdaTekst').textContent = 'Da li ste sigurni da želite obrisati sve stavke iz korpe?';
+
+            document.getElementById('potvrdiAkciju').onclick = function() {
+                fetch('@Url.Action("OcistiKorpu", "Korpa")', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                    },
+                    body: JSON.stringify({ korisnikId: @Model?.KorisnikId })
+                })
+                .then(response => {
+                    if (response.ok) {
+                        location.reload();
+                    } else {
+                        alert('Greška pri čišćenju korpe');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Greška pri čišćenju korpe');
+                });
+
+                bootstrap.Modal.getInstance(document.getElementById('potvrdiModal')).hide();
+            };
+
+            new bootstrap.Modal(document.getElementById('potvrdiModal')).show();
+        }
+
+        // Toast notifikacije
+        function prikaziToast(poruka, tip = 'success') {
+            const toastHtml = `
+                <div class="toast align-items-center text-white bg-${tip} border-0" role="alert">
+                    <div class="d-flex">
+                        <div class="toast-body">${poruka}</div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                    </div>
+                </div>
+            `;
+
+            let toastContainer = document.getElementById('toast-container');
+            if (!toastContainer) {
+                toastContainer = document.createElement('div');
+                toastContainer.id = 'toast-container';
+                toastContainer.className = 'toast-container position-fixed bottom-0 end-0 p-3';
+                document.body.appendChild(toastContainer);
+            }
+
+            toastContainer.insertAdjacentHTML('beforeend', toastHtml);
+            const toast = new bootstrap.Toast(toastContainer.lastElementChild);
+            toast.show();
+        }
+    </script>
 }
-    </tbody>
-</table>
+
+<style>
+    .table td {
+        vertical-align: middle;
+    }
+
+    .input-group-text {
+        background-color: #f8f9fa;
+        border-left: 0;
+        border-right: 0;
+        font-weight: bold;
+    }
+
+    .btn-outline-secondary:hover {
+        color: #fff;
+    }
+
+    .card {
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        border: 1px solid rgba(0, 0, 0, 0.125);
+    }
+
+    .card-header {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: rgba(0, 0, 0, 0.025);
+    }
+
+</style>
