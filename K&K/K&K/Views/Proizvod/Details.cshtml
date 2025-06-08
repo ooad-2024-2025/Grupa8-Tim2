@@ -126,7 +126,7 @@
                                     </a>
 
                                 </div>
-                            </div>
+                                </div>
                         </div>
                     </div>
                 </div>
@@ -223,7 +223,48 @@
 </div>
 
 
+<<<<<<< HEAD
 
+=======
+@* FORMA ZA RECENZIJU - PREMJESTENO NA DNO I MODIFICIRANO ZA AJAX *@
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="card mt-4">
+        <div class="card-header bg-light">
+            <h6>Dodajte recenziju</h6>
+        </div>
+        <div class="card-body">
+            <form id="recenzijaForm"> @* Uklonjen asp-controller i asp-action, dodat id *@
+                @Html.AntiForgeryToken() @* Ne zaboravite token! *@
+                <input type="hidden" id="ProizvodId" name="ProizvodId" value="@Model.Id" />
+                @* Ako je NarudzbaId bitan i statičan, postavite ga ovdje. Inace, mozda nije potreban za recenzije. *@
+                <input type="hidden" id="NarudzbaId" name="NarudzbaId" value="0" /> 
+                <div class="mb-3">
+                    <label for="Ocjena" class="form-label">Ocjena (1-5):</label>
+                    <select id="Ocjena" name="Ocjena" class="form-select" required>
+                        <option value="">Odaberite ocjenu</option>
+                        @for (int i = 1; i <= 5; i++)
+                        {
+                            <option value="@i">@i</option>
+                        }
+                    </select>
+                    <span data-valmsg-for="Ocjena" class="text-danger"></span> @* Dodano za klijentsku validaciju *@
+                </div>
+                <div class="mb-3">
+                    <label for="Tekst" class="form-label">Komentar:</label> @* Promijenjeno iz Komentar u Tekst, prilagodite svom modelu *@
+                    <textarea id="Tekst" name="Tekst" class="form-control" rows="3"></textarea>
+                    <span data-valmsg-for="Tekst" class="text-danger"></span> @* Dodano za klijentsku validaciju *@
+                </div>
+                <button type="submit" class="btn btn-primary">Pošalji recenziju</button>
+            </form>
+        </div>
+    </div>
+}
+else
+{
+    <p class="text-muted mt-3">Morate biti prijavljeni da biste dodali recenziju.</p>
+}
+>>>>>>> 40ab88804276d8166da704558038b964e985e0e2
 
 @* KONTENER ZA SVE RECENZIJE - OVO JE OVDJE DA PRIKAZUJE SVE, NE SAMO PRVE 3 *@
 <div class="card mt-4">
