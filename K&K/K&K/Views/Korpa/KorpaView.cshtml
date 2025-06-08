@@ -6,7 +6,7 @@
 
 <div class="container mt-4">
     <h2>Moja Korpa</h2>
-
+   
     @if (Model?.Stavke != null && Model.Stavke.Any())
     {
         <div class="card mt-3">
@@ -76,7 +76,6 @@
     }
 </div>
 
-<!-- Loading spinner -->
 <div id="loading-spinner" class="d-none text-center">
     <div class="spinner-border text-primary" role="status">
         <span class="visually-hidden">Loading...</span>
@@ -85,134 +84,148 @@
 
 @section Scripts {
     <script>
-        $(document).ready(function() {
-            const korpaId = @Model.Id;
+        @if (Model != null && Model.Id > 0)
+        {
+            <text>
+                $(document).ready(function() {
+                    const korpaId = @Model.Id;
 
-            // Loading funkcije
-            function showLoading() {
-                $('#loading-spinner').removeClass('d-none');
-            }
-
-            function hideLoading() {
-                $('#loading-spinner').addClass('d-none');
-            }
-
-            // Ažuriranje prikaza
-            function azurirajPrikaz() {
-                $.get('@Url.Action("GetKorpaInfo", "Korpa")', { korpaId: korpaId })
-                    .done(function(data) {
-                        if (data.success) {
-                            $('#ukupno-proizvoda').text(data.brojProizvoda);
-                            $('#ukupna-cijena').text(data.ukupnaCijena + ' KM');
-
-                            // Ažuriraj stavke
-                            data.stavke.forEach(function(stavka) {
-                                const row = $(`tr[data-proizvod-id="${stavka.proizvodId}"]`);
-                                row.find('.kolicina-input').val(stavka.kolicina);
-                                row.find('.stavka-ukupno').text(stavka.cijena + ' KM');
-                            });
-
-                            if (data.stavke.length === 0) {
-                                location.reload();
-                            }
-                        }
-                    })
-                    .always(function() {
-                        hideLoading();
-                    });
-            }
-
-            // Promjena količine
-            $('.kolicina-input').on('change', function() {
-                const input = $(this);
-                const row = input.closest('tr');
-                const proizvodId = row.data('proizvod-id');
-                const novaKolicina = parseInt(input.val());
-
-                if (novaKolicina < 1) {
-                    input.val(1);
-                    return;
-                }
-
-                showLoading();
-
-                $.post('@Url.Action("PromijeniKolicinu", "Korpa")', {
-                    korpaId: korpaId,
-                    proizvodId: proizvodId,
-                    kolicina: novaKolicina
-                })
-                .done(function(data) {
-                    if (data.success) {
-                        azurirajPrikaz();
+                    // Loading funkcije
+                    function showLoading() {
+                        $('#loading-spinner').removeClass('d-none');
                     }
-                })
-                .fail(function() {
-                    alert('Greška pri ažuriranju količine.');
-                    hideLoading();
+
+                    function hideLoading() {
+                        $('#loading-spinner').addClass('d-none');
+                    }
+
+                    // Ažuriranje prikaza
+                    function azurirajPrikaz() {
+                        $.get('/Korpa/GetKorpaInfo', { korpaId: korpaId })
+                            .done(function(data) {
+                                if (data && data.success) {
+                                    $('#ukupno-proizvoda').text(data.brojProizvoda || 0);
+                                    $('#ukupna-cijena').text((data.ukupnaCijena || 0) + ' KM');
+
+                                    // Ažuriraj stavke
+                                    if (data.stavke && data.stavke.length > 0) {
+                                        data.stavke.forEach(function(stavka) {
+                                            const row = $(`tr[data-proizvod-id="${stavka.proizvodId}"]`);
+                                            if (row.length > 0) {
+                                                row.find('.kolicina-input').val(stavka.kolicina || 0);
+                                                row.find('.stavka-ukupno').text((stavka.cijena || 0) + ' KM');
+                                            }
+                                        });
+                                    }
+
+                                    if (!data.stavke || data.stavke.length === 0) {
+                                        location.reload();
+                                    }
+                                }
+                            })
+                            .always(function() {
+                                hideLoading();
+                            });
+                    }
+
+                    // Promjena količine
+                    $('.kolicina-input').on('change', function() {
+                        const input = $(this);
+                        const row = input.closest('tr');
+                        const proizvodId = row.data('proizvod-id');
+                        const novaKolicina = parseInt(input.val()) || 1;
+
+                        if(novaKolicina < 1) {
+                            input.val(1);
+                            return;
+                        }                      
+
+                        showLoading();
+
+                        $.post('/Korpa/PromijeniKolicinu', {
+                            korpaId: korpaId,
+                            proizvodId: proizvodId,
+                            kolicina: novaKolicina
+                        })
+                        .done(function(data) {
+                            if (data && data.success) {
+                                azurirajPrikaz();
+                            }
+                        })
+                        .fail(function() {
+                            alert('Greška pri ažuriranju količine.');
+                            hideLoading();
+                        });
+                    });
+
+                    // Plus dugme
+                    $('.kolicina-plus').on('click', function() {
+                        const input = $(this).prev('.kolicina-input');
+                        const trenutnaKolicina = parseInt(input.val()) || 0;
+                        input.val(trenutnaKolicina + 1).trigger('change');
+                    });
+
+                    // Minus dugme
+                    $('.kolicina-minus').on('click', function() {
+                        const input = $(this).next('.kolicina-input');
+                        const trenutnaKolicina = parseInt(input.val()) || 1;
+                        if (trenutnaKolicina > 1) {
+                            input.val(trenutnaKolicina - 1).trigger('change');
+                        }
+                    });
+
+                    // Uklanjanje stavke
+                    $('.ukloni-stavku').on('click', function() {
+                        if (confirm('Da li ste sigurni da želite ukloniti ovaj proizvod iz korpe?')) {
+                            const proizvodId = $(this).data('proizvod-id');
+                            const row = $(this).closest('tr');
+
+                            showLoading();
+
+                            $.post('/Korpa/UkloniStavku', {
+                                korpaId: korpaId,
+                                proizvodId: proizvodId
+                            })
+                            .done(function(data) {
+                                if (data && data.success) {
+                                    row.remove();
+                                    azurirajPrikaz();
+                                }
+                            })
+                            .fail(function() {
+                                alert('Greška pri uklanjanju proizvoda.');
+                                hideLoading();
+                            });
+                        }
+                    });
+
+                    // Čišćenje korpe
+                    $('.ocisti-korpu').on('click', function() {
+                        if (confirm('Da li ste sigurni da želite obrisati sve proizvode iz korpe?')) {
+                            showLoading();
+
+                            $.post('/Korpa/OcistiKorpu', {
+                                korpaId: korpaId
+                            })
+                            .done(function(data) {
+                                if (data && data.success) {
+                                    location.reload();
+                                }
+                            })
+                            .fail(function() {
+                                alert('Greška pri čišćenju korpe.');
+                                hideLoading();
+                            });
+                        }
+                    });
                 });
-            });
-
-            // Plus dugme
-            $('.kolicina-plus').on('click', function() {
-                const input = $(this).prev('.kolicina-input');
-                const trenutnaKolicina = parseInt(input.val());
-                input.val(trenutnaKolicina + 1).trigger('change');
-            });
-
-            // Minus dugme
-            $('.kolicina-minus').on('click', function() {
-                const input = $(this).next('.kolicina-input');
-                const trenutnaKolicina = parseInt(input.val());
-                if (trenutnaKolicina > 1) {
-                    input.val(trenutnaKolicina - 1).trigger('change');
-                }
-            });
-
-            // Uklanjanje stavke
-            $('.ukloni-stavku').on('click', function() {
-                if (confirm('Da li ste sigurni da želite ukloniti ovaj proizvod iz korpe?')) {
-                    const proizvodId = $(this).data('proizvod-id');
-                    const row = $(this).closest('tr');
-
-                    showLoading();
-
-                    $.post('@Url.Action("UkloniStavku", "Korpa")', {
-                        korpaId: korpaId,
-                        proizvodId: proizvodId
-                    })
-                    .done(function(data) {
-                        if (data.success) {
-                            row.remove();
-                            azurirajPrikaz();
-                        }
-                    })
-                    .fail(function() {
-                        alert('Greška pri uklanjanju proizvoda.');
-                        hideLoading();
-                    });
-                }
-            });
-
-            // Čišćenje korpe
-            $('.ocisti-korpu').on('click', function() {
-                if (confirm('Da li ste sigurni da želite obrisati sve proizvode iz korpe?')) {
-
-                    showLoading();
-
-                    $.post('@Url.Action("OcistiKorpu", "Korpa")', {
-                        korpaId: korpaId
-                    })
-                    .done(function(data) {
-                        if (data.success) {
-                            location.reload();
-                        }
-                    })
-                    .fail(function() {
-                        alert('Greška pri čišćenju korpe.');
-                        hideLoading();
-                    });
-                }
-            });
-        });
+            </text>
+        }
+        else
+        {
+            <text>
+                console.log('Model je null ili nema ID');
+            </text>
+        }
     </script>
 }

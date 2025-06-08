@@ -255,6 +255,8 @@ namespace K_K.Controllers
             {
                 return NotFound();
             }
+            ModelState.Remove("slikaFile");
+
             if (slikaFile != null && slikaFile.Length > 0)
             {
                 try

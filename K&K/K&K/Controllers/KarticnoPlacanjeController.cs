@@ -16,6 +16,18 @@ public class KarticnoPlacanjeController : Controller
         return View(new KarticnoPlacanje());
     }
 
+    
+    [HttpGet]
+    public IActionResult Unos(int id)
+    {
+        // Prosledi ID narudzbe u view ako treba
+        ViewBag.NarudzbaId = id;
+
+        // Inicijalizuj model i prosledi u view
+        var model = new KarticnoPlacanje { NarudzbaId = id };
+        return View(model); // Ovo će tražiti view Unos.cshtml
+    }
+
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> IzvrsiUplatu(KarticnoPlacanje placanje)

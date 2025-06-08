@@ -1,12 +1,14 @@
 ﻿using K_K.Data;
 using K_K.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace K_K.Controllers
@@ -16,17 +18,46 @@ namespace K_K.Controllers
     public class NarudzbaController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public NarudzbaController(ApplicationDbContext context)
+        public NarudzbaController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Narudzba
         public async Task<IActionResult> Index()
-        {
-            var applicationDbContext = _context.Narudzba.Include(n => n.Korisnik).Include(n => n.Radnik);
-            return View(await applicationDbContext.ToListAsync());
+        {/* //ovo dodati kad dodamo uloge
+            IQueryable<Narudzba> narudzbeQuery = _context.Narudzba
+                                                .Include(n => n.Korisnik)
+                                                .Include(n => n.Radnik);
+            if (!User.IsInRole("Admin"))
+            {
+                // Korisnik nije admin, prikaži samo njegove narudžbe
+                string userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+                if (userId == null)
+                {
+                    return Unauthorized();
+                }
+
+                narudzbeQuery = narudzbeQuery.Where(n => n.KorisnikId == userId);
+            }
+
+            var narudzbe = await narudzbeQuery.ToListAsync();*/
+            var korisnik = await _userManager.GetUserAsync(User);
+            if (korisnik == null)
+            {
+                return Unauthorized(); // ili redirect na login
+            }
+            var narudzbe = await _context.Narudzba
+                        .Where(n=>n.KorisnikId==korisnik.Id) 
+                        .ToListAsync();
+
+            return View(narudzbe);
+            //var applicationDbContext = _context.Narudzba.Include(n => n.Korisnik).Include(n => n.Radnik);
+            //return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Narudzba/Details/5
@@ -37,24 +68,54 @@ namespace K_K.Controllers
                 return NotFound();
             }
 
+            /* var narudzba = await _context.Narudzba
+             .Include(n => n.Korisnik)
+             //.Include(n => n.Radnik)
+             .FirstOrDefaultAsync(n => n.Id == id);*/
+            var narudzba = await _context.Narudzba.FindAsync(id);
 
-            var narudzba = await _context.Narudzba
-                .Include(n => n.Korisnik)
-                .Include(n => n.Radnik)
-                .FirstOrDefaultAsync(m => m.Id == id);
             if (narudzba == null)
             {
                 return NotFound();
             }
-            double ukupnaCijena = IzracunajUkupnuCijenuNarudzbe(narudzba.Id);
-            ViewBag.UkupnaCijena = ukupnaCijena;
 
+            var stavke = await _context.StavkaNarudzbe
+             .Where(s => s.NarudzbaId == id)
+             .Include(s => s.Proizvod) 
+             .ToListAsync();
+
+            ViewData["stavke"] = stavke;
             return View(narudzba);
         }
 
         // GET: Narudzba/Create
-        public IActionResult Create()
-        {
+        //prepravila sam da bude Task<IActionResult>
+        public async Task<IActionResult> Create()
+        {  
+            var korisnik =  await _userManager.GetUserAsync(User);
+            
+            if (korisnik == null)
+            {
+                return Redirect("/Identity/Account/Register");
+            }
+
+
+            // Dohvati sve stavke iz korpe za korisnika
+            var korpa = await _context.Korpa.FirstOrDefaultAsync(k => k.KorisnikId == korisnik.Id);
+            if (korpa == null)
+            {
+                TempData["ErrorMessage"] = "Korpa ne postoji.";
+                return RedirectToAction("Index", "Proizvod");
+            }
+            var stavke= await _context.StavkaKorpe
+               .Where(s => s.KorpaId == korpa.Id)
+               .ToListAsync();
+
+            double ukupnaCijena = korpa?.ukupnaCijena ?? 0;
+
+            ViewData["Cijena"] = ukupnaCijena;
+            ViewData["KorpaStavke"] = stavke;
+
             ViewData["KorisnikId"] = new SelectList(_context.Osoba, "Id", "Email");
             ViewData["RadnikId"] = new SelectList(_context.Osoba, "Id", "Email");
 
@@ -66,16 +127,76 @@ namespace K_K.Controllers
         // POST: Narudzba/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //uklonila sam Id,KorisnikId,RadnikId,StatusNarudzbe, u parametrima
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,KorisnikId,RadnikId,StatusNarudzbe,NacinPlacanja,NacinPreuzimanja,DatumNarudzbe,AdresaDostave")] Narudzba narudzba)
+        public async Task<IActionResult> Create([Bind("StatusNarudzbe,NacinPlacanja,NacinPreuzimanja,DatumNarudzbe,AdresaDostave")] Narudzba narudzba)
         {
+            var korisnik = await _userManager.GetUserAsync(User);
+            if (korisnik == null)
+             {
+                 return Redirect("/Identity/Account/Register");
+             }
+            var korpa = await _context.Korpa.FirstOrDefaultAsync(k => k.KorisnikId == korisnik.Id);
+
+            var stavkeUKorpi = await _context.StavkaKorpe
+             .Where(s => s.KorpaId == korpa.Id)
+             .ToListAsync();
+
+            if (stavkeUKorpi == null || stavkeUKorpi.Count == 0)
+            {
+                TempData["ErrorMessage"] = "Vaša korpa je prazna. Dodajte proizvode prije naručivanja.";
+                return RedirectToAction("Index", "Proizvod");
+            }
+
+
+
+            narudzba.KorisnikId = korisnik.Id;
+            narudzba.RadnikId = "f7974104-9ab3-4d73-a79b-85f21b1c9f68";
+            narudzba.StatusNarudzbe = StatusNarudzbe.Potvrdjena;
+
+
+
+            // Ukloni greske validacije za ova polja jer ih postavljam rucno
+            ModelState.Remove("Korisnik");
+            ModelState.Remove("Radnik");
+            ModelState.Remove("KorisnikId");
+            ModelState.Remove("RadnikId");
             if (ModelState.IsValid)
             {
                 _context.Add(narudzba);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+               // var korpa = await _context.Korpa.FirstOrDefaultAsync(k => k.KorisnikId == narudzba.KorisnikId);
+               /* var stavkeUKorpi = await _context.StavkaKorpe
+               .Where(s => s.KorpaId == korpa.Id)
+               .ToListAsync();*/
+
+                foreach (var stavka in stavkeUKorpi)
+                {
+                    var novaStavka = new StavkaNarudzbe
+                    {
+                        NarudzbaId = narudzba.Id,
+                        ProizvodId = stavka.ProizvodId,
+                        Kolicina = stavka.Kolicina,
+                        Cijena = stavka.Cijena
+                    };
+                    _context.StavkaNarudzbe.Add(novaStavka);
+                }
+                await _context.SaveChangesAsync();
+                _context.StavkaKorpe.RemoveRange(stavkeUKorpi);
+                await _context.SaveChangesAsync();
+
+                if (narudzba.NacinPlacanja == VrstaPlacanja.Kartica)
+                {
+                    return RedirectToAction("Unos", "KarticnoPlacanje", new { id = narudzba.Id });
+                }
+                else
+                {
+                    return RedirectToAction("Index","Proizvod");
+                }
+               
             }
+            
             ViewData["KorisnikId"] = new SelectList(_context.Osoba, "Id", "Email", narudzba.KorisnikId);
             ViewData["RadnikId"] = new SelectList(_context.Osoba, "Id", "Email", narudzba.RadnikId);
             ViewData["NacinPreuzimanja"] = new SelectList(Enum.GetValues(typeof(VrstaPreuzimanja)), narudzba.NacinPreuzimanja);
@@ -85,37 +206,111 @@ namespace K_K.Controllers
 
         // GET: Narudzba/Edit/5
         public async Task<IActionResult> Edit(int? id)
-        {
+        { 
+            
+        
+            
             if (id == null)
             {
                 return NotFound();
             }
 
             var narudzba = await _context.Narudzba.FindAsync(id);
+
             if (narudzba == null)
             {
                 return NotFound();
             }
-           
-            ViewData["KorisnikId"] = new SelectList(_context.Osoba, "Id", "Email", narudzba.KorisnikId);
-            ViewData["RadnikId"] = new SelectList(_context.Osoba, "Id", "Email", narudzba.RadnikId);
+           /* if (!User.IsInAnyRole("Admin", "Radnik"))
+            {
+
+            }*/
+
+                ViewData["KorisnikId"] = new SelectList(_context.Osoba, "Id", "Email", narudzba.KorisnikId);
+           ViewData["RadnikId"] = new SelectList(_context.Osoba, "Id", "Email", narudzba.RadnikId);
             ViewData["NacinPlacanja"] = new SelectList(Enum.GetValues(typeof(VrstaPlacanja)), narudzba.NacinPlacanja);
 
             return View(narudzba);
+            
         }
 
         // POST: Narudzba/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //Id,KorisnikId,RadnikId, ovo sam izbacila iz Bind dodati ako bude trebalo
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,KorisnikId,RadnikId,StatusNarudzbe,NacinPlacanja,NacinPreuzimanja,DatumNarudzbe,AdresaDostave")] Narudzba narudzba)
+        public async Task<IActionResult> Edit(int id, [Bind("StatusNarudzbe,NacinPlacanja,NacinPreuzimanja,DatumNarudzbe,AdresaDostave")] Narudzba narudzba)
         {
-            if (id != narudzba.Id)
+            /*
+                        if (id != narudzba.Id)
+                        {
+                            //return NotFound();
+                            return Content($"Test Ne postoji narudzba: {id}");
+                        }
+
+                        var korisnik = await _userManager.GetUserAsync(User);
+                        if (korisnik == null)
+                        {
+                            return Redirect("/Identity/Account/Register");
+                        }
+
+
+                        var postojeca = await _context.Narudzba.FindAsync(id);
+                        if (postojeca == null)
+                        {
+                            return NotFound();
+                        }
+            */
+            var korisnik = await _userManager.GetUserAsync(User);
+            if (korisnik == null)
+            {
+                return Redirect("/Identity/Account/Register");
+            }
+
+            //var postojeca = await _context.Narudzba.FindAsync(id);
+            if (narudzba == null)
             {
                 return NotFound();
             }
 
+            // Ažurirajte samo polja koja su promijenjena
+            /*if (postojeca.StatusNarudzbe != narudzba.StatusNarudzbe)
+             {
+                 postojeca.StatusNarudzbe = narudzba.StatusNarudzbe;
+             }
+
+             if (postojeca.NacinPlacanja != narudzba.NacinPlacanja)
+             {
+                 postojeca.NacinPlacanja = narudzba.NacinPlacanja;
+             }
+
+             if (postojeca.NacinPreuzimanja != narudzba.NacinPreuzimanja)
+             {
+                 postojeca.NacinPreuzimanja = narudzba.NacinPreuzimanja;
+             }
+
+             if (postojeca.DatumNarudzbe != narudzba.DatumNarudzbe)
+             {
+                 postojeca.DatumNarudzbe = narudzba.DatumNarudzbe;
+             }
+
+             // Za string polja, provjerite null i whitespace
+             if (!string.IsNullOrWhiteSpace(narudzba.AdresaDostave) &&
+                 postojeca.AdresaDostave != narudzba.AdresaDostave)
+             {
+                 postojeca.AdresaDostave = narudzba.AdresaDostave;
+             }
+            */
+            // Ova polja uvijek postavite (ako su potrebna)
+            narudzba.Id = id;
+            narudzba.KorisnikId = korisnik.Id;
+           narudzba.RadnikId = "f7974104-9ab3-4d73-a79b-85f21b1c9f68";
+
+            ModelState.Remove("Korisnik");
+            ModelState.Remove("Radnik");
+            ModelState.Remove("KorisnikId");
+            ModelState.Remove("RadnikId");
 
             if (ModelState.IsValid)
             {
@@ -123,6 +318,10 @@ namespace K_K.Controllers
                 {
                     _context.Update(narudzba);
                     await _context.SaveChangesAsync();
+                  return RedirectToAction(nameof(Index));
+                    //return RedirectToAction("Index","Proizvod");
+                    
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -135,13 +334,17 @@ namespace K_K.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
+
+            // If we get here, model validation failed - return to Edit view
             ViewData["KorisnikId"] = new SelectList(_context.Osoba, "Id", "Email", narudzba.KorisnikId);
-            ViewData["RadnikId"] = new SelectList(_context.Osoba, "Id", "Email", narudzba.RadnikId);
+           ViewData["RadnikId"] = new SelectList(_context.Osoba, "Id", "Email", narudzba.RadnikId);
             ViewData["NacinPlacanja"] = new SelectList(Enum.GetValues(typeof(VrstaPlacanja)), narudzba.NacinPlacanja);
             ViewData["NacinPreuzimanja"] = new SelectList(Enum.GetValues(typeof(VrstaPreuzimanja)), narudzba.NacinPreuzimanja);
+
             return View(narudzba);
+           
+
         }
 
         // GET: Narudzba/Delete/5
@@ -183,26 +386,8 @@ namespace K_K.Controllers
         {
             return _context.Narudzba.Any(e => e.Id == id);
         }
-        public double IzracunajUkupnuCijenuNarudzbe(int narudzbaId)
-        {
-            var stavke = _context.StavkaNarudzbe
-                .Where(s => s.NarudzbaId == narudzbaId)
-                .ToList();
+        
+       
 
-            var narudzba = _context.Narudzba.Find(narudzbaId);
-
-            if (narudzba == null)
-                throw new Exception("Narudžba nije pronađena.");
-
-            double ukupno = stavke.Sum(s => s.Cijena * s.Kolicina);
-
-            // Dodaj cijenu dostave ako je potrebno
-            if (narudzba.NacinPreuzimanja == VrstaPreuzimanja.Dostava)
-            {
-                ukupno += 5.0; // fiksna cijena dostave
-            }
-
-            return ukupno;
-        }
     }
 }
