@@ -22,49 +22,49 @@ namespace K_K.Controllers
             _userManager = userManager;
         }
 
-        // GET: Recenzija/PrikaziRecenziju?proizvodId=X
-        // Akcija za prikaz SVIH recenzija za jedan proizvod na posebnoj stranici (ako je imate)
-
-        //treba se zvat prikaziRecenzije
-        // GET: Akcija za prikaz SVIH recenzija za određeni proizvod (za donji card)
         [HttpGet]
         public async Task<IActionResult> PrikaziRecenziju(int proizvodId)
         {
             var recenzije = await _dataContext.Recenzija
-                                        .Include(r => r.Korisnik) // Učitajte Korisnik objekt
-                                        .Where(r => r.ProizvodId == proizvodId)
-                                        .OrderByDescending(r => r.DatumDodavanja) // Koristim DatumDodavanja
-                                        .ToListAsync();
-
-            return PartialView("PrikaziRecenziju", recenzije);
-        }
-
-        // NOVA GET akcija za dohvat SAMO sažetka recenzija (za gornji desni card)
-        [HttpGet]
-        public async Task<IActionResult> GetReviewSummary(int proizvodId)
-        {
-            var recenzije = await _dataContext.Recenzija
-                                        .Include(r => r.Korisnik) // Učitajte Korisnik objekt ako je potrebno
+                                        .Include(r => r.Korisnik)
                                         .Where(r => r.ProizvodId == proizvodId)
                                         .OrderByDescending(r => r.DatumDodavanja)
                                         .ToListAsync();
 
-            var brojRecenzija = recenzije.Count;
-            var prosjecnaOcjena = brojRecenzija > 0 ? recenzije.Average(r => r.Ocjena) : 0.0;
+            // Provjeri da li je AJAX poziv
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+            {
+                return PartialView("~/Views/Recenzija/_RecenzijeListaPartial.cshtml", recenzije);
+            }
 
-            // Proslijedite podatke u PartialView
-            ViewBag.BrojRecenzija = brojRecenzija;
-            ViewBag.ProsjecnaOcjena = prosjecnaOcjena;
-            ViewBag.Recenzije = recenzije.Take(3).ToList(); // Samo prve 3 za summary
-
-            return PartialView("_RecenzijeSummaryPartial"); // Vraća novi partial view
+            return PartialView("~/Views/Recenzija/_RecenzijeListaPartial.cshtml", recenzije);
         }
-    }
 
 
-// GET: Recenzija/OstaviRecenziju?proizvodId=X&narudzbaId=Y
-// Akcija za prikaz forme za ostavljanje recenzije
-public async Task<IActionResult> OstaviRecenziju(int proizvodId, int narudzbaId)
+        [HttpGet]
+        public async Task<IActionResult> GetReviewSummary(int proizvodId)
+        {
+            var recenzije = await _dataContext.Recenzija
+                                    .Where(r => r.ProizvodId == proizvodId)
+                                    .ToListAsync();
+
+            ViewBag.ProsjecnaOcjena = recenzije.Any() ? recenzije.Average(r => r.Ocjena) : 0;
+            ViewBag.BrojRecenzija = recenzije.Count();
+
+            ViewBag.Recenzije = await _dataContext.Recenzija
+                                                .Include(r => r.Korisnik)
+                                                .Where(r => r.ProizvodId == proizvodId)
+                                                .OrderByDescending(r => r.DatumDodavanja)
+                                                .Take(3)
+                                                .ToListAsync();
+
+            return PartialView("~/Views/Recenzija/_RecenzijeSummaryPartial.cshtml");
+        }
+
+
+        // GET: Recenzija/OstaviRecenziju?proizvodId=X&narudzbaId=Y
+        // Akcija za prikaz forme za ostavljanje recenzije
+        public async Task<IActionResult> OstaviRecenziju(int proizvodId, int narudzbaId)
         {
             var korisnik = await _userManager.GetUserAsync(User);
             if (korisnik == null)
@@ -117,58 +117,54 @@ public async Task<IActionResult> OstaviRecenziju(int proizvodId, int narudzbaId)
             return View(recenzija); // Proslijedi djelomično popunjen model u View
         }
 
-        // POST: Recenzija/OstaviRecenziju
-        // Akcija za spremanje recenzije poslane s forme
-        // POST: Akcija za obradu recenzije (AJAX poziv)
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> OstaviRecenziju([FromBody] Recenzija recenzija)
         {
-            // Ovdje možete dodati provjeru da li ProizvodId zaista postoji
-            var proizvodExists = await _dataContext.Proizvod.AnyAsync(p => p.Id == recenzija.ProizvodId);
-            if (!proizvodExists)
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId))
             {
-                return Json(new { success = false, message = "Navedeni proizvod ne postoji." });
+                return Json(new { success = false, message = "Korisnik nije prijavljen." });
             }
 
-            // Manually add ModelState error if required field is empty for [FromBody]
-            if (recenzija.Ocjena == 0) // Pretpostavljam da je 0 default za int i da je obavezna
+            recenzija.KorisnikId = userId;
+            recenzija.DatumDodavanja = DateTime.Now;
+
+            // Ukloni validaciju za NarudzbaId ako nije obavezna
+            ModelState.Remove("NarudzbaId");
+           // ModelState.Remove("Korisnik");
+           // ModelState.Remove("Proizvod");
+            //ModelState.Remove("Narudzba");
+
+            // Provjeri da li korisnik već ima recenziju za ovaj proizvod
+            var postojiRecenzija = await _dataContext.Recenzija
+                .AnyAsync(r => r.ProizvodId == recenzija.ProizvodId && r.KorisnikId == userId);
+
+            if (postojiRecenzija)
             {
-                ModelState.AddModelError("Ocjena", "Ocjena je obavezna.");
+                return Json(new { success = false, message = "Već ste ostavili recenziju za ovaj proizvod." });
             }
-            if (string.IsNullOrWhiteSpace(recenzija.Tekst)) // Pretpostavljam da je tekst obavezan
+
+            if (!ModelState.IsValid)
             {
-                ModelState.AddModelError("Tekst", "Tekst recenzije je obavezan.");
+                var errors = ModelState.Values
+                                       .SelectMany(v => v.Errors)
+                                       .Select(e => e.ErrorMessage)
+                                       .ToList();
+                return Json(new { success = false, message = "Validacija neuspješna.", errors = errors });
             }
 
-
-            if (ModelState.IsValid)
+            try
             {
-                // Postavite trenutni datum i vrijeme
-                recenzija.DatumDodavanja = DateTime.Now;
-
-                // Pretpostavka: Ako koristite ASP.NET Core Identity za korisnike,
-                // možete dohvatiti trenutnog korisnika ovako:
-                // var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                // recenzija.KorisnikId = userId;
-                // Inače, KorisnikId može biti null ili ga morate postaviti na neki anonimni ID.
-                // Morate se pobrinuti da je KorisnikId setiran ispravno, ako je obavezan.
-
                 _dataContext.Add(recenzija);
                 await _dataContext.SaveChangesAsync();
-
-                // Da bi se username prikazao u PartialViewu, moramo ga dohvatiti
-                // nakon što je recenzija spremljena i prije slanja JSON-a.
-                // U ovom slučaju, bolje je da PartialView sam dohvati korisnika.
-
                 return Json(new { success = true, message = "Recenzija uspješno dodana!" });
             }
-
-            var errors = ModelState.Values
-                                   .SelectMany(v => v.Errors)
-                                   .Select(e => e.ErrorMessage)
-                                   .ToList();
-            return Json(new { success = false, message = "Validacija neuspješna.", errors = errors });
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Došlo je do greške prilikom spremanja recenzije.", error = ex.Message });
+            }
         }
 
         // GET: Recenzija/UrediRecenziju/5

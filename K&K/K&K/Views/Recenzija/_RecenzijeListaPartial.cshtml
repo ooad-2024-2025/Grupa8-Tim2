@@ -19,7 +19,7 @@ else
                     {
                         <strong>Anonimni korisnik</strong>
                     }
-                    <small class="text-muted">@recenzija.DatumDodavanja.ToShortDateString() @recenzija.DatumDodavanja.ToShortTimeString()</small> @* Koristim DatumDodavanja *@
+                    <small class="text-muted">@recenzija.DatumDodavanja.ToShortDateString() @recenzija.DatumDodavanja.ToShortTimeString()</small>
                 </div>
                 <div class="text-warning mb-1">
                     @for (int i = 1; i <= recenzija.Ocjena; i++)
@@ -28,10 +28,10 @@ else
                     }
                     @for (int i = recenzija.Ocjena + 1; i <= 5; i++)
                     {
-                         <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
                     }
                 </div>
-                <p>@recenzija.Tekst</p> @* Koristim Tekst *@
+                <p>@recenzija.Tekst</p> @* Osigurajte da je ovo .Tekst, a ne .Komentar *@
             </div>
         }
     </div>
