@@ -1,4 +1,4 @@
-﻿@model K_K.Models.Proizvod
+﻿@*model K_K.Models.Proizvod
 
 @{
     ViewData["Title"] = "Detalji proizvoda";
@@ -15,7 +15,7 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        @*SLIKA, PROVJERITI JOS*@
+                        @*SLIKA, PROVJERITI JOS
                         <div class="col-md-5 mb-4">
                             <div class="product-image-container">
                                 @if (!string.IsNullOrEmpty(Model.Slika))
@@ -35,7 +35,7 @@
                             </div>
                         </div>
 
-                        @*INFO O PROIZVIDU*@
+                        @*INFO O PROIZVIDU
                         <div class="col-md-7">
                             <div class="product-details">
                                 
@@ -105,7 +105,7 @@
                                     <p class="text-dark">@Model.Opis</p>
                                 </div>
 
-                                @*DUGMAD DODAJ, DELETE, EDIT*@
+                                @*DUGMAD DODAJ, DELETE, EDIT
                                 <div class="d-flex flex-wrap gap-2">
 
                                     <a asp-controller="Korpa"
@@ -116,8 +116,8 @@
                                     </a>
                                     
                                     @*SAMO ADMINISTRATOR CE MOCI DA VIDI UREDI I OBRISI*@
-                                    @*@if (User.IsInRole("Admin"))*@
-                                    
+                                    @*@if (User.IsInRole("Admin"))
+                                 
                                         <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">
                                             <i class="fas fa-edit"></i> Uredi
                                         </a>
@@ -133,9 +133,9 @@
             </div>
         </div>
 
-        @*PORED RECENZIJE, NAVIGACIJA ITD*@
+        @*PORED RECENZIJE, NAVIGACIJA ITD
         <div class="col-lg-4">
-            @*NAVIGACIJA*@
+            @*NAVIGACIJA
             <div class="card shadow-sm mb-4">
                 <div class="card-header bg-light">
                     <h6 class="mb-0"><i class="fas fa-compass"></i> Navigacija</h6>
@@ -155,7 +155,7 @@
                 </div>
             </div>
 
-            @*RECENZIJE PREGLED*@
+            @*RECENZIJE PREGLED
             @if (ViewBag.Recenzije != null)
             {
                 <div class="card shadow-sm">
@@ -227,6 +227,236 @@
         function dodajUKorpu(proizvodId) {
             
             alert('Proizvod je dodan u korpu! ID: ' + proizvodId);
+        }
+    </script>
+}
+@* K_K/Views/Proizvod/Details.cshtml *@
+@* K_K/Views/Proizvod/Details.cshtml *@
+@model K_K.Models.Proizvod
+
+@{
+    ViewData["Title"] = "Detalji proizvoda - " + Model.Naziv; // Bolji naslov
+}
+
+@* Display TempData messages (Success/Error) *@
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-5">
+                            @* ISPRAVLJENO: Koristi Model.Slika umjesto Model.SlikaUrl *@
+                            @if (!string.IsNullOrEmpty(Model.Slika))
+                            {
+                                <img src="@Model.Slika" class="img-fluid rounded-start" alt="@Model.Naziv">
+                            }
+                            else
+                            {
+                                <img src="https://via.placeholder.com/300x300?text=Nema+Slike" class="img-fluid rounded-start" alt="Nema slike">
+                            }
+                        </div>
+                        <div class="col-md-7">
+                            <h2 class="card-title">@Model.Naziv</h2>
+                            @* UKLONJENO: Reference na Kategorija i Brend, jer ne postoje u vašem modelu *@
+                            @* <p class="text-muted">Kategorija: @(Model.Kategorija?.Naziv ?? "N/A") | Brend: @(Model.Brend?.Naziv ?? "N/A")</p> *@
+                            
+                            @* Prikaz veličine ako je potrebno, pretpostavljajući da je Velicina enum ili String *@
+                            @if (Model.Velicina != null)
+                            {
+                                <p class="text-muted">Veličina: @Model.Velicina</p>
+                            }
+
+                            <h3 class="text-primary">@Model.Cijena.ToString("C")</h3> @* Pretpostavka za valutu *@
+                            <p class="card-text">@Model.Opis</p>
+                            
+                            @* Primjer za Dodaj u Korpu dugme - ovdje bi trebala biti AJAX ili POST forma *@
+                            <div class="mt-3">
+                                <button type="button" class="btn btn-success" onclick="dodajUKorpu(@Model.Id)">
+                                    <i class="fas fa-shopping-cart"></i> Dodaj u korpu
+                                </button>
+                            </div>
+
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <div class="mt-3">
+                                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning btn-sm">
+                                        <i class="fas fa-edit"></i> Uredi proizvod
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-trash"></i> Obriši proizvod
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-light">
+                    <h6 class="mb-0"><i class="fas fa-compass"></i> Navigacija</h6>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a asp-action="Index" class="btn btn-outline-secondary">
+                            <i class="fas fa-list"></i> Svi proizvodi
+                        </a>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a asp-action="Create" class="btn btn-outline-success">
+                                <i class="fas fa-plus"></i> Dodaj novi proizvod
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                    <h6 class="mb-0">
+                        <i class="fas fa-star"></i> Recenzije
+                        <span class="badge bg-primary">@(ViewBag.BrojRecenzija ?? 0)</span> @* Osigurava da je 0 ako je null *@
+                    </h6>
+                </div>
+                <div class="card-body">
+                    @if (ViewBag.BrojRecenzija > 0)
+                    {
+                        <div class="mb-3">
+                            <h5 class="text-warning">
+                                @for (int i = 1; i <= 5; i++)
+                                {
+                                    if (i <= (int)ViewBag.ProsjecnaOcjena)
+                                    {
+                                        <i class="fas fa-star"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="far fa-star"></i>
+                                    }
+                                }
+                                <small class="text-muted">(@(((double)ViewBag.ProsjecnaOcjena).ToString("F1")))</small> @* Formatiranje na jednu decimalu *@
+                            </h5>
+                        </div>
+
+                        <div class="latest-reviews">
+                            @* ViewBag.Recenzije MORA biti lista recenzija iz kontrolera *@
+                            @foreach (var recenzija in (IEnumerable<K_K.Models.Recenzija>)ViewBag.Recenzije.Take(3))
+                            {
+                                <div class="border-bottom pb-2 mb-2">
+                                    <div class="d-flex justify-content-between">
+                                        <small class="fw-bold">@recenzija.Korisnik?.UserName</small>
+                                        <small class="text-muted">
+                                            @for (int i = 1; i <= recenzija.Ocjena; i++)
+                                            {
+                                                <i class="fas fa-star text-warning"></i>
+                                            }
+                                        </small>
+                                    </div>
+                                    @if (!string.IsNullOrEmpty(recenzija.Tekst)) @* Koristimo .Tekst kao što ste naveli *@
+                                    {
+                                        <small class="text-muted">@recenzija.Tekst</small>
+                                    }
+                                </div>
+                            }
+                        </div>
+
+                        @if (ViewBag.BrojRecenzija > 3)
+                        {
+                            <small class="text-muted">i još @(ViewBag.BrojRecenzija - 3) recenzija...</small>
+                        }
+                    }
+                    else
+                    {
+                        <p class="text-muted">Nema recenzija za ovaj proizvod.</p>
+                    }
+
+                    <div class="mt-3 d-grid">
+                        <a asp-controller="Recenzija" asp-action="PrikaziRecenziju" asp-route-proizvodId="@Model.Id" class="btn btn-outline-primary">
+                            <i class="fas fa-comments"></i> Sve recenzije
+                        </a>
+                    </div>
+
+                    @* ViewBag.MozeOstavitiRecenziju i ViewBag.NarudzbaId se moraju postaviti u ProizvodController.Details akciji *@
+                    @if (User.Identity.IsAuthenticated) // Dodao provjeru da li je korisnik prijavljen prije provjere ViewBag.MozeOstavitiRecenziju
+                    {
+                        if (ViewBag.MozeOstavitiRecenziju == true && ViewBag.NarudzbaId != null)
+                        {
+                            <div class="mt-2 d-grid">
+                                <a asp-controller="Recenzija"
+                                   asp-action="OstaviRecenziju"
+                                   asp-route-proizvodId="@Model.Id"
+                                   asp-route-narudzbaId="@ViewBag.NarudzbaId" @* Proslijedi ID narudžbe *@
+                                   class="btn btn-outline-success">
+                                    <i class="fas fa-pen"></i> Napiši recenziju
+                                </a>
+                            </div>
+                        }
+                        else if (ViewBag.MozeOstavitiRecenziju == false && ViewBag.NarudzbaId != null) // Ako je false, ali je bilo narudzbe
+                        {
+                             <p class="text-info mt-2"><small>Već ste recenzirali ovaj proizvod.</small></p>
+                        }
+                        else // Korisnik je prijavljen, ali nema narudžbu ili narudzbaId je null iz nekog razloga
+                        {
+                            <p class="text-info mt-2"><small>Kupite ovaj proizvod da biste ga recenzirali.</small></p>
+                        }
+                    }
+                    else // Korisnik nije prijavljen
+                    {
+                        <p class="text-info mt-2"><small>Prijavite se da biste mogli ostaviti recenziju.</small></p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function dodajUKorpu(proizvodId) {
+            // Ovdje bi trebao biti AJAX poziv za dodavanje proizvoda u korpu
+            // Primjer (treba dopuniti stvarnom logikom i rutiranjem):
+            /*
+            fetch('/Korpa/DodajUKorpu', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value // Ako koristite AntiForgeryToken
+                },
+                body: JSON.stringify({ proizvodId: proizvodId, kolicina: 1 })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Proizvod je dodan u korpu!');
+                    // Osvježi prikaz korpe ili obavijesti korisnika
+                } else {
+                    alert('Greška pri dodavanju u korpu: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Došlo je do greške:', error);
+                alert('Došlo je do greške pri dodavanju u korpu.');
+            });
+            */
+            alert('Trenutno samo simuliramo: Proizvod je dodan u korpu! ID: ' + proizvodId);
         }
     </script>
 }

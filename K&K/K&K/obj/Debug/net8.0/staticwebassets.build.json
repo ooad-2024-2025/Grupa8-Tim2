@@ -1,6 +1,18 @@
 {
   "Version": 1,
+<<<<<<< HEAD
   "Hash": "c0dVGhrpvSFQNJ9kQUi+3WDpZU4WJfg5UEdbeB+LZzE=",
+=======
+<<<<<<< HEAD
+  "Hash": "pw/jKLDj2IeM9CAawBH4J02bNpfqvOg54cpaT+s6N60=",
+=======
+<<<<<<< HEAD
+  "Hash": "jiXHltF8yBY35yr8mi69ZwRvXpBtJlac0k/Iri6lZ/g=",
+=======
+  "Hash": "4UkFg5eTBnfXLiVYxTzJTKeUt75Z2OszLw63xkjuYgg=",
+>>>>>>> 405c037ed9634734bfc419ce8a85141daea5a724
+>>>>>>> 199675a10b42bf0fe2de72cc5b6ddf4ff8a9aa7e
+>>>>>>> 3aaa5e37e11cbdf8a65a25899d160ea8de8fc5ff
   "Source": "K&K",
   "BasePath": "_content/K&K",
   "Mode": "Default",
@@ -5481,7 +5493,19 @@
         },
         {
           "Name": "Last-Modified",
+<<<<<<< HEAD
           "Value": "Sat, 07 Jun 2025 22:06:55 GMT"
+=======
+<<<<<<< HEAD
+          "Value": "Sat, 07 Jun 2025 22:11:51 GMT"
+=======
+<<<<<<< HEAD
+          "Value": "Thu, 05 Jun 2025 21:57:11 GMT"
+=======
+          "Value": "Mon, 02 Jun 2025 22:11:04 GMT"
+>>>>>>> 405c037ed9634734bfc419ce8a85141daea5a724
+>>>>>>> 199675a10b42bf0fe2de72cc5b6ddf4ff8a9aa7e
+>>>>>>> 3aaa5e37e11cbdf8a65a25899d160ea8de8fc5ff
         },
         {
           "Name": "Cache-Control",
@@ -5518,7 +5542,19 @@
         },
         {
           "Name": "Last-Modified",
+<<<<<<< HEAD
           "Value": "Sat, 07 Jun 2025 22:06:55 GMT"
+=======
+<<<<<<< HEAD
+          "Value": "Sat, 07 Jun 2025 22:11:51 GMT"
+=======
+<<<<<<< HEAD
+          "Value": "Thu, 05 Jun 2025 21:57:11 GMT"
+=======
+          "Value": "Mon, 02 Jun 2025 22:11:04 GMT"
+>>>>>>> 405c037ed9634734bfc419ce8a85141daea5a724
+>>>>>>> 199675a10b42bf0fe2de72cc5b6ddf4ff8a9aa7e
+>>>>>>> 3aaa5e37e11cbdf8a65a25899d160ea8de8fc5ff
         },
         {
           "Name": "Cache-Control",
@@ -5563,7 +5599,19 @@
         },
         {
           "Name": "Last-Modified",
+<<<<<<< HEAD
           "Value": "Sat, 07 Jun 2025 22:06:55 GMT"
+=======
+<<<<<<< HEAD
+          "Value": "Sat, 07 Jun 2025 22:11:51 GMT"
+=======
+<<<<<<< HEAD
+          "Value": "Thu, 05 Jun 2025 21:57:11 GMT"
+=======
+          "Value": "Mon, 02 Jun 2025 22:11:04 GMT"
+>>>>>>> 405c037ed9634734bfc419ce8a85141daea5a724
+>>>>>>> 199675a10b42bf0fe2de72cc5b6ddf4ff8a9aa7e
+>>>>>>> 3aaa5e37e11cbdf8a65a25899d160ea8de8fc5ff
         },
         {
           "Name": "Cache-Control",
@@ -5608,7 +5656,19 @@
         },
         {
           "Name": "Last-Modified",
+<<<<<<< HEAD
           "Value": "Sat, 07 Jun 2025 22:06:55 GMT"
+=======
+<<<<<<< HEAD
+          "Value": "Sat, 07 Jun 2025 22:11:51 GMT"
+=======
+<<<<<<< HEAD
+          "Value": "Thu, 05 Jun 2025 21:57:11 GMT"
+=======
+          "Value": "Mon, 02 Jun 2025 22:11:04 GMT"
+>>>>>>> 405c037ed9634734bfc419ce8a85141daea5a724
+>>>>>>> 199675a10b42bf0fe2de72cc5b6ddf4ff8a9aa7e
+>>>>>>> 3aaa5e37e11cbdf8a65a25899d160ea8de8fc5ff
         },
         {
           "Name": "Cache-Control",
