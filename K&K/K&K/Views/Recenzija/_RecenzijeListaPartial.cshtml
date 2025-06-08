@@ -1,0 +1,38 @@
+﻿@model List<K_K.Models.Recenzija>
+
+@if (!Model.Any())
+{
+    <p class="text-muted">Još nema recenzija za ovaj proizvod.</p>
+}
+else
+{
+    <div class="list-group">
+        @foreach (var recenzija in Model)
+        {
+            <div class="list-group-item mb-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    @if (recenzija.Korisnik != null)
+                    {
+                        <strong>@recenzija.Korisnik.UserName</strong>
+                    }
+                    else
+                    {
+                        <strong>Anonimni korisnik</strong>
+                    }
+                    <small class="text-muted">@recenzija.DatumDodavanja.ToShortDateString() @recenzija.DatumDodavanja.ToShortTimeString()</small> @* Koristim DatumDodavanja *@
+                </div>
+                <div class="text-warning mb-1">
+                    @for (int i = 1; i <= recenzija.Ocjena; i++)
+                    {
+                        <i class="fas fa-star"></i>
+                    }
+                    @for (int i = recenzija.Ocjena + 1; i <= 5; i++)
+                    {
+                         <i class="far fa-star"></i>
+                    }
+                </div>
+                <p>@recenzija.Tekst</p> @* Koristim Tekst *@
+            </div>
+        }
+    </div>
+}

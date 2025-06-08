@@ -224,8 +224,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjZW56aWphXE9zdGF2aVJlY2VuemlqdS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/HP/Source/Repos/Grupa8-Tim2/K&K/K&K/Views/Recenzija/PrikaziRecenzije.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjZW56aWphXFByaWthemlSZWNlbnppamUuY3NodG1s
+[C:/Users/HP/Source/Repos/Grupa8-Tim2/K&K/K&K/Views/Recenzija/PrikaziRecenziju.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjZW56aWphXFByaWthemlSZWNlbnppanUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/HP/Source/Repos/Grupa8-Tim2/K&K/K&K/Views/Recenzija/RecenzijeView.cshtml]
@@ -234,6 +234,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/HP/Source/Repos/Grupa8-Tim2/K&K/K&K/Views/Recenzija/UrediRecenziju.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjZW56aWphXFVyZWRpUmVjZW56aWp1LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/HP/Source/Repos/Grupa8-Tim2/K&K/K&K/Views/Recenzija/_RecenzijeListaPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjZW56aWphXF9SZWNlbnppamVMaXN0YVBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/HP/Source/Repos/Grupa8-Tim2/K&K/K&K/Views/Recenzija/_RecenzijeSummaryPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjZW56aWphXF9SZWNlbnppamVTdW1tYXJ5UGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/HP/Source/Repos/Grupa8-Tim2/K&K/K&K/Views/Shared/Error.cshtml]
