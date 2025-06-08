@@ -25,19 +25,19 @@ namespace K_K.Controllers
         [HttpGet]
         public async Task<IActionResult> PrikaziRecenziju(int proizvodId)
         {
-            var recenzije = await _dataContext.Recenzija
+           /* var recenzije = await _dataContext.Recenzija
                                         .Include(r => r.Korisnik)
                                         .Where(r => r.ProizvodId == proizvodId)
                                         .OrderByDescending(r => r.DatumDodavanja)
-                                        .ToListAsync();
+                                        .ToListAsync();*/
 
             // Provjeri da li je AJAX poziv
-            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
-            {
-                return PartialView("~/Views/Recenzija/_RecenzijeListaPartial.cshtml", recenzije);
-            }
+           // if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+            //{
+              //  return PartialView("~/Views/Recenzija/_RecenzijeListaPartial.cshtml", recenzije);
+           // }
 
-<<<<<<< HEAD
+
             /*var recenzije = await _dataContext.Recenzija
                 .Include(r => r.Korisnik)
                 .Where(r => r.ProizvodId == proizvodId)
@@ -46,6 +46,9 @@ namespace K_K.Controllers
             var recenzije = await _dataContext.Recenzija
                           .Where(r => r.ProizvodId == proizvodId)
                            .ToListAsync();
+            var proizvod = await _dataContext.Proizvod
+          .Where(r => r.Id == proizvodId)
+           .FirstOrDefaultAsync();
 
 
             ViewBag.ProizvodNaziv = proizvod.Naziv; // Za prikaz naziva proizvoda na RecenzijeView
@@ -66,9 +69,8 @@ namespace K_K.Controllers
 
             return View(recenzije); // šaljemo listu u view
         }
-=======
-            return PartialView("~/Views/Recenzija/_RecenzijeListaPartial.cshtml", recenzije);
-        }
+
+          
 
 
         [HttpGet]
@@ -92,7 +94,7 @@ namespace K_K.Controllers
         }
 
 
->>>>>>> 40ab88804276d8166da704558038b964e985e0e2
+
         // GET: Recenzija/OstaviRecenziju?proizvodId=X&narudzbaId=Y
         // Akcija za prikaz forme za ostavljanje recenzije
         //int proizvodId, int narudzbaId
@@ -107,18 +109,18 @@ namespace K_K.Controllers
 
             // --- Logika provjere da li korisnik SMIJE ostaviti recenziju (ponavlja se zbog sigurnosti) ---
             // 1. Provjeri da li je korisnik kupio ovaj proizvod putem ove narudžbe
-           // bool kupioProizvod = await _dataContext.Narudzba
-             //   .Where(n => n.Id == narudzbaId && n.KorisnikId == korisnik.Id).AnyAsync(); // Provjerava da li postoji takva narudžba za korisnika
+            // bool kupioProizvod = await _dataContext.Narudzba
+            //   .Where(n => n.Id == narudzbaId && n.KorisnikId == korisnik.Id).AnyAsync(); // Provjerava da li postoji takva narudžba za korisnika
 
-           /* if (!kupioProizvod) // Ako korisnik NEMA tu narudžbu (ili nije njegova)
-            {
-                TempData["ErrorMessage"] = "Ne možete ostaviti recenziju putem nevažeće narudžbe.";
-                return RedirectToAction("Details", "Proizvod", new { id = proizvodId });
-            }*/ // zakomentarisala sam samo da mogu pristupiti bez narudzbe
+            /* if (!kupioProizvod) // Ako korisnik NEMA tu narudžbu (ili nije njegova)
+             {
+                 TempData["ErrorMessage"] = "Ne možete ostaviti recenziju putem nevažeće narudžbe.";
+                 return RedirectToAction("Details", "Proizvod", new { id = proizvodId });
+             }*/ // zakomentarisala sam samo da mogu pristupiti bez narudzbe
 
             // 2. Provjeri da li je korisnik već ostavio recenziju za ovaj proizvod (općenito)
             //var vecPostojiRecenzija = await _dataContext.Recenzija
-              //  .AnyAsync(r => r.ProizvodId == proizvodId && r.KorisnikId == korisnik.Id);
+            //  .AnyAsync(r => r.ProizvodId == proizvodId && r.KorisnikId == korisnik.Id);
 
             /*if (vecPostojiRecenzija)
             {
@@ -138,18 +140,19 @@ namespace K_K.Controllers
 
             // Dohvati naziv proizvoda za prikaz na formi (koristeći ViewData)
             var proizvod = await _dataContext.Proizvod.FindAsync(proizvodId);
-           /* if (proizvod != null)
-            {
-                ViewData["ProizvodNaziv"] = proizvod.Naziv;
-            }*/
+            /* if (proizvod != null)
+             {
+                 ViewData["ProizvodNaziv"] = proizvod.Naziv;
+             }*/
 
             return View(recenzija); // Proslijedi djelomično popunjen model u View
         }
 
 
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-<<<<<<< HEAD
+
         // Bindirajte samo polja koja korisnik unosi. KorisnikId, DatumDodavanja postavljamo mi.
         //ProizvodId,NarudzbaId,Ocjena,Tekst,DatumDodavanja,KorisnikI
         public async Task<IActionResult> OstaviRecenziju([Bind("ProizvodId,NarudzbaId,Ocjena,Tekst,DatumDodavanja")] Recenzija recenzija)
@@ -179,7 +182,7 @@ namespace K_K.Controllers
                                     .Where(n => n.Id == recenzija.NarudzbaId && n.KorisnikId == korisnik.Id)
                                     .AnyAsync();
             if (!kupioProizvod)
-=======
+
         public async Task<IActionResult> OstaviRecenziju([FromBody] Recenzija recenzija)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -202,7 +205,7 @@ namespace K_K.Controllers
                 .AnyAsync(r => r.ProizvodId == recenzija.ProizvodId && r.KorisnikId == userId);
 
             if (postojiRecenzija)
->>>>>>> 40ab88804276d8166da704558038b964e985e0e2
+
             {
                 return Json(new { success = false, message = "Već ste ostavili recenziju za ovaj proizvod." });
             }
@@ -215,15 +218,15 @@ namespace K_K.Controllers
                                        .ToList();
                 return Json(new { success = false, message = "Validacija neuspješna.", errors = errors });
             }
-<<<<<<< HEAD
+
             // --- Kraj sigurnosne provjere ---
             */
 
             if (ModelState.IsValid)
-=======
+
 
             try
->>>>>>> 40ab88804276d8166da704558038b964e985e0e2
+
             {
                 _dataContext.Add(recenzija);
                 await _dataContext.SaveChangesAsync();
@@ -233,6 +236,7 @@ namespace K_K.Controllers
             {
                 return Json(new { success = false, message = "Došlo je do greške prilikom spremanja recenzije.", error = ex.Message });
             }
+            return View(recenzija);
         }
 
         // GET: Recenzija/UrediRecenziju/5
