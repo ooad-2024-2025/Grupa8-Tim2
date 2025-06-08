@@ -128,16 +128,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS29ycGFcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/korisnik/Source/Repos/Grupa8-Tim2/K&K/K&K/Views/Korpa/GostKorpa.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS29ycGFcR29zdEtvcnBhLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/korisnik/Source/Repos/Grupa8-Tim2/K&K/K&K/Views/Korpa/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS29ycGFcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/korisnik/Source/Repos/Grupa8-Tim2/K&K/K&K/Views/Korpa/KorpaView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS29ycGFcS29ycGFWaWV3LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/korisnik/Source/Repos/Grupa8-Tim2/K&K/K&K/Views/Korpa/PraznaKorpa.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS29ycGFcUHJhem5hS29ycGEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/korisnik/Source/Repos/Grupa8-Tim2/K&K/K&K/Views/LokacijaKafica/Create.cshtml]
@@ -222,6 +222,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/korisnik/Source/Repos/Grupa8-Tim2/K&K/K&K/Views/Recenzija/OstaviRecenziju.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjZW56aWphXE9zdGF2aVJlY2VuemlqdS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/korisnik/Source/Repos/Grupa8-Tim2/K&K/K&K/Views/Recenzija/PrikaziRecenzije.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjZW56aWphXFByaWthemlSZWNlbnppamUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/korisnik/Source/Repos/Grupa8-Tim2/K&K/K&K/Views/Recenzija/RecenzijeView.cshtml]

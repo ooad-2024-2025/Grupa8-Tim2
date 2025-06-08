@@ -1,27 +1,231 @@
 ﻿@model K_K.Models.Korpa
-<h2>Korpa korisnika:</h2>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Proizvod</th>
-            <th>Količina</th>
-            <th>Cijena</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var stavka in Model.Stavke)
+@{
+    ViewData["Title"] = "Moja Korpa";
+}
+
+<div class="container mt-4">
+    <h2>Moja Korpa</h2>
+   
+    @if (Model?.Stavke != null && Model.Stavke.Any())
+    {
+        <div class="card mt-3">
+            <div class="card-header">
+                <h5>Proizvodi u korpi</h5>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Proizvod</th>
+                            <th>Cijena</th>
+                            <th>Količina</th>
+                            <th>Ukupno</th>
+                            <th>Akcije</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var stavka in Model.Stavke)
+                        {
+                            <tr data-proizvod-id="@stavka.ProizvodId">
+                                <td>@stavka.Proizvod.Naziv</td>
+                                <td>@stavka.Proizvod.Cijena KM</td>
+                                <td>
+                                    <button class="btn btn-sm btn-secondary kolicina-minus">-</button>
+                                    <input type="number" class="kolicina-input mx-2" style="width: 60px;"
+                                           value="@stavka.Kolicina" min="1">
+                                    <button class="btn btn-sm btn-secondary kolicina-plus">+</button>
+                                </td>
+                                <td class="stavka-ukupno">@stavka.Cijena KM</td>
+                                <td>
+                                    <button class="btn btn-sm btn-danger ukloni-stavku"
+                                            data-proizvod-id="@stavka.ProizvodId">
+                                        Ukloni
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                <div class="row">
+                    <div class="col-md-6 offset-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <p><strong>Ukupno proizvoda: <span id="ukupno-proizvoda">@Model.brojProizvoda</span></strong></p>
+                                <p><strong>Ukupna cijena: <span id="ukupna-cijena">@Model.ukupnaCijena KM</span></strong></p>
+
+                                <button class="btn btn-success">Nastavi ka plaćanju</button>
+                                <button class="btn btn-outline-danger ms-2 ocisti-korpu" data-korpa-id="@Model.Id">
+                                    Očisti korpu
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="text-center mt-5">
+            <h4>Korpa je prazna</h4>
+            <p>Dodajte proizvode u korpu da biste nastavili sa kupovinom.</p>
+            <a href="@Url.Action("Index", "Proizvod")" class="btn btn-primary">Nastavi kupovinu</a>
+        </div>
+    }
+</div>
+
+<div id="loading-spinner" class="d-none text-center">
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        @if (Model != null && Model.Id > 0)
         {
-            <tr>
-                <td>@stavka.Proizvod.Naziv</td>
-                <td>@stavka.Kolicina</td>
-                <td>@stavka.Cijena</td>
-            </tr>
-        }
-    </tbody>
-</table>
+            <text>
+                $(document).ready(function() {
+                    const korpaId = @Model.Id;
 
-<p>
-    Ukupno proizvoda: @Model.brojProizvoda<br />
-    Ukupna cijena: @Model.ukupnaCijena
-</p>
+                    // Loading funkcije
+                    function showLoading() {
+                        $('#loading-spinner').removeClass('d-none');
+                    }
+
+                    function hideLoading() {
+                        $('#loading-spinner').addClass('d-none');
+                    }
+
+                    // Ažuriranje prikaza
+                    function azurirajPrikaz() {
+                        $.get('/Korpa/GetKorpaInfo', { korpaId: korpaId })
+                            .done(function(data) {
+                                if (data && data.success) {
+                                    $('#ukupno-proizvoda').text(data.brojProizvoda || 0);
+                                    $('#ukupna-cijena').text((data.ukupnaCijena || 0) + ' KM');
+
+                                    // Ažuriraj stavke
+                                    if (data.stavke && data.stavke.length > 0) {
+                                        data.stavke.forEach(function(stavka) {
+                                            const row = $(`tr[data-proizvod-id="${stavka.proizvodId}"]`);
+                                            if (row.length > 0) {
+                                                row.find('.kolicina-input').val(stavka.kolicina || 0);
+                                                row.find('.stavka-ukupno').text((stavka.cijena || 0) + ' KM');
+                                            }
+                                        });
+                                    }
+
+                                    if (!data.stavke || data.stavke.length === 0) {
+                                        location.reload();
+                                    }
+                                }
+                            })
+                            .always(function() {
+                                hideLoading();
+                            });
+                    }
+
+                    // Promjena količine
+                    $('.kolicina-input').on('change', function() {
+                        const input = $(this);
+                        const row = input.closest('tr');
+                        const proizvodId = row.data('proizvod-id');
+                        const novaKolicina = parseInt(input.val()) || 1;
+
+                        if(novaKolicina < 1) {
+                            input.val(1);
+                            return;
+                        }                      
+
+                        showLoading();
+
+                        $.post('/Korpa/PromijeniKolicinu', {
+                            korpaId: korpaId,
+                            proizvodId: proizvodId,
+                            kolicina: novaKolicina
+                        })
+                        .done(function(data) {
+                            if (data && data.success) {
+                                azurirajPrikaz();
+                            }
+                        })
+                        .fail(function() {
+                            alert('Greška pri ažuriranju količine.');
+                            hideLoading();
+                        });
+                    });
+
+                    // Plus dugme
+                    $('.kolicina-plus').on('click', function() {
+                        const input = $(this).prev('.kolicina-input');
+                        const trenutnaKolicina = parseInt(input.val()) || 0;
+                        input.val(trenutnaKolicina + 1).trigger('change');
+                    });
+
+                    // Minus dugme
+                    $('.kolicina-minus').on('click', function() {
+                        const input = $(this).next('.kolicina-input');
+                        const trenutnaKolicina = parseInt(input.val()) || 1;
+                        if (trenutnaKolicina > 1) {
+                            input.val(trenutnaKolicina - 1).trigger('change');
+                        }
+                    });
+
+                    // Uklanjanje stavke
+                    $('.ukloni-stavku').on('click', function() {
+                        if (confirm('Da li ste sigurni da želite ukloniti ovaj proizvod iz korpe?')) {
+                            const proizvodId = $(this).data('proizvod-id');
+                            const row = $(this).closest('tr');
+
+                            showLoading();
+
+                            $.post('/Korpa/UkloniStavku', {
+                                korpaId: korpaId,
+                                proizvodId: proizvodId
+                            })
+                            .done(function(data) {
+                                if (data && data.success) {
+                                    row.remove();
+                                    azurirajPrikaz();
+                                }
+                            })
+                            .fail(function() {
+                                alert('Greška pri uklanjanju proizvoda.');
+                                hideLoading();
+                            });
+                        }
+                    });
+
+                    // Čišćenje korpe
+                    $('.ocisti-korpu').on('click', function() {
+                        if (confirm('Da li ste sigurni da želite obrisati sve proizvode iz korpe?')) {
+                            showLoading();
+
+                            $.post('/Korpa/OcistiKorpu', {
+                                korpaId: korpaId
+                            })
+                            .done(function(data) {
+                                if (data && data.success) {
+                                    location.reload();
+                                }
+                            })
+                            .fail(function() {
+                                alert('Greška pri čišćenju korpe.');
+                                hideLoading();
+                            });
+                        }
+                    });
+                });
+            </text>
+        }
+        else
+        {
+            <text>
+                console.log('Model je null ili nema ID');
+            </text>
+        }
+    </script>
+}
