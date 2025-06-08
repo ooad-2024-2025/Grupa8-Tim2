@@ -17,225 +17,242 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = K_K
 build_property.RootNamespace = K_K
+<<<<<<< HEAD
 build_property.ProjectDir = C:\Users\korisnik\source\repos\Grupa8-Tim2\K&K\K&K\
+=======
+build_property.ProjectDir = C:\Users\User\source\repos\Grupa8-Tim2\K&K\K&K\
+>>>>>>> 74338ee1067ba24cc3ff169c737a4407b0e71698
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+<<<<<<< HEAD
 build_property.MSBuildProjectDirectory = C:\Users\korisnik\source\repos\Grupa8-Tim2\K&K\K&K
+=======
+build_property.MSBuildProjectDirectory = C:\Users\User\source\repos\Grupa8-Tim2\K&K\K&K
+>>>>>>> 74338ee1067ba24cc3ff169c737a4407b0e71698
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 8.0
 build_property.EnableCodeStyleSeverity = 
 
+<<<<<<< HEAD
 [C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Areas/Identity/Pages/Account/AccessDenied.cshtml]
+=======
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Areas/Identity/Pages/Account/AccessDenied.cshtml]
+>>>>>>> 74338ee1067ba24cc3ff169c737a4407b0e71698
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxBY2Nlc3NEZW5pZWQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Areas/Identity/Pages/Account/ConfirmEmail.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Areas/Identity/Pages/Account/ConfirmEmail.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxDb25maXJtRW1haWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Areas/Identity/Pages/Account/ForgotPassword.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Areas/Identity/Pages/Account/ForgotPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxGb3Jnb3RQYXNzd29yZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Areas/Identity/Pages/Account/Login.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Areas/Identity/Pages/Account/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Areas/Identity/Pages/Account/Logout.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Areas/Identity/Pages/Account/Logout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxMb2dvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Areas/Identity/Pages/Account/Manage/ChangePassword.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Areas/Identity/Pages/Account/Manage/ChangePassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcQ2hhbmdlUGFzc3dvcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Areas/Identity/Pages/Account/Manage/Index.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Areas/Identity/Pages/Account/Manage/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Areas/Identity/Pages/Account/Manage/_ManageNav.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Areas/Identity/Pages/Account/Manage/_ManageNav.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcX01hbmFnZU5hdi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Areas/Identity/Pages/Account/Manage/_ViewImports.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Areas/Identity/Pages/Account/Manage/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Areas/Identity/Pages/Account/Register.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Areas/Identity/Pages/Account/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Areas/Identity/Pages/Account/ResetPassword.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Areas/Identity/Pages/Account/ResetPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxSZXNldFBhc3N3b3JkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Areas/Identity/Pages/Account/ResetPasswordConfirmation.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Areas/Identity/Pages/Account/ResetPasswordConfirmation.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxSZXNldFBhc3N3b3JkQ29uZmlybWF0aW9uLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Areas/Identity/Pages/Account/_ViewImports.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Areas/Identity/Pages/Account/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxfVmlld0ltcG9ydHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Areas/Identity/Pages/_ValidationScriptsPartial.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Areas/Identity/Pages/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZhbGlkYXRpb25TY3JpcHRzUGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Areas/Identity/Pages/_ViewImports.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Areas/Identity/Pages/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Areas/Identity/Pages/_ViewStart.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Areas/Identity/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Views/Areas/Identity/Pages/_ViewStart.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/Areas/Identity/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Views/Home/Index.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Views/Home/Privacy.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Views/KarticnoPlacanje/Potvrda.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/KarticnoPlacanje/Potvrda.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS2FydGljbm9QbGFjYW5qZVxQb3R2cmRhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Views/KarticnoPlacanje/Unos.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/KarticnoPlacanje/Unos.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS2FydGljbm9QbGFjYW5qZVxVbm9zLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Views/Korpa/Create.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/Korpa/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS29ycGFcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Views/Korpa/Delete.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/Korpa/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS29ycGFcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Views/Korpa/Details.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/Korpa/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS29ycGFcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Views/Korpa/Edit.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/Korpa/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS29ycGFcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Views/Korpa/GostKorpa.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/Korpa/GostKorpa.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS29ycGFcR29zdEtvcnBhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Views/Korpa/Index.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/Korpa/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS29ycGFcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Views/Korpa/KorpaView.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/Korpa/KorpaView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS29ycGFcS29ycGFWaWV3LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Views/LokacijaKafica/Create.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/LokacijaKafica/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9rYWNpamFLYWZpY2FcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Views/LokacijaKafica/Delete.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/LokacijaKafica/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9rYWNpamFLYWZpY2FcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Views/LokacijaKafica/Details.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/LokacijaKafica/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9rYWNpamFLYWZpY2FcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Views/LokacijaKafica/Edit.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/LokacijaKafica/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9rYWNpamFLYWZpY2FcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Views/LokacijaKafica/Index.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/LokacijaKafica/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9rYWNpamFLYWZpY2FcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Views/Narudzba/Create.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/Narudzba/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmFydWR6YmFcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Views/Narudzba/Delete.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/Narudzba/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmFydWR6YmFcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Views/Narudzba/Details.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/Narudzba/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmFydWR6YmFcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Views/Narudzba/Edit.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/Narudzba/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmFydWR6YmFcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Views/Narudzba/Index.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/Narudzba/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmFydWR6YmFcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Views/Proizvod/Create.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/Proizvod/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvaXp2b2RcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Views/Proizvod/Delete.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/Proizvod/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvaXp2b2RcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Views/Proizvod/Details.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/Proizvod/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvaXp2b2RcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Views/Proizvod/Edit.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/Proizvod/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvaXp2b2RcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Views/Proizvod/Index.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/Proizvod/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvaXp2b2RcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Views/Recenzija/Create.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/Recenzija/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjZW56aWphXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Views/Recenzija/Delete.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/Recenzija/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjZW56aWphXERlbGV0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Views/Recenzija/Details.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/Recenzija/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjZW56aWphXERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Views/Recenzija/Edit.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/Recenzija/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjZW56aWphXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Views/Recenzija/Index.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/Recenzija/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjZW56aWphXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Views/Recenzija/MojeRecenzije.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/Recenzija/MojeRecenzije.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjZW56aWphXE1vamVSZWNlbnppamUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Views/Recenzija/OstaviRecenziju.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/Recenzija/OstaviRecenziju.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjZW56aWphXE9zdGF2aVJlY2VuemlqdS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+<<<<<<< HEAD
 [C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Views/Recenzija/RecenzijeView.cshtml]
+=======
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/Recenzija/RecenzijeView.cshtml]
+>>>>>>> 74338ee1067ba24cc3ff169c737a4407b0e71698
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjZW56aWphXFJlY2VuemlqZVZpZXcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Views/Recenzija/UrediRecenziju.cshtml]
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/Recenzija/UrediRecenziju.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjZW56aWphXFVyZWRpUmVjZW56aWp1LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+<<<<<<< HEAD
 [C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Views/Recenzija/_RecenzijeListaPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjZW56aWphXF9SZWNlbnppamVMaXN0YVBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -265,5 +282,36 @@ build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/korisnik/source/repos/Grupa8-Tim2/K&K/K&K/Views/Shared/_Layout.cshtml]
+=======
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/Recenzija/_RecenzijeListaPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjZW56aWphXF9SZWNlbnppamVMaXN0YVBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/Recenzija/_RecenzijeSummaryPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjZW56aWphXF9SZWNlbnppamVTdW1tYXJ5UGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/Shared/_LoginPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Mb2dpblBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/User/source/repos/Grupa8-Tim2/K&K/K&K/Views/Shared/_Layout.cshtml]
+>>>>>>> 74338ee1067ba24cc3ff169c737a4407b0e71698
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-qit7zek756
