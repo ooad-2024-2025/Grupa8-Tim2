@@ -114,6 +114,7 @@ namespace K_K.Controllers
             return View(await proizvodi.ToListAsync());
         }
   
+
         // GET: Proizvod/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -254,6 +255,8 @@ namespace K_K.Controllers
             {
                 return NotFound();
             }
+            ModelState.Remove("slikaFile");
+
             if (slikaFile != null && slikaFile.Length > 0)
             {
                 try
