@@ -77,7 +77,7 @@ namespace K_K.Controllers
             if (korpa == null || korpa.Stavke == null || !korpa.Stavke.Any())
             {
                 TempData["CartMessage"] = "Korpa je trenutno prazna!";
-                return RedirectToAction("PraznaKorpa");
+                return View();
             }
 
             // Pass single cart model to the view
@@ -91,7 +91,7 @@ namespace K_K.Controllers
             var korisnik = await _userManager.GetUserAsync(User);
             if (korisnik == null)
             {
-                return Redirect("/Identity/Account/Register");
+                return Redirect("/Identity/Account/Login");
             }
 
             // Pronađi proizvod

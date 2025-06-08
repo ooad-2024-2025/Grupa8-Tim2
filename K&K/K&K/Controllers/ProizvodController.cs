@@ -114,7 +114,6 @@ namespace K_K.Controllers
             return View(await proizvodi.ToListAsync());
         }
   
-
         // GET: Proizvod/Details/5
         public async Task<IActionResult> Details(int? id)
         {
