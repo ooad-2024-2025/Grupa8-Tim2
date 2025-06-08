@@ -10,6 +10,8 @@
 
   <ItemGroup>
     <Content Remove="Views\KarticnoPlacanje.cshtml" />
+    <Content Remove="Views\Korpa\GuestCartOptions.cshtml" />
+    <Content Remove="Views\Korpa\Index1.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

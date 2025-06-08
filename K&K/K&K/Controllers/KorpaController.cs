@@ -64,6 +64,7 @@ namespace K_K.Controllers
             if (korisnik == null)
             {
                 return Redirect("/Identity/Account/Register");
+
             }
 
             var korisnikId = korisnik.Id;
@@ -91,7 +92,8 @@ namespace K_K.Controllers
             var korisnik = await _userManager.GetUserAsync(User);
             if (korisnik == null)
             {
-                return Redirect("/Identity/Account/Login");
+                //return Redirect("/Identity/Account/Login");
+                return DodajUKorpuGost(Id);
             }
 
             // Pronađi proizvod
@@ -151,16 +153,19 @@ namespace K_K.Controllers
             //korpa.brojProizvoda = korpa.Stavke.Sum(s => s.Kolicina);
             //korpa.ukupnaCijena = korpa.Stavke.Sum(s => s.Cijena);
             await AzurirajKorpu(korpa.Id);
-            
+
+            //await DodajProizvodUKorpu(korisnik.Id, Id); da se ne dupla KOD
 
             return RedirectToAction("KorpaView", new { korisnikId = korisnik.Id });
+            //ovdje mozda: return RedirectToAction("KorpaView");
+
         }
 
-    
 
-        
 
-      
+
+
+
         [HttpPost]
         public async Task<IActionResult> PromijeniKolicinu(int korpaId, int proizvodId, int kolicina)
         {
@@ -434,6 +439,186 @@ namespace K_K.Controllers
         private bool KorpaExists(int id)
         {
             return _context.Korpa.Any(e => e.Id == id);
+        }
+
+        // Dodaj ove metode u KorpaController.cs
+
+        [HttpPost]
+        public IActionResult DodajUKorpuGost(int Id)
+        {
+            //sa TempData sacuvati proizvod
+            var guestCartKey = "GuestCart_" + Guid.NewGuid().ToString("N")[..8];
+            TempData[guestCartKey] = Id;
+            TempData["GuestCartKey"] = guestCartKey;
+
+            //GostOPCIJE za gosta da se prikaze registracija/login
+            return RedirectToAction("GostKorpa");
+        }
+
+        public IActionResult GostKorpa()
+        {
+            var guestCartKey = TempData["GuestCartKey"]?.ToString();
+            if (string.IsNullOrEmpty(guestCartKey) || TempData[guestCartKey] == null)
+            {
+                return RedirectToAction("Index", "Proizvod");
+            }
+
+            //Očuvanje podataka između ciklusa
+            TempData.Keep("GuestCartKey");
+            TempData.Keep(guestCartKey);
+
+            var proizvodId = (int)TempData[guestCartKey];
+            var proizvod = _context.Proizvod.Find(proizvodId);
+
+            ViewBag.Proizvod = proizvod;
+            ViewBag.GuestCartKey = guestCartKey;
+
+            return View();
+        }
+       
+        [HttpPost]
+        public async Task<IActionResult> DodajUKorpuNakonPrijave()
+        {
+            var korisnik = await _userManager.GetUserAsync(User);
+            if (korisnik == null)
+            {
+                return RedirectToAction("Index", "Proizvod");
+            }
+
+            //Provjeravanje da li postoji proizvod za dodavanje iz guest korpe
+            var guestCartKey = TempData["GuestCartKey"]?.ToString();
+            if (!string.IsNullOrEmpty(guestCartKey) && TempData[guestCartKey] != null)
+            {
+                var proizvodId = (int)TempData[guestCartKey];
+                await DodajProizvodUKorpu(korisnik.Id, proizvodId);
+
+                //izbrisem iz tempdata ako postoji
+                TempData.Remove(guestCartKey);
+                TempData.Remove("GuestCartKey");
+
+                TempData["SuccessMessage"] = "Proizvod je uspješno dodan u korpu!";
+            }
+
+            return RedirectToAction("KorpaView");
+        }
+
+        private async Task DodajProizvodUKorpu(string korisnikId, int proizvodId)
+        {
+            var proizvod = await _context.Proizvod.FirstOrDefaultAsync(m => m.Id == proizvodId);
+            if (proizvod == null) return;
+
+            var korpa = await _context.Korpa
+                .Include(k => k.Stavke)
+                .FirstOrDefaultAsync(k => k.KorisnikId == korisnikId);
+
+            if (korpa == null)
+            {
+                korpa = new Korpa
+                {
+                    KorisnikId = korisnikId,
+                    brojProizvoda = 0,
+                    ukupnaCijena = 0,
+                    Stavke = new List<StavkaKorpe>()
+                };
+                _context.Korpa.Add(korpa);
+                await _context.SaveChangesAsync();
+            }
+
+            if (korpa.Stavke == null)
+            {
+                korpa.Stavke = new List<StavkaKorpe>();
+            }
+
+            var postojecaStavka = korpa.Stavke.FirstOrDefault(s => s.ProizvodId == proizvodId);
+            if (postojecaStavka != null)
+            {
+                postojecaStavka.Kolicina++;
+                postojecaStavka.Cijena = postojecaStavka.Kolicina * proizvod.Cijena;
+            }
+            else
+            {
+                var novaStavka = new StavkaKorpe
+                {
+                    KorpaId = korpa.Id,
+                    ProizvodId = proizvodId,
+                    Kolicina = 1,
+                    Cijena = proizvod.Cijena
+                };
+                _context.StavkaKorpe.Add(novaStavka);
+                korpa.Stavke.Add(novaStavka);
+            }
+
+            await _context.SaveChangesAsync();
+            await AzurirajKorpu(korpa.Id);
+        }
+
+
+
+        //nakon prijave/registracije se poziva
+        public async Task<IActionResult> KorpaGostView()
+        {
+            var korisnik = await _userManager.GetUserAsync(User);
+            if (korisnik == null)
+            {
+                return RedirectToAction("Index", "Proizvod");
+            }
+
+            //provjeravanje Query string parametara koji dolaze sa returnUrl
+            var guestCartKey = Request.Query["GuestCartKey"].ToString();
+            if (string.IsNullOrEmpty(guestCartKey))
+            {
+                guestCartKey = TempData["GuestCartKey"]?.ToString();
+            }
+
+            if (!string.IsNullOrEmpty(guestCartKey))
+            {
+                var proizvodIdObj = TempData[guestCartKey];
+                if (proizvodIdObj != null && int.TryParse(proizvodIdObj.ToString(), out int proizvodId))
+                {
+                    await DodajProizvodUKorpu(korisnik.Id, proizvodId);
+
+                    //brisanje
+                    TempData.Remove(guestCartKey);
+                    TempData.Remove("GuestCartKey");
+
+                    
+                }
+            }
+
+            return RedirectToAction("KorpaView");
+        }
+
+
+        public IActionResult GostLogin()
+        {
+            var guestCartKey = TempData["GuestCartKey"]?.ToString();
+            if (!string.IsNullOrEmpty(guestCartKey))
+            {
+                //ocuvanje opet, da bi ostalo nakon Redirecta
+                TempData.Keep("GuestCartKey");
+                TempData.Keep(guestCartKey);
+
+                //url sa guest korpom
+                var returnUrl = Url.Action("KorpaGostView", "Korpa", new { GuestCartKey = guestCartKey });
+                return Redirect($"/Identity/Account/Login?returnUrl={Uri.EscapeDataString(returnUrl)}");
+            }
+
+            return Redirect("/Identity/Account/Login");
+        }
+
+        public IActionResult GostRegister()
+        {
+            var guestCartKey = TempData["GuestCartKey"]?.ToString();
+            if (!string.IsNullOrEmpty(guestCartKey))
+            {
+                TempData.Keep("GuestCartKey");
+                TempData.Keep(guestCartKey);
+
+                var returnUrl = Url.Action("KorpaGostView", "Korpa", new { GuestCartKey = guestCartKey });
+                return Redirect($"/Identity/Account/Register?returnUrl={Uri.EscapeDataString(returnUrl)}");
+            }
+
+            return Redirect("/Identity/Account/Register");
         }
     }
 }

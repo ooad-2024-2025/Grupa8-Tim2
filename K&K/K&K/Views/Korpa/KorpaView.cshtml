@@ -135,10 +135,10 @@
                         const proizvodId = row.data('proizvod-id');
                         const novaKolicina = parseInt(input.val()) || 1;
 
-                        if (novaKolicina < 1) {
+                        if(novaKolicina < 1) {
                             input.val(1);
                             return;
-                        }
+                        }                      
 
                         showLoading();
 
@@ -224,7 +224,7 @@
         else
         {
             <text>
-                console.log('Model je null ili nema ID - JavaScript se ne izvršava');
+                console.log('Model je null ili nema ID');
             </text>
         }
     </script>
