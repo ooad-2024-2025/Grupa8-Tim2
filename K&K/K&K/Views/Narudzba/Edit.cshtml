@@ -1,41 +1,45 @@
-﻿@model K_K.Models.Narudzba
+﻿@*
+@model K_K.Models.Narudzba
 
 @{
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1>Uredite Vašu narudžbu</h1>
 
 <h4>Narudzba</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="KorisnikId" class="control-label"></label>
                 <select asp-for="KorisnikId" class="form-control" asp-items="ViewBag.KorisnikId"></select>
                 <span asp-validation-for="KorisnikId" class="text-danger"></span>
             </div>
+            @*Ovo bi trebalo samo da radnik moze promijeniti
+            
             <div class="form-group">
                 <label asp-for="RadnikId" class="control-label"></label>
                 <select asp-for="RadnikId" class="form-control" asp-items="ViewBag.RadnikId"></select>
                 <span asp-validation-for="RadnikId" class="text-danger"></span>
             </div>
+            @*Ovo bi trebalo samo da radnik moze promijeniti
             <div class="form-group">
                 <label asp-for="StatusNarudzbe" class="control-label"></label>
-                <select asp-for="StatusNarudzbe" class="form-control"></select>
+                <select asp-for="StatusNarudzbe" class="form-control" asp-items="Html.GetEnumSelectList<StatusNarudzbe>()"></select>
                 <span asp-validation-for="StatusNarudzbe" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="NacinPlacanja" class="control-label"></label>
-                <select asp-for="NacinPlacanja" class="form-control"></select>
+                <select asp-for="NacinPlacanja" class="form-control" asp-items="Html.GetEnumSelectList<VrstaPlacanja>()"></select>
                 <span asp-validation-for="NacinPlacanja" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="NacinPreuzimanja" class="control-label"></label>
-                <select asp-for="NacinPreuzimanja" class="form-control"></select>
+                <select asp-for="NacinPreuzimanja" class="form-control" asp-items="Html.GetEnumSelectList<VrstaPreuzimanja>()"></select>
                 <span asp-validation-for="NacinPreuzimanja" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -48,8 +52,8 @@
                 <input asp-for="AdresaDostave" class="form-control" />
                 <span asp-validation-for="AdresaDostave" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+            <div class="form-group mt-3 pt-2">
+                <input type="submit" value="Edit" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -61,4 +65,80 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+*@
+@model K_K.Models.Narudzba
+@{
+    ViewData["Title"] = "Edit";
+}
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+@if (Model == null)
+{
+    <h1>Narudžba nije pronađena</h1>
+    <div>
+        <a asp-action="Index">Nazad na listu</a>
+    </div>
+}
+else
+{
+    <h1>Uredite Vašu narudžbu</h1>
+    <h4>Narudzba</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Edit" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+
+                @*Ovo bi trebalo samo da radnik moze promijeniti*@
+                <div class="form-group">
+                    <label asp-for="StatusNarudzbe" class="control-label"></label>
+                    <select asp-for="StatusNarudzbe" class="form-control" asp-items="Html.GetEnumSelectList<StatusNarudzbe>()"></select>
+                    <span asp-validation-for="StatusNarudzbe" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="NacinPlacanja" class="control-label"></label>
+                    <select asp-for="NacinPlacanja" class="form-control" asp-items="Html.GetEnumSelectList<VrstaPlacanja>()"></select>
+                    <span asp-validation-for="NacinPlacanja" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="NacinPreuzimanja" class="control-label"></label>
+                    <select asp-for="NacinPreuzimanja" class="form-control" asp-items="Html.GetEnumSelectList<VrstaPreuzimanja>()"></select>
+                    <span asp-validation-for="NacinPreuzimanja" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="DatumNarudzbe" class="control-label"></label>
+                    <input asp-for="DatumNarudzbe" class="form-control" type="datetime-local" />
+                    <span asp-validation-for="DatumNarudzbe" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="AdresaDostave" class="control-label"></label>
+                    <input asp-for="AdresaDostave" class="form-control" />
+                    <span asp-validation-for="AdresaDostave" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mt-3 pt-2">
+                    <input type="submit" value="Sačuvaj izmjene" class="btn btn-primary" />
+                    <a asp-action="Index" class="btn btn-secondary">Otkaži</a>
+                </div>
+            </form>
+        </div>
+    </div>
+}
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

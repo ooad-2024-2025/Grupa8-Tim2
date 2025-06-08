@@ -1,0 +1,55 @@
+﻿@* _RecenzijeSummaryPartial.cshtml *@
+@* Model nije potreban jer koristimo ViewBag *@
+
+<div class="mb-3" id="prosjecnaOcjenaStars">
+    @if (ViewBag.BrojRecenzija > 0)
+    {
+        <h5 class="text-warning">
+            @for (int i = 1; i <= 5; i++)
+            {
+                if (i <= ViewBag.ProsjecnaOcjena)
+                {
+                    <i class="fas fa-star"></i>
+                }
+                else
+                {
+                    <i class="far fa-star"></i>
+                }
+            }
+            <small class="text-muted">(<span id="prosjecnaOcjenaText">@ViewBag.ProsjecnaOcjena.ToString("F1")</span>)</small>
+        </h5>
+    }
+    else
+    {
+        <p class="text-muted" id="noReviewsMessage">Nema recenzija za ovaj proizvod.</p>
+    }
+</div>
+
+@if (ViewBag.Recenzije != null && ViewBag.Recenzije.Any())
+{
+    <div class="latest-reviews" id="latestReviewsContainer">
+        @foreach (var recenzija in ViewBag.Recenzije) @* Ovdje već imate take(3) u kontroleru *@
+        {
+            <div class="border-bottom pb-2 mb-2">
+                <div class="d-flex justify-content-between">
+                    <small class="fw-bold">@recenzija.Korisnik?.UserName</small>
+                    <small class="text-muted">
+                        @for (int i = 1; i <= recenzija.Ocjena; i++)
+                        {
+                            <i class="fas fa-star text-warning"></i>
+                        }
+                    </small>
+                </div>
+                @if (!string.IsNullOrEmpty(recenzija.Tekst))
+                {
+                    <small class="text-muted">@recenzija.Tekst</small>
+                }
+            </div>
+        }
+    </div>
+
+    @if (ViewBag.BrojRecenzija > 3)
+    {
+        <small class="text-muted" id="preostaleRecenzijeText">i još @(ViewBag.BrojRecenzija - 3) recenzija...</small>
+    }
+}
