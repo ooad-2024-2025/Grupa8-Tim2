@@ -275,7 +275,7 @@
                             <h2 class="card-title">@Model.Naziv</h2>
                             @* UKLONJENO: Reference na Kategorija i Brend, jer ne postoje u vašem modelu *@
                             @* <p class="text-muted">Kategorija: @(Model.Kategorija?.Naziv ?? "N/A") | Brend: @(Model.Brend?.Naziv ?? "N/A")</p> *@
-
+                            
                             @* Prikaz veličine ako je potrebno, pretpostavljajući da je Velicina enum ili String *@
                             @if (Model.Velicina != null)
                             {
@@ -284,7 +284,7 @@
 
                             <h3 class="text-primary">@Model.Cijena.ToString("C")</h3> @* Pretpostavka za valutu *@
                             <p class="card-text">@Model.Opis</p>
-
+                            
                             @* Primjer za Dodaj u Korpu dugme - ovdje bi trebala biti AJAX ili POST forma *@
                             <div class="mt-3">
                                 <button type="button" class="btn btn-success" onclick="dodajUKorpu(@Model.Id)">
@@ -411,7 +411,7 @@
                         }
                         else if (ViewBag.MozeOstavitiRecenziju == false && ViewBag.NarudzbaId != null) // Ako je false, ali je bilo narudzbe
                         {
-                            <p class="text-info mt-2"><small>Već ste recenzirali ovaj proizvod.</small></p>
+                             <p class="text-info mt-2"><small>Već ste recenzirali ovaj proizvod.</small></p>
                         }
                         else // Korisnik je prijavljen, ali nema narudžbu ili narudzbaId je null iz nekog razloga
                         {
