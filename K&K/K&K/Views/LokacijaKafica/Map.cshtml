@@ -1,0 +1,466 @@
+@model IEnumerable<K_K.Models.LokacijaKafica>
+
+@{
+    ViewData["Title"] = "Mapa Lokacija";
+}
+
+<style>
+body {
+    background-color: #ffffff;
+    color: #6b7280;
+    font-family: 'Inter', sans-serif;
+}
+h1 {
+    font-size: 48px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 1rem;
+}
+#map {
+    height: 500px;
+    width: 100%;
+    border-radius: 0.75rem;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+    border: 1px solid #e5e7eb;
+}
+.card {
+    border-radius: 0.75rem;
+    box-shadow: 0 2px 6px rgb(0 0 0 / 0.05);
+    border: none;
+    margin-bottom: 1.5rem;
+}
+.card-header {
+    font-weight: 600;
+    color: #111827;
+    font-size: 1.125rem;
+    padding: 1rem 1.5rem;
+    background-color: #f9fafb;
+    border-bottom: 1px solid #e5e7eb;
+    border-radius: 0.75rem 0.75rem 0 0;
+}
+.card-body {
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+}
+.btn-primary {
+    background-color: #111827;
+    border-color: #111827;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+.btn-primary:hover, .btn-primary:focus {
+    background-color: #374151;
+    border-color: #374151;
+}
+.location-item {
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid #e5e7eb;
+    transition: background-color 0.2s ease;
+}
+.location-item:hover {
+    background-color: #f3f4f6;
+    color: #111827;
+}
+#nearestResult .alert-success {
+    background-color: #ecfdf5;
+    color: #065f46;
+    border-radius: 0.5rem;
+    padding: 1rem;
+}
+#errorMessage .alert-danger {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border-radius: 0.5rem;
+    padding: 1rem;
+}
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+</style>
+
+<h1>Mapa Lokacija Kafića</h1>
+
+@if (Model == null || !Model.Any())
+{
+    <p>Nema dostupnih lokacija.</p>
+}
+else
+{
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div id="map"></div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    Pronađi Najbližu Lokaciju
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="addressInput" class="form-label">Unesite vašu adresu:</label>
+                        <input type="text" id="addressInput" class="form-control" 
+                               placeholder="Npr: Zmaja od Bosne 8, Sarajevo" aria-label="Adresa korisnika" />
+                    </div>
+                    <button id="findNearest" class="btn btn-primary w-100" type="button">
+                        <i class="fas fa-search" aria-hidden="true"></i> Pronađi najbližu poslovnicu
+                    </button>
+                    
+                    <div id="nearestResult" class="mt-4" style="display:none;">
+                        <div class="alert alert-success">
+                            <h6>Najbliža lokacija:</h6>
+                            <div id="nearestInfo"></div>
+                        </div>
+                    </div>
+                    
+                    <div id="errorMessage" class="mt-4" style="display:none;">
+                        <div class="alert alert-danger">
+                            <span id="errorText"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">Sve Lokacije</div>
+                <div class="card-body" id="locationsList">
+                    <!-- Lokacije će biti učitane iz servera -->
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <!-- Leaflet CSS i JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    
+    <script>
+        let map;
+        let markers = [];
+        let userMarker;
+        let lokacije = [];
+        let isLoading = false;
+        let isInitialized = false;
+
+        
+        function initMap() {
+            if (isInitialized) return;
+            isInitialized = true;
+            
+            
+            map = L.map('map').setView([44.169, 17.79], 8);
+            
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+            loadLocations();
+        }
+
+        
+        async function loadLocations() {
+            if (isLoading) return;
+            isLoading = true;
+
+            try {
+                const response = await fetch('/LokacijaKafica/GetLokacije');
+                if (!response.ok) {
+                    throw new Error('Greška pri dohvatanju podataka');
+                }
+                
+                lokacije = await response.json();
+                console.log('Učitano lokacija:', lokacije.length);
+                
+                
+                clearMarkers();
+                clearLocationsList();
+                
+                
+                addMarkersToMap();
+                
+                
+                populateLocationsList();
+                
+            } catch (error) {
+                console.error('Greška pri učitavanju lokacija:', error);
+                showError('Greška pri učitavanju lokacija');
+            } finally {
+                isLoading = false;
+            }
+        }
+
+       
+        function clearMarkers() {
+            markers.forEach(marker => {
+                map.removeLayer(marker);
+            });
+            markers = [];
+            
+            if (userMarker) {
+                map.removeLayer(userMarker);
+                userMarker = null;
+            }
+        }
+
+        
+        function clearLocationsList() {
+            const locationsList = document.getElementById('locationsList');
+            if(locationsList) {
+                locationsList.innerHTML = '';
+            }
+        }
+
+       
+        function addMarkersToMap() {
+            lokacije.forEach(lokacija => {
+                
+                const exists = markers.some(marker => {
+                    const pos = marker.getLatLng();
+                    return Math.abs(pos.lat - lokacija.lat) < 0.000001 && Math.abs(pos.lng - lokacija.lng) < 0.000001;
+                });
+                if (exists) return;
+                
+                const marker = L.marker([lokacija.lat, lokacija.lng])
+                    .bindPopup(`
+                        <div>
+                            <h6>${lokacija.adresa}</h6>
+                            <p><strong>Grad:</strong> ${lokacija.grad}</p>
+                            <p><strong>Koordinate:</strong> ${lokacija.lat.toFixed(4)}, ${lokacija.lng.toFixed(4)}</p>
+                            <a href="/LokacijaKafica/Details/${lokacija.id}" class="btn btn-sm btn-primary">Detalji</a>
+                        </div>
+                    `)
+                    .addTo(map);
+                
+                
+                marker.setIcon(L.icon({
+                    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+                    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                    iconSize: [25, 41],
+                    iconAnchor: [12, 41],
+                    popupAnchor: [1, -34],
+                    shadowSize: [41, 41]
+                }));
+
+                markers.push(marker);
+            });
+        }
+
+       
+        function populateLocationsList() {
+            const locationsList = document.getElementById('locationsList');
+            if (!locationsList) return;
+            locationsList.innerHTML = '';
+            
+            if (lokacije.length === 0) {
+                locationsList.innerHTML = '<p class="text-muted">Nema dostupnih lokacija</p>';
+                return;
+            }
+            
+            lokacije.forEach(lokacija => {
+                const locationItem = document.createElement('div');
+                locationItem.className = 'location-item';
+                locationItem.innerHTML = `
+                    <strong>${lokacija.adresa}</strong><br>
+                    <small class="text-muted">${lokacija.grad}</small>
+                `;
+                
+                locationItem.addEventListener('click', () => {
+                    map.setView([lokacija.lat, lokacija.lng], 15);
+                    
+                    
+                    const targetMarker = markers.find(m => {
+                        const pos = m.getLatLng();
+                        return Math.abs(pos.lat - lokacija.lat) < 0.0001 && 
+                               Math.abs(pos.lng - lokacija.lng) < 0.0001;
+                    });
+                    
+                    if (targetMarker) {
+                        targetMarker.openPopup();
+                    }
+                });
+                
+                locationsList.appendChild(locationItem);
+            });
+        }
+
+        
+        async function searchByAddress() {
+            const address = document.getElementById('addressInput').value.trim();
+            if (!address) {
+                showError('Molimo unesite vašu adresu');
+                return;
+            }
+
+            const button = document.getElementById('findNearest');
+            const originalText = button.innerHTML;
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Pretražujem...';
+            button.disabled = true;
+            button.classList.add('loading');
+
+            try {
+               
+                const geocodeUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}&limit=1&countrycodes=ba`;
+                
+                const response = await fetch(geocodeUrl);
+                const results = await response.json();
+                
+                if (results && results.length > 0) {
+                    const result = results[0];
+                    const lat = parseFloat(result.lat);
+                    const lng = parseFloat(result.lon);
+                    
+                    if (userMarker) {
+                        map.removeLayer(userMarker);
+                    }
+                    
+                    
+                    userMarker = L.marker([lat, lng], {
+                        icon: L.icon({
+                            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png',
+                            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                            iconSize: [25, 41],
+                            iconAnchor: [12, 41],
+                            popupAnchor: [1, -34],
+                            shadowSize: [41, 41]
+                        })
+                    })
+                    .bindPopup(`
+                        <div>
+                            <h6><i class="fas fa-home"></i> Vaša adresa</h6>
+                            <p>${address}</p>
+                        </div>
+                    `)
+                    .addTo(map);
+                    
+                    map.setView([lat, lng], 13);
+                    
+                    
+                    await findNearestLocation(lat, lng);
+                    
+                } else {
+                    showError('Adresa nije pronađena. Molimo pokušajte sa detaljnijom adresom.');
+                }
+                
+            } catch (error) {
+                console.error('Greška pri geocoding-u:', error);
+                showError('Greška pri pronalaženju adrese. Molimo pokušajte ponovo.');
+            } finally {
+                button.innerHTML = originalText;
+                button.disabled = false;
+                button.classList.remove('loading');
+            }
+        }
+
+        
+        async function findNearestLocation(userLat, userLng) {
+            try {
+                const response = await fetch('/LokacijaKafica/NajblizaLokacija', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        latitude: userLat,
+                        longitude: userLng
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    const lokacija = result.lokacija;
+                    
+                   
+                    document.getElementById('nearestInfo').innerHTML = `
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <strong><i class="fas fa-map-marker-alt text-success"></i> ${lokacija.adresa}</strong><br>
+                                <small class="text-muted"><i class="fas fa-city"></i> ${lokacija.grad}</small><br>
+                                <small class="text-info"><i class="fas fa-route"></i> Udaljenost: ${lokacija.udaljenost} km</small>
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            <a href="/LokacijaKafica/Details/${lokacija.id}" class="btn btn-sm btn-outline-primary">
+                                <i class="fas fa-info-circle"></i> Detalji
+                            </a>
+                        </div>
+                    `;
+                    
+                    document.getElementById('nearestResult').style.display = 'block';
+                    document.getElementById('errorMessage').style.display = 'none';
+                    
+                    
+                    highlightNearestMarker(lokacija.lat, lokacija.lng);
+                    
+                } else {
+                    showError(result.message || 'Greška pri pronalaženju najbliže lokacije');
+                }
+                
+            } catch (error) {
+                console.error('Greška:', error);
+                showError('Greška pri pronalaženju najbliže lokacije');
+            }
+        }
+
+        
+        function highlightNearestMarker(lat, lng) {
+            markers.forEach(marker => {
+                const pos = marker.getLatLng();
+                if (Math.abs(pos.lat - lat) < 0.0001 && Math.abs(pos.lng - lng) < 0.0001) {
+                    
+                    marker.setIcon(L.icon({
+                        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
+                        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                        iconSize: [25, 41],
+                        iconAnchor: [12, 41],
+                        popupAnchor: [1, -34],
+                        shadowSize: [41, 41]
+                    }));
+                    marker.openPopup();
+                } else {
+                    
+                    marker.setIcon(L.icon({
+                        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+                        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                        iconSize: [25, 41],
+                        iconAnchor: [12, 41],
+                        popupAnchor: [1, -34],
+                        shadowSize: [41, 41]
+                    }));
+                }
+            });
+        }
+
+        
+        function showError(message) {
+            const errorText = document.getElementById('errorText');
+            if (errorText) {
+                errorText.textContent = message;
+            }
+            document.getElementById('errorMessage').style.display = 'block';
+            document.getElementById('nearestResult').style.display = 'none';
+        }
+
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            initMap();
+            
+            document.getElementById('findNearest').addEventListener('click', searchByAddress);
+            
+            document.getElementById('addressInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchByAddress();
+                }
+            });
+        });
+    </script>
+}
+
+@section Styles {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+}
+
