@@ -1,0 +1,69 @@
+﻿@model K_K.Models.Korpa
+
+@{
+    ViewData["Title"] = "Dodaj u korpu";
+    var proizvod = ViewBag.Proizvod as K_K.Models.Proizvod;
+    var guestCartKey = ViewBag.GuestCartKey?.ToString();
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4 class="mb-0">
+                        <i class="fas fa-shopping-cart"></i> Dodaj u korpu
+                    </h4>
+                </div>
+                <div class="card-body text-center">
+                    @if (proizvod != null)
+                    {
+                        <div class="mb-4">
+                            <h5 class="text-muted">Želite dodati u korpu:</h5>
+                            <div class="product-info p-3 bg-light rounded">
+                                @if (!string.IsNullOrEmpty(proizvod.Slika))
+                                {
+                                    <img src="~/images/proizvodi/@proizvod.Slika"
+                                         alt="@proizvod.Naziv"
+                                         class="img-thumbnail mb-2"
+                                         style="max-width: 100px; max-height: 100px;" />
+                                }
+                                <h6 class="fw-bold">@proizvod.Naziv</h6>
+                                <p class="text-primary h5">@proizvod.Cijena.ToString("F2") KM</p>
+                            </div>
+                        </div>
+                    }
+
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i>
+                        <strong>Da biste dodali proizvod u korpu, morate biti prijavljeni.</strong>
+                    </div>
+
+                    <p class="mb-4">Molimo izaberite jednu od opcija:</p>
+
+                    <div class="d-grid gap-3">
+                        
+                        <a asp-controller="Korpa" asp-action="GostLogin" class="btn btn-success btn-lg">
+                            <i class="fas fa-sign-in-alt"></i> Prijavite se
+                        </a>
+                        <small class="text-muted text-center mb-2">Već imate nalog? Prijavite se ovde</small>
+
+                        <a asp-controller="Korpa" asp-action="GostRegister" class="btn btn-primary btn-lg">
+                            <i class="fas fa-user-plus"></i> Registrujte se
+                        </a>
+                        <small class="text-muted text-center mb-2">Nemate nalog? Registrujte se brzo i lako</small>
+
+                        <a asp-controller="Proizvod" asp-action="Index" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left"></i> Nastavi kupovinu bez registracije
+                        </a>
+                    </div>
+                </div>
+                <div class="card-footer text-center text-muted">
+                    <small>
+                        <i class="fas fa-lock"></i> Vaši podaci su sigurni i zaštićeni
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

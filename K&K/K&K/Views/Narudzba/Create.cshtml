@@ -1,35 +1,65 @@
-﻿@model K_K.Models.Narudzba
+﻿@*
+  Prva opcija za view
+@model K_K.Models.Narudzba
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Unesite podatke za finaliziranje narudžbe</h1>
 
-<h4>Narudzba</h4>
+
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="KorisnikId" class="control-label"></label>
-                <select asp-for="KorisnikId" class ="form-control" asp-items="ViewBag.KorisnikId"></select>
+                @if (!ViewData.ModelState.IsValid)
+                {
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach (var modelError in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                            {
+                                <li>@modelError.ErrorMessage</li>
+                            }
+                        </ul>
+                    </div>
+                }
+                <label asp-for="Korisnik.Ime" class="control-label"></label>
+                <input asp-for="Korisnik.Ime" class="form-control" />
+                <span asp-validation-for="Korisnik.Ime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="RadnikId" class="control-label"></label>
-                <select asp-for="RadnikId" class ="form-control" asp-items="ViewBag.RadnikId"></select>
+                <label asp-for="Korisnik.Prezime" class="control-label"></label>
+                <input asp-for="Korisnik.Prezime" class="form-control" />
+                <span asp-validation-for="Korisnik.Prezime" class="text-danger"></span>
             </div>
+            @*Za sad ne treba*@
+            @*
             <div class="form-group">
+                <label asp-for="RadnikId" class="control-label">ID Radnika</label>
+                <input asp-for="RadnikId" class="form-control" type="text" />
+                <span asp-validation-for="RadnikId" class="text-danger"></span>
+            </div>*@
+            @*
+            <div class="form-group">
+                <label asp-for="KorisnikId" class="control-label">ID Korisnika</label>
+                <input asp-for="KorisnikId" class="form-control" type="text" />
+                <span asp-validation-for="KorisnikId" class="text-danger"></span>
+            </div>*@
+           @* <div class="form-group">
                 <label asp-for="StatusNarudzbe" class="control-label"></label>
-                <select asp-for="StatusNarudzbe" class="form-control"></select>
+                <select asp-for="StatusNarudzbe" class="form-control" asp-items="Html.GetEnumSelectList<StatusNarudzbe>()"></select>
                 <span asp-validation-for="StatusNarudzbe" class="text-danger"></span>
             </div>
+           
             <div class="form-group">
                 <label asp-for="NacinPlacanja" class="control-label"></label>
                 <select asp-for="NacinPlacanja" class="form-control" asp-items="Html.GetEnumSelectList<VrstaPlacanja>()"></select>
                 <span asp-validation-for="NacinPlacanja" class="text-danger"></span>
             </div>
+            
             <div class="form-group">
                 <label asp-for="NacinPreuzimanja" class="control-label"></label>
                 <select asp-for="NacinPreuzimanja" class="form-control" asp-items="Html.GetEnumSelectList<VrstaPreuzimanja>()"></select>
@@ -45,8 +75,18 @@
                 <input asp-for="AdresaDostave" class="form-control" />
                 <span asp-validation-for="AdresaDostave" class="text-danger"></span>
             </div>
+           <div class="border rounded p-3 mb-3 bg-light">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <span class="text-muted">Ukupna cijena:</span>
+                    </div>
+                    <div class="col-auto">
+                        <h4 class="mb-0 text-primary fw-bold">@ViewData["Cijena"] KM</h4>
+                    </div>
+                </div>
+            </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input id="submitButton" type="submit" value="Kreiraj narudžbu" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -56,6 +96,334 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+                function updateSubmitButton() {
+            var nacinPlacanja = document.querySelector('[name="NacinPlacanja"]');
+            var submitButton = document.getElementById("submitButton");
+            var selectedValue = nacinPlacanja.value;
+
+            if (selectedValue === "Kartica") {
+                submitButton.value = "💳 Unesite podatke o kartici";
+                submitButton.className = "btn btn-warning btn-lg";
+                submitButton.disabled = false;
+            } else if (selectedValue === "Gotovina") {
+                submitButton.value = "✅ Finaliziraj narudžbu";
+                submitButton.className = "btn btn-success btn-lg";
+                submitButton.disabled = false;
+            } else if (selectedValue && selectedValue !== "") {
+                submitButton.value = "📋 Kreiraj narudžbu";
+                submitButton.className = "btn btn-primary btn-lg";
+                submitButton.disabled = false;
+            } else {
+                submitButton.value = "Odaberite način plaćanja";
+                submitButton.className = "btn btn-secondary";
+                submitButton.disabled = true;
+            }
+        }
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var nacinPlacanja = document.querySelector('[name="NacinPlacanja"]');
+
+            // Pozovi funkciju odmah pri učitavanju
+            updateSubmitButton();
+              } // ← Ovo je nedostajalo!
+            // Dodaj event listener za promene
+            nacinPlacanja.addEventListener("change", updateSubmitButton);
+    </script>
+}
+
+*@
+@*Druga opcija za view*@
+@model K_K.Models.Narudzba
+
+@{
+    ViewData["Title"] = "Create";
+    var korpaStavke = ViewData["KorpaStavke"] as List<K_K.Models.StavkaKorpe>; 
+    double ukupno = korpaStavke?.Sum(s => s.Cijena ) ?? 0;
+    double porez = ukupno * 0.17; 
+    double ukupnoSaPorezom = ukupno + porez;
+}
+
+<h1>Kreiranje narudžbe</h1>
+
+<div class="row">
+    <!-- Lijeva kolona - Forma -->
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h4>📋 Podaci o narudžbi</h4>
+            </div>
+            <div class="card-body">
+                <form asp-action="Create" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach (var modelError in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                                {
+                                    <li>@modelError.ErrorMessage</li>
+                                }
+                            </ul>
+                        </div>
+                    }
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Korisnik.Ime" class="control-label"></label>
+                        <input asp-for="Korisnik.Ime" class="form-control" />
+                        <span asp-validation-for="Korisnik.Ime" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Korisnik.Prezime" class="control-label"></label>
+                        <input asp-for="Korisnik.Prezime" class="form-control" />
+                        <span asp-validation-for="Korisnik.Prezime" class="text-danger"></span>
+                    </div>
+                    @*
+                    <div class="form-group mb-3">
+                        <label asp-for="RadnikId" class="control-label">ID Radnika</label>
+                        <input asp-for="RadnikId" class="form-control" type="text" />
+                        <span asp-validation-for="RadnikId" class="text-danger"></span>
+                    </div>
+                    *@
+                    @*
+                    <div class="form-group mb-3">
+                        <label asp-for="KorisnikId" class="control-label">ID Korisnika</label>
+                        <input asp-for="KorisnikId" class="form-control" type="text" />
+                        <span asp-validation-for="KorisnikId" class="text-danger"></span>
+                    </div>
+                    *@
+                    @*
+                    <div class="form-group mb-3">
+                        <label asp-for="StatusNarudzbe" class="control-label"></label>
+                        <select asp-for="StatusNarudzbe" class="form-control" asp-items="Html.GetEnumSelectList<StatusNarudzbe>()"></select>
+                        <span asp-validation-for="StatusNarudzbe" class="text-danger"></span>
+                    </div>
+                    *@
+
+                    <div class="form-group mb-3">
+                        <label asp-for="NacinPlacanja" class="control-label"></label>
+                        <select asp-for="NacinPlacanja" id="NacinPlacanja" class="form-control" asp-items="Html.GetEnumSelectList<VrstaPlacanja>()"></select>
+                        <span asp-validation-for="NacinPlacanja" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="NacinPreuzimanja" class="control-label"></label>
+                        <select asp-for="NacinPreuzimanja" class="form-control" asp-items="Html.GetEnumSelectList<VrstaPreuzimanja>()"></select>
+                        <span asp-validation-for="NacinPreuzimanja" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="DatumNarudzbe" class="control-label"></label>
+                        <input asp-for="DatumNarudzbe" class="form-control" />
+                        <span asp-validation-for="DatumNarudzbe" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="AdresaDostave" class="control-label"></label>
+                        <input asp-for="AdresaDostave" class="form-control" />
+                        <span asp-validation-for="AdresaDostave" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <input id="submitButton" type="submit" value="Kreiraj narudžbu" class="btn btn-primary btn-lg w-100" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Desna kolona - Prikaz korpe -->
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-light">
+                <h4>🛒 Vaša narudžba</h4>
+            </div>
+            <div class="card-body">
+                @if (korpaStavke != null && korpaStavke.Any())
+                {
+                    <!-- Stavke iz korpe -->
+                    @foreach (var stavka in korpaStavke)
+                    {
+                        <div class="row align-items-center mb-3 p-3 border rounded">
+                            <div class="col-3">
+                                @if (!string.IsNullOrEmpty(stavka.Proizvod?.Slika))
+                                {
+                                    <img src="@stavka.Proizvod.Slika" alt="@stavka.Proizvod.Naziv"
+                                         class="img-fluid rounded-circle" style="width: 60px; height: 60px; object-fit: cover;" />
+                                }
+                                else
+                                {
+                                    <div class="bg-light rounded-circle d-flex align-items-center justify-content-center"
+                                         style="width: 60px; height: 60px;">
+                                        <i class="fas fa-coffee text-muted"></i>
+                                    </div>
+                                }
+                            </div>
+                            <div class="col-6">
+                                <h6 class="mb-1">@stavka.Proizvod?.Naziv</h6>
+                                <small class="text-muted">@stavka.Proizvod?.Opis</small>
+                                <div class="d-flex align-items-center mt-2">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary me-2"
+                                            onclick="updateQuantity(@stavka.Id, -1)">
+                                        -
+                                    </button>
+                                    <span class="mx-2 fw-bold">@stavka.Kolicina</span>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary ms-2"
+                                            onclick="updateQuantity(@stavka.Id, 1)">
+                                        +
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-3 text-end">
+                               @* <div class="fw-bold">@((stavka.Cijena * stavka.Kolicina).ToString("F2")) KM</div>*@
+                                <div class="fw-bold">@((stavka.Cijena ).ToString("F2")) KM</div>
+                                <small class="text-muted">@stavka.Cijena.ToString("F2") KM svaki</small>
+                                <div class="mt-2">
+                                    <button type="button" class="btn btn-sm btn-outline-danger"
+                                            onclick="removeItem(@stavka.Id)">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <!-- Separator -->
+                    <hr class="my-4">
+
+                    <!-- Pregled računa -->
+                    <div class="row mb-2">
+                        <div class="col-8">Subtotal:</div>
+                        <div class="col-4 text-end">@ukupno.ToString("F2") KM</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-8">PDV (17%):</div>
+                        <div class="col-4 text-end">@porez.ToString("F2") KM</div>
+                    </div>
+                    <hr>
+                    <div class="row mb-3">
+                        <div class="col-8"><strong>Ukupno:</strong></div>
+                        <div class="col-4 text-end"><strong class="fs-5">@ukupnoSaPorezom.ToString("F2") KM</strong></div>
+                    </div>
+
+                    <!-- Dodatne opcije -->
+                    <div class="alert alert-info">
+                        <small>
+                            <i class="fas fa-info-circle me-1"></i>
+                            Možete promijeniti količinu ili ukloniti stavke prije finalizacije narudžbe.
+                        </small>
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center py-4">
+                        <i class="fas fa-shopping-cart fa-3x text-muted mb-3"></i>
+                        <h5 class="text-muted">Korpa je prazna</h5>
+                        <p class="text-muted">Dodajte proizvode u korpu prije kreiranja narudžbe.</p>
+                        <a href="@Url.Action("Index", "Proizvod")" class="btn btn-primary">
+                            <i class="fas fa-plus me-1"></i> Dodaj proizvode
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@* //ovo smije samo admin ne treba za korisnika
+<div class="mt-3">
+    <a asp-action="Index" class="btn btn-secondary">
+        <i class="fas fa-arrow-left me-1"></i> Nazad na listu
+    </a>
+</div>
+*@
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        function updateSubmitButton() {
+            var nacinPlacanja = document.querySelector('[name="NacinPlacanja"]');
+            var submitButton = document.getElementById("submitButton");
+
+            if (!nacinPlacanja || !submitButton) {
+                return;
+            }
+
+            var selectedValue = nacinPlacanja.value;
+
+            if (selectedValue === "Kartica") {
+                submitButton.value = "💳 Unesite podatke o kartici";
+                submitButton.className = "btn btn-warning btn-lg w-100";
+                submitButton.disabled = false;
+            } else if (selectedValue === "Gotovina") {
+                submitButton.value = "✅ Finaliziraj narudžbu";
+                submitButton.className = "btn btn-success btn-lg w-100";
+                submitButton.disabled = false;
+            } else if (selectedValue && selectedValue !== "") {
+                submitButton.value = "📋 Kreiraj narudžbu";
+                submitButton.className = "btn btn-primary btn-lg w-100";
+                submitButton.disabled = false;
+            } else {
+                submitButton.value = "Odaberite način plaćanja";
+                submitButton.className = "btn btn-secondary btn-lg w-100";
+                submitButton.disabled = true;
+            }
+        }
+
+        // Funkcija za ažuriranje količine
+        function updateQuantity(stavkaId, change) {
+            fetch('/Korpa/UpdateQuantity', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': document.querySelector('[name="__RequestVerificationToken"]').value
+                },
+                body: JSON.stringify({ id: stavkaId, change: change })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload(); // Reload da se ažuriraju podaci
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        // Funkcija za uklanjanje stavke
+        function removeItem(stavkaId) {
+            if (confirm('Da li ste sigurni da želite ukloniti ovu stavku?')) {
+                fetch('/Korpa/Remove', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'RequestVerificationToken': document.querySelector('[name="__RequestVerificationToken"]').value
+                    },
+                    body: JSON.stringify({ id: stavkaId })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        location.reload();
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var nacinPlacanja = document.querySelector('[name="NacinPlacanja"]');
+
+            if (nacinPlacanja) {
+                updateSubmitButton();
+                nacinPlacanja.addEventListener("change", updateSubmitButton);
+            }
+        });
+    </script>
 }

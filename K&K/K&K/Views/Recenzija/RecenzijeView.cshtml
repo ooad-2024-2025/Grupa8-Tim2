@@ -1,8 +1,7 @@
 ﻿@model IEnumerable<K_K.Models.Recenzija>
-
 @{
     ViewData["Title"] = "Recenzije Proizvoda";
-    // Dohvaćamo ProizvodId ako je dostupan, pretpostavljamo da je to prvi element ili se šalje u ViewData
+
     int proizvodId = 0;
     if (Model != null && Model.Any())
     {
@@ -12,23 +11,25 @@
     {
         proizvodId = (int)ViewData["ProizvodId"];
     }
+
+    string trenutniKorisnikId = ViewData["KorisnikId"]?.ToString() ?? "";
+    bool isAdmin = ViewData["IsAdmin"] != null && (bool)ViewData["IsAdmin"];
 }
 
 <h1>Recenzije za Proizvod</h1>
 
 <p>
-    @* Link za ostavljanje nove recenzije *@
-    <a asp-action="OstaviRecenziju" asp-route-proizvodId="@proizvodId">Ostavi novu recenziju</a>
+    <a asp-action="OstaviRecenziju" asp-route-proizvodId="@proizvodId" class="btn btn-success">Ostavi novu recenziju</a>
 </p>
 
 @if (TempData["Poruka"] != null)
 {
-    <div class="alert alert-info">
+    <div class="alert alert-info">ik 
         @TempData["Poruka"]
     </div>
 }
 
-@if (Model == null || !Model.Any())
+@if (!Model.Any())
 {
     <p>Trenutno nema recenzija za ovaj proizvod.</p>
 }
@@ -41,41 +42,28 @@ else
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Ocjena: @item.Ocjena / 5</h5>
-                        @*<h6 class="card-subtitle mb-2 text-muted">@item.Korisnik?.KorisnickoIme (Id: @item.KorisnikId)</h6>
-                        <p class="card-text">@item.Komentar</p> DODAL U KOMENTAR*@
-                        @* Opcionalno: Prikaz datuma kreiranja, ako postoji u modelu *@
-                        @* <small class="text-muted">Datum: @item.DatumKreiranja.ToShortDateString()</small> *@
 
-                        @* Gumbi za uređivanje i brisanje - vidljivi samo vlasniku ili adminu *@
-                        @{
-                            // Dohvati trenutnog korisnika za provjeru autorizacije u View-u
-                            // PAŽNJA: GetTrenutniKorisnikAsync() je async, ali View-ovi nisu direktno async.
-                            // Ovo je pojednostavljena verzija. U pravoj aplikaciji biste proslijedili ulogu/ID kroz ViewModel.
-                            // Za sada, pretpostavljamo da je autorizacija već obrađena na backendu,
-                            // i da samo sakrivamo/prikazujemo gumbe radi estetike.
-                            // BOLJI PRISTUP: Poslati flag (npr. bool CanEdit, bool CanDelete) iz kontrolera u ViewModel.
-                            //var currentUserIdClaim = Context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-                            int currentUserId = 0;
-                            @*if (currentUserIdClaim != null)
-                            { ZAKOMENTARISALA
-                                int.TryParse(currentUserIdClaim, out currentUserId);
-                            }*@
+                        @if (item.Korisnik != null)
+                        {
+                            <h6 class="card-subtitle mb-2 text-muted">
+                                Korisnik: @item.Korisnik.Ime @item.Korisnik.Prezime (@item.Korisnik.Email)
+                            </h6>
+                        }
 
-                            // Pretpostavka da je Uloga u Recenzija.Korisnik dostupna i da se podudara sa prijavljenim korisnikom
-                            // I da uloga.Admin radi.
-                            bool isAdmin = false; // Postaviti true ako je trenutni korisnik admin
-                            // ILI dohvatite iz ViewData["IsAdmin"] ako šaljete iz kontrolera
+                        <p class="card-text">@item.Tekst</p>
+                        <small class="text-muted">Dodano: @item.DatumDodavanja.ToShortDateString()</small>
+                        <br />
 
-                            // Ovo je pojednostavljena provjera SAMO na strani klijenta
-                            // Stvarna autorizacija je na serveru u kontroleru!
-                            /*if (currentUserId > 0 && item.KorisnikId == currentUserId || isAdmin)
-                            {
-                                <a asp-action="UrediRecenziju" asp-route-id="@item.Id" class="btn btn-sm btn-primary">Uredi</a>
-                                <form asp-action="IzbrisiRecenziju" asp-route-id="@item.Id" method="post" class="d-inline">
-                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Jeste li sigurni da želite obrisati ovu recenziju?');">Obriši</button>
-                                    @Html.AntiForgeryToken()
-                                </form>
-                            }*/
+                        @if (trenutniKorisnikId == item.KorisnikId || isAdmin)
+                        {
+                            <a asp-action="UrediRecenziju" asp-route-id="@item.Id" class="btn btn-sm btn-primary mt-2">Uredi</a>
+                            <form asp-action="IzbrisiRecenziju" asp-route-id="@item.Id" method="post" class="d-inline">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-sm btn-danger mt-2"
+                                        onclick="return confirm('Jeste li sigurni da želite obrisati ovu recenziju?');">
+                                    Obriši
+                                </button>
+                            </form>
                         }
                     </div>
                 </div>

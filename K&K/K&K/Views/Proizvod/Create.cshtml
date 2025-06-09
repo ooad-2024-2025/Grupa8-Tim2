@@ -25,7 +25,7 @@
                     }
 
                     <form asp-action="Create" method="post" enctype="multipart/form-data">
-                        <input asp-for="Slika" type="hidden" value="default.jpg" />
+                        @*<input asp-for="Slika" type="hidden" value="" />*@
                         <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
                         @*Tip proizvoda*@ 
@@ -107,7 +107,7 @@
                             <div class="col-md-6 mb-3">
                                 <label class="form-label fw-bold">Slika proizvoda</label>
                                 <input type="file" name="slikaFile" class="form-control" accept="image/*" />
-                                <div class="form-text">Podržani formati: JPG, PNG, GIF (maks. 5MB)</div>
+                                <div class="form-text">Podržani formati: JPG, PNG, GIF (maks. 2MB)</div>
                             </div>
                         </div>
 
@@ -116,6 +116,10 @@
                             <label class="form-label fw-bold">Pregled slike:</label>
                             <div class="border rounded p-2">
                                 <img id="previewImg" src="" alt="Pregled" style="max-width: 200px; max-height: 200px;" class="img-thumbnail">
+                                <div class="mt-2">
+                                    <small class="text-muted" id="fileInfo"></small>
+                                    
+                                </div>
                             </div>
                         </div>
 
@@ -159,50 +163,45 @@
         });
 
         //Uploadovana slika prikaz
+        // Poboljšan preview sa validacijom
         document.querySelector('input[name="slikaFile"]').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            const preview = document.getElementById('imagePreview');
-            const previewImg = document.getElementById('previewImg');
+             const file = e.target.files[0];
+             const preview = document.getElementById('imagePreview');
+             const previewImg = document.getElementById('previewImg');
+             const fileInfo = document.getElementById('fileInfo');
 
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    previewImg.src = e.target.result;
-                    preview.style.display = 'block';
-                };
-                reader.readAsDataURL(file);
-            } else {
-                preview.style.display = 'none';
-            }
-        });
+             if (file) {
+                 // Validacija veličine
+                 if (file.size > 2 * 1024 * 1024) {
+                     alert('Fajl je prevelik! Maksimalna veličina je 2MB.');
+                     this.value = '';
+                     preview.style.display = 'none';
+                     return;
+                 }
 
-        //Validacija, popraviti mozda
-        document.querySelector('form').addEventListener('submit', function(e) {
-            const tipProizvoda = document.querySelector('input[name="tipProizvoda"]:checked');
+                 // Validacija tipa
+                 const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+                 if (!allowedTypes.includes(file.type)) {
+                     alert('Nepodrzan tip fajla! Koristite JPG, PNG ili GIF.');
+                     this.value = '';
+                     preview.style.display = 'none';
+                     return;
+                 }
 
-            if (!tipProizvoda) {
-                e.preventDefault();
-                alert('Molimo odaberite tip proizvoda!');
-                return;
-            }
+                 const reader = new FileReader();
+                 reader.onload = function(e) {
+                     previewImg.src = e.target.result;
+                     preview.style.display = 'block';
 
-            if (tipProizvoda.value === 'Hrana') {
-                const vrstaHrane = document.querySelector('select[name="vrstaHrane"]').value;
-                if (!vrstaHrane) {
-                    e.preventDefault();
-                    alert('Molimo odaberite vrstu hrane!');
-                    return;
-                }
-            }
+                     const sizeKB = Math.round(file.size / 1024);
+                     fileInfo.textContent = `${file.name} (${sizeKB} KB)`;
+                 };
+                 reader.readAsDataURL(file);
+             } else {
+                 preview.style.display = 'none';
+             }
+         });
 
-            if (tipProizvoda.value === 'Pice') {
-                const vrstaPica = document.querySelector('select[name="vrstaPica"]').value;
-                if (!vrstaPica) {
-                    e.preventDefault();
-                    alert('Molimo odaberite vrstu pića!');
-                    return;
-                }
-            }
-        });
+         
     </script>
 }

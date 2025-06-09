@@ -6,7 +6,7 @@ namespace K_K.Models
     {
         [Display(Name = "Gotovina")]
         Gotovina,
-        [Display(Name = "Karticno placanje")]
+        [Display(Name = "Kartica")]
         Kartica
     }
 }

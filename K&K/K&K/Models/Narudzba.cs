@@ -20,7 +20,9 @@ namespace K_K.Models
 
         [ForeignKey(nameof(Radnik))]
         public String RadnikId { get; set; }
+       // [ScaffoldColumn(false)]
         public Osoba Korisnik { get; set; }
+       // [ScaffoldColumn(false)]
         public Osoba Radnik { get; set; }
         public StatusNarudzbe StatusNarudzbe { get; set; }
          [EnumDataType(typeof(VrstaPlacanja))] 
