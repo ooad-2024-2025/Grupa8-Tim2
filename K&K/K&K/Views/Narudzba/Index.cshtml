@@ -273,7 +273,10 @@
 @{
     ViewData["Title"] = "Moje Narudžbe";
 }
-
+@if (TempData["PorukaZaKorpu"] != null)
+{
+    <div class="alert alert-warning">@TempData["PorukaZaKorpu"]</div>
+}
 <div class="container mt-4">
     <div class="row">
         <div class="col-12">
@@ -393,7 +396,7 @@
                                             <i class="fas fa-eye"></i> Detalji
                                         </a>
 
-                                        <form asp-controller="Korpa" asp-action="DodajUKorpu" method="post" class="d-inline">
+                                        <form asp-controller="Korpa" asp-action="dodajIzNarudzbe" method="post" class="d-inline">
                                             <input type="hidden" name="narudzbaId" value="@narudzba.Id" />
                                             <button type="submit" class="btn btn-outline-success btn-sm">
                                                 <i class="fas fa-shopping-cart"></i> Dodaj u korpu

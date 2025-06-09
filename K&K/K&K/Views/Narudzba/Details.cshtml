@@ -70,6 +70,9 @@
 @{
     ViewData["Title"] = "Detalji Narudžbe";
     var stavke = ViewData["stavke"] as List<K_K.Models.StavkaNarudzbe>;
+    var pdv = @stavke.Sum(s => s.Cijena) * 0.17;
+    var ukupno = pdv + @stavke.Sum(s => s.Cijena);
+
 }
 
 <div class="container mt-4">
@@ -200,7 +203,7 @@
                                             </td>
                                             <td class="text-end">@stavka.Cijena.ToString("F2") KM</td>
                                             <td class="text-end">
-                                                <strong>@((stavka.Cijena * stavka.Kolicina).ToString("F2")) KM</strong>
+                                                <strong>@stavka.Cijena.ToString("F2") KM</strong>
                                             </td>
                                         </tr>
                                     }
@@ -209,7 +212,7 @@
                                     <tr>
                                         <th colspan="4" class="text-end">Ukupna cijena:</th>
                                         <th class="text-end text-primary">
-                                            @stavke.Sum(s => s.Cijena * s.Kolicina).ToString("F2") KM
+                                            @ukupno.ToString("F2") KM
                                         </th>
                                     </tr>
                                 </tfoot>

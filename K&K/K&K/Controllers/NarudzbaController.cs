@@ -318,6 +318,10 @@ namespace K_K.Controllers
                 {
                     _context.Update(narudzba);
                     await _context.SaveChangesAsync();
+                    if (narudzba.NacinPlacanja == VrstaPlacanja.Kartica)
+                    {
+                        return RedirectToAction("Unos","KarticnoPlacanje");
+                    }
                   return RedirectToAction(nameof(Index));
                     //return RedirectToAction("Index","Proizvod");
                     
