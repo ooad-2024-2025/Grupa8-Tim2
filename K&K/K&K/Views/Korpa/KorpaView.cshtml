@@ -3,6 +3,18 @@
 @{
     ViewData["Title"] = "Moja Korpa";
 }
+@if (TempData["PorukaZaKorpu2"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["PorukaZaKorpu2"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+@if (ViewBag.PorukaZaKorpu != null)
+{
+    <div class="alert alert-success">@ViewBag.PorukaZaKorpu</div>
+}
+
 
 <div class="container mt-4">
     <h2>Moja Korpa</h2>
@@ -55,7 +67,9 @@
                                 <p><strong>Ukupno proizvoda: <span id="ukupno-proizvoda">@Model.brojProizvoda</span></strong></p>
                                 <p><strong>Ukupna cijena: <span id="ukupna-cijena">@Model.ukupnaCijena KM</span></strong></p>
 
-                                <button class="btn btn-success">Nastavi ka plaćanju</button>
+                                <a class="btn btn-outline-danger ms-2" href="/Narudzba/Create">
+                                    Nastavi ka plaćanju
+                                </a>
                                 <button class="btn btn-outline-danger ms-2 ocisti-korpu" data-korpa-id="@Model.Id">
                                     Očisti korpu
                                 </button>

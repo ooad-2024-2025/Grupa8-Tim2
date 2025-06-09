@@ -143,7 +143,7 @@
 @{
     ViewData["Title"] = "Create";
     var korpaStavke = ViewData["KorpaStavke"] as List<K_K.Models.StavkaKorpe>; 
-    double ukupno = korpaStavke?.Sum(s => s.Cijena * s.Kolicina) ?? 0;
+    double ukupno = korpaStavke?.Sum(s => s.Cijena ) ?? 0;
     double porez = ukupno * 0.17; 
     double ukupnoSaPorezom = ukupno + porez;
 }
@@ -281,7 +281,8 @@
                                 </div>
                             </div>
                             <div class="col-3 text-end">
-                                <div class="fw-bold">@((stavka.Cijena * stavka.Kolicina).ToString("F2")) KM</div>
+                               @* <div class="fw-bold">@((stavka.Cijena * stavka.Kolicina).ToString("F2")) KM</div>*@
+                                <div class="fw-bold">@((stavka.Cijena ).ToString("F2")) KM</div>
                                 <small class="text-muted">@stavka.Cijena.ToString("F2") KM svaki</small>
                                 <div class="mt-2">
                                     <button type="button" class="btn btn-sm btn-outline-danger"

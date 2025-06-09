@@ -58,6 +58,90 @@ namespace K_K.Controllers
     .ToList();
             return View(productCarts);
         }*/
+        public async Task<IActionResult> dodajIzNarudzbe(int narudzbaId)
+        {
+            var korisnik = await _userManager.GetUserAsync(User);
+            if (korisnik == null)
+                return Redirect("/Identity/Account/Register");
+
+            var stavkeNarudzbe = await _context.StavkaNarudzbe
+                .Where(n => n.NarudzbaId == narudzbaId)
+                .Include(s => s.Proizvod)
+                .ToListAsync();
+
+            if (!stavkeNarudzbe.Any())
+            {
+                TempData["PorukaZaKorpu"] = "Stavke su uklonjene ili je narudžba prazna";
+                return View();
+            }
+
+            var korpa = await _context.Korpa
+                .Include(k => k.Stavke)
+                .FirstOrDefaultAsync(c => c.KorisnikId == korisnik.Id);
+
+            var stavkeZaKorpu = stavkeNarudzbe.Select(s => new StavkaKorpe
+            {
+                ProizvodId = s.ProizvodId,
+                Kolicina = s.Kolicina,
+                Cijena = s.Cijena
+            }).ToList();
+
+            // Zapamtite staro stanje korpe za računanje dodatnih vrijednosti
+            int staraKolicina = korpa?.brojProizvoda ?? 0;
+            double staraCijena = korpa?.ukupnaCijena ?? 0;
+            int dodatnaKolicina = 0;
+            double dodatnaCijena = 0;
+
+            if (korpa == null)
+            {
+                korpa = new Korpa
+                {
+                    KorisnikId = korisnik.Id,
+                    brojProizvoda = stavkeZaKorpu.Sum(s => s.Kolicina),
+                    ukupnaCijena = stavkeZaKorpu.Sum(s => s.Cijena * s.Kolicina),
+                    Stavke = stavkeZaKorpu
+                };
+                _context.Korpa.Add(korpa);
+            }
+            else
+            {
+                foreach (var novaStavka in stavkeZaKorpu)
+                {
+                    var postojecaStavka = korpa.Stavke.FirstOrDefault(s => s.ProizvodId == novaStavka.ProizvodId);
+                    if (postojecaStavka != null)
+                    {
+                        postojecaStavka.Kolicina += novaStavka.Kolicina;
+                        postojecaStavka.Cijena = novaStavka.Cijena;
+                        dodatnaKolicina += novaStavka.Kolicina;
+                        dodatnaCijena += novaStavka.Cijena;
+                       await PromijeniKolicinu(korpa.Id, postojecaStavka.ProizvodId, postojecaStavka.Kolicina);
+                    }
+                    else
+                    {
+                        korpa.Stavke.Add(novaStavka);
+                    }
+                }
+            }
+
+            // Preračunajte ukupne vrijednosti
+            //korpa.brojProizvoda = korpa.Stavke.Sum(s => s.Kolicina);
+            //korpa.ukupnaCijena = korpa.Stavke.Sum(s => s.Cijena * s.Kolicina);
+            
+
+           
+            
+
+            // Postavite TempData umjesto ViewBag (jer koristite RedirectToAction)
+            TempData["DodatnaKolicina"] = dodatnaKolicina.ToString();
+            TempData["DodatnaCijena"] = dodatnaCijena.ToString();
+            TempData["PorukaZaKorpu2"] = "Proizvodi su uspešno dodati u korpu";
+
+            await _context.SaveChangesAsync();
+            
+            await AzurirajKorpu(korpa.Id);
+
+            return RedirectToAction("KorpaView", "Korpa");
+        }
         public async Task<IActionResult> KorpaView()
         {
             var korisnik = await _userManager.GetUserAsync(User);
