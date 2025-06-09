@@ -9,7 +9,6 @@
         <div class="col-12">
             <h2 class="mb-4">
                 <i class="fas fa-coffee"></i> Naša Ponuda
-                <small class="text-muted">(@ViewBag.TotalCount proizvoda)</small>
             </h2>
         </div>
     </div>
@@ -159,14 +158,13 @@
                         <div class="card-img-top-wrapper" style="height: 200px; overflow: hidden;">
                             @if (!string.IsNullOrEmpty(proizvod.Slika))
                             {
-                                <img src="~/images/proizvodi/@proizvod.Slika"
-                                     class="card-img-top"
-                                     alt="@proizvod.Naziv"
-                                     style="width: 100%; height: 100%; object-fit: cover;" />
+                                
+                                <img src="@proizvod.Slika" class="card-img-top" style="height: 200px; object-fit: cover;" alt="@proizvod.Naziv" />
+
                             }
                             else
                             {
-                                <div class="bg-light d-flex align-items-center justify-content-center h-100">
+                                <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
                                     <i class="fas fa-image fa-3x text-muted"></i>
                                 </div>
                             }
@@ -186,7 +184,7 @@
                                         @switch (hrana.VrstaHrane)
                                         {
                                             case VrstaHrane.Pecivo:
-                                                <text><i class="fas fa-cookie-bite"></i> Pečivo</text>
+                                                <text><i class="fas fa-cookie-bite"></i> Pecivo</text>
                                                 break;
                                             case VrstaHrane.Kolac:
                                                 <text><i class="fas fa-birthday-cake"></i> Kolač</text>

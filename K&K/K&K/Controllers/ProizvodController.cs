@@ -22,11 +22,11 @@ namespace K_K.Controllers
         }
 
         // GET: Proizvod
-        public async Task<IActionResult> Index(string searchTerm, string sortOrder, string tipProizvoda, 
+        public async Task<IActionResult> Index(string searchTerm, string sortOrder, string tipProizvoda,
                                                 string podkategorija, decimal? minPrice, decimal? maxPrice, string velicina)
         {
             var proizvodi = _context.Proizvod.AsQueryable();
-            if(!string.IsNullOrEmpty(searchTerm))
+            if (!string.IsNullOrEmpty(searchTerm))
             {
                 proizvodi = proizvodi.Where(p => p.Naziv.Contains(searchTerm) || p.Opis.Contains(searchTerm));
             }
@@ -113,7 +113,7 @@ namespace K_K.Controllers
 
             return View(await proizvodi.ToListAsync());
         }
-  
+
 
         // GET: Proizvod/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -154,15 +154,16 @@ namespace K_K.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //[Authorize(Roles = "Admin")], isto moram dodat
-        public async Task<IActionResult> Create([Bind("Id,Velicina,Naziv,Opis,Slika,Cijena")] Proizvod proizvod, 
+        public async Task<IActionResult> Create([Bind("Id,Velicina,Naziv,Opis,Slika,Cijena")] Proizvod proizvod,
                                                 string tipProizvoda, VrstaHrane? vrstaHrane,
                                                 VrstaPica? vrstaPica, IFormFile slikaFile)
         {
+            ModelState.Remove("Slika");
             if (slikaFile != null && slikaFile.Length > 0)
             {
                 try
                 {
-                   
+                    /*
                     var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "proizvodi");
                     Directory.CreateDirectory(uploadsFolder);
 
@@ -176,6 +177,28 @@ namespace K_K.Controllers
                     }
 
                     proizvod.Slika = fileName;
+                    */
+                    if (slikaFile.Length > 2 * 1024 * 1024) // 2MB
+                    {
+                        ModelState.AddModelError("", "Slika je prevelika. Maksimalno 2MB.");
+                        return View(proizvod);
+                    }
+
+                    var allowedTypes = new[] { "image/jpeg", "image/jpg", "image/png", "image/gif" };
+                    if (!allowedTypes.Contains(slikaFile.ContentType.ToLower()))
+                    {
+                        ModelState.AddModelError("", "Nepodrzan format. Koristite JPG, PNG ili GIF.");
+                        return View(proizvod);
+                    }
+
+                    // Konverzija u Base64
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await slikaFile.CopyToAsync(memoryStream);
+                        var imageBytes = memoryStream.ToArray();
+                        var base64String = Convert.ToBase64String(imageBytes);
+                        proizvod.Slika = $"data:{slikaFile.ContentType};base64,{base64String}";
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -183,7 +206,24 @@ namespace K_K.Controllers
                     return View(proizvod);
                 }
             }
+            if (string.IsNullOrEmpty(tipProizvoda))
+            {
+                ModelState.AddModelError("", "Molimo odaberite tip proizvoda.");
+                return View(proizvod);
+            }
 
+            if (tipProizvoda == "Hrana" && !vrstaHrane.HasValue)
+            {
+                ModelState.AddModelError("", "Molimo odaberite vrstu hrane.");
+                return View(proizvod);
+            }
+
+            if (tipProizvoda == "Pice" && !vrstaPica.HasValue)
+            {
+                ModelState.AddModelError("", "Molimo odaberite vrstu pića.");
+                return View(proizvod);
+            }
+            
             if (ModelState.IsValid)
             {
                 Proizvod finalProizvod = null;
@@ -217,7 +257,6 @@ namespace K_K.Controllers
                     ModelState.AddModelError("", "Molimo odaberite tip proizvoda i kategoriju.");
                     return View(proizvod);
                 }
-
                 _context.Add(finalProizvod);
                 await _context.SaveChangesAsync();
                 TempData["SuccessMessage"] = "Proizvod je uspješno kreiran.";
@@ -261,7 +300,7 @@ namespace K_K.Controllers
             {
                 try
                 {
-                    //jednom
+                    /*//jednom
                     var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "proizvodi");
                     Directory.CreateDirectory(uploadsFolder);
 
@@ -287,7 +326,29 @@ namespace K_K.Controllers
                         await slikaFile.CopyToAsync(stream);
                     }
 
-                    proizvod.Slika = fileName;
+                    proizvod.Slika = fileName
+                    */
+                    if (slikaFile.Length > 2 * 1024 * 1024)
+                    {
+                        ModelState.AddModelError("", "Slika je prevelika. Maksimalno 2MB.");
+                        return View(proizvod);
+                    }
+
+                    var allowedTypes = new[] { "image/jpeg", "image/jpg", "image/png", "image/gif" };
+                    if (!allowedTypes.Contains(slikaFile.ContentType.ToLower()))
+                    {
+                        ModelState.AddModelError("", "Nepodrzan format. Koristite JPG, PNG ili GIF.");
+                        return View(proizvod);
+                    }
+
+                    // Konverzija u Base64
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await slikaFile.CopyToAsync(memoryStream);
+                        var imageBytes = memoryStream.ToArray();
+                        var base64String = Convert.ToBase64String(imageBytes);
+                        proizvod.Slika = $"data:{slikaFile.ContentType};base64,{base64String}";
+                    }
                 }
                 catch (Exception ex)
                 {
