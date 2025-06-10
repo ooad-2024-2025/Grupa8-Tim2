@@ -77,15 +77,15 @@ namespace K_K.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
+            [Required(ErrorMessage = "Ovo polje je obavezno!")]
             [Display(Name = "Ime")]
             public string Ime { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "Ovo polje je obavezno!")]
             [Display(Name = "Prezime")]
             public string Prezime { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "Ovo polje je obavezno!")]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
@@ -94,8 +94,8 @@ namespace K_K.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [Required(ErrorMessage = "Ovo polje je obavezno!")]
+            [StringLength(100, ErrorMessage = "Lozinka mora imati između {2} i {1} karaktera.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
@@ -106,7 +106,7 @@ namespace K_K.Areas.Identity.Pages.Account
             /// </summary>
             [DataType(DataType.Password)]
             [Display(Name = "Potvrdi password")]
-            [Compare("Password", ErrorMessage = "Password i potvrda se ne podudaraju.")]
+            [Compare("Password", ErrorMessage = "Lozinke se ne podudaraju.")]
             public string ConfirmPassword { get; set; }
         }
 
