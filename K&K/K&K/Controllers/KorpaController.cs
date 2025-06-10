@@ -15,10 +15,10 @@ namespace K_K.Controllers
     public class KorpaController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<Osoba> _userManager;
 
 
-        public KorpaController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        public KorpaController(ApplicationDbContext context, UserManager<Osoba> userManager)
         {
             _context = context;
             _userManager = userManager;
@@ -381,7 +381,7 @@ namespace K_K.Controllers
         // GET: Korpa/Create
         public IActionResult Create()
         {
-            ViewData["KorisnikId"] = new SelectList(_context.Osoba, "Id", "Email");
+            ViewData["KorisnikId"] = new SelectList(_context.Users, "Id", "Email");
             return View();
         }
 
@@ -398,7 +398,7 @@ namespace K_K.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["KorisnikId"] = new SelectList(_context.Osoba, "Id", "Email", korpa.KorisnikId);
+            ViewData["KorisnikId"] = new SelectList(_context.Users, "Id", "Email", korpa.KorisnikId);
             return View(korpa);
         }
 
@@ -416,7 +416,7 @@ namespace K_K.Controllers
             {
                 return NotFound();
             }
-            ViewData["KorisnikId"] = new SelectList(_context.Osoba, "Id", "Email", korpa.KorisnikId);
+            ViewData["KorisnikId"] = new SelectList(_context.Users, "Id", "Email", korpa.KorisnikId);
             return View(korpa);
         }
 
@@ -452,7 +452,7 @@ namespace K_K.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["KorisnikId"] = new SelectList(_context.Osoba, "Id", "Email", korpa.KorisnikId);
+            ViewData["KorisnikId"] = new SelectList(_context.Users, "Id", "Email", korpa.KorisnikId);
             return View(korpa);
         }
 

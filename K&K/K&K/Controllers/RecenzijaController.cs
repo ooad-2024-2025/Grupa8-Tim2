@@ -14,10 +14,10 @@ namespace K_K.Controllers
     public class RecenzijaController : Controller
     {
         private readonly ApplicationDbContext _dataContext;
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager; // Dodana injekcija
+        private readonly UserManager<Osoba> _userManager;
+        private readonly SignInManager<Osoba> _signInManager; // Dodana injekcija
 
-        public RecenzijaController(ApplicationDbContext context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public RecenzijaController(ApplicationDbContext context, UserManager<Osoba> userManager, SignInManager<Osoba> signInManager)
         {
             _dataContext = context;
             _userManager = userManager;

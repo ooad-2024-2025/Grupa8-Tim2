@@ -18,9 +18,9 @@ namespace K_K.Controllers
     public class NarudzbaController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<Osoba> _userManager;
 
-        public NarudzbaController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        public NarudzbaController(ApplicationDbContext context, UserManager<Osoba> userManager)
         {
             _context = context;
             _userManager = userManager;
@@ -117,8 +117,8 @@ namespace K_K.Controllers
             ViewData["KorpaStavke"] = stavke;
             ViewData["KorpaId"] = korpa.Id;
 
-            ViewData["KorisnikId"] = new SelectList(_context.Osoba, "Id", "Email");
-            ViewData["RadnikId"] = new SelectList(_context.Osoba, "Id", "Email");
+            ViewData["KorisnikId"] = new SelectList(_context.Users, "Id", "Email");
+            ViewData["RadnikId"] = new SelectList(_context.Users, "Id", "Email");
 
             ViewData["NacinPreuzimanja"] = new SelectList(Enum.GetValues(typeof(VrstaPreuzimanja)));
             ViewData["NacinPlacanja"] = new SelectList(Enum.GetValues(typeof(VrstaPlacanja)));
@@ -198,8 +198,8 @@ namespace K_K.Controllers
                
             }
             
-            ViewData["KorisnikId"] = new SelectList(_context.Osoba, "Id", "Email", narudzba.KorisnikId);
-            ViewData["RadnikId"] = new SelectList(_context.Osoba, "Id", "Email", narudzba.RadnikId);
+            ViewData["KorisnikId"] = new SelectList(_context.Users, "Id", "Email", narudzba.KorisnikId);
+            ViewData["RadnikId"] = new SelectList(_context.Users, "Id", "Email", narudzba.RadnikId);
             ViewData["NacinPreuzimanja"] = new SelectList(Enum.GetValues(typeof(VrstaPreuzimanja)), narudzba.NacinPreuzimanja);
             ViewData["NacinPlacanja"] = new SelectList(Enum.GetValues(typeof(VrstaPlacanja)), narudzba.NacinPlacanja);
             return View(narudzba);
@@ -227,8 +227,8 @@ namespace K_K.Controllers
 
             }*/
 
-                ViewData["KorisnikId"] = new SelectList(_context.Osoba, "Id", "Email", narudzba.KorisnikId);
-           ViewData["RadnikId"] = new SelectList(_context.Osoba, "Id", "Email", narudzba.RadnikId);
+                ViewData["KorisnikId"] = new SelectList(_context.Users, "Id", "Email", narudzba.KorisnikId);
+           ViewData["RadnikId"] = new SelectList(_context.Users, "Id", "Email", narudzba.RadnikId);
             ViewData["NacinPlacanja"] = new SelectList(Enum.GetValues(typeof(VrstaPlacanja)), narudzba.NacinPlacanja);
 
             return View(narudzba);
@@ -342,8 +342,8 @@ namespace K_K.Controllers
             }
 
             // If we get here, model validation failed - return to Edit view
-            ViewData["KorisnikId"] = new SelectList(_context.Osoba, "Id", "Email", narudzba.KorisnikId);
-           ViewData["RadnikId"] = new SelectList(_context.Osoba, "Id", "Email", narudzba.RadnikId);
+            ViewData["KorisnikId"] = new SelectList(_context.Users, "Id", "Email", narudzba.KorisnikId);
+           ViewData["RadnikId"] = new SelectList(_context.Users, "Id", "Email", narudzba.RadnikId);
             ViewData["NacinPlacanja"] = new SelectList(Enum.GetValues(typeof(VrstaPlacanja)), narudzba.NacinPlacanja);
             ViewData["NacinPreuzimanja"] = new SelectList(Enum.GetValues(typeof(VrstaPreuzimanja)), narudzba.NacinPreuzimanja);
 

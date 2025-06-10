@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace K_K.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<Osoba>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -18,7 +18,6 @@ namespace K_K.Data
         public DbSet<LokacijaKafica> LokacijaKafica { get; set; }
         public DbSet<Narudzba> Narudzba  { get; set; }
         public DbSet<Obavijest> Obavijest  { get; set; }
-        public DbSet<Osoba> Osoba  { get; set; }
         public DbSet<Recenzija> Recenzija { get; set; }
         public DbSet<StavkaNarudzbe> StavkaNarudzbe { get; set; }
         public DbSet<StavkaKorpe> StavkaKorpe { get; set; }
