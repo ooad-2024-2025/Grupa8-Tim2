@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+//using IEmailSender = K_K.Models.IEmailSender;
 
 namespace K_K.Areas.Identity.Pages.Account
 {
@@ -29,14 +30,15 @@ namespace K_K.Areas.Identity.Pages.Account
         private readonly IUserStore<Osoba> _userStore;
         private readonly IUserEmailStore<Osoba> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
-        private readonly IEmailSender _emailSender;
+        private readonly Models.IEmailSender _emailSender;
 
         public RegisterModel(
             UserManager<Osoba> userManager,
             IUserStore<Osoba> userStore,
             SignInManager<Osoba> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            Models.IEmailSender emailSender
+            )
         {
             _userManager = userManager;
             _userStore = userStore;
