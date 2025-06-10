@@ -92,90 +92,104 @@ namespace K_K.Controllers
             return View(narudzba);
         }
 
+
         // GET: Narudzba/Create
-        //prepravila sam da bude Task<IActionResult>
         public async Task<IActionResult> Create()
-        {  
-            var korisnik =  await _userManager.GetUserAsync(User);
-            
+        {
+            var korisnik = await _userManager.GetUserAsync(User);
             if (korisnik == null)
             {
                 return Redirect("/Identity/Account/Register");
             }
 
-
-            // Dohvati sve stavke iz korpe za korisnika
             var korpa = await _context.Korpa.FirstOrDefaultAsync(k => k.KorisnikId == korisnik.Id);
             if (korpa == null)
             {
                 TempData["ErrorMessage"] = "Korpa ne postoji.";
                 return RedirectToAction("Index", "Proizvod");
             }
-            var stavke= await _context.StavkaKorpe
+            var stavke = await _context.StavkaKorpe
                .Where(s => s.KorpaId == korpa.Id)
                .ToListAsync();
+
+            if (!stavke.Any()) // Provjera da li korpa ima stavki prije prikaza forme
+            {
+                TempData["ErrorMessage"] = "Vaša korpa je prazna. Dodajte proizvode prije naručivanja.";
+                return RedirectToAction("Index", "Proizvod");
+            }
 
             double ukupnaCijena = korpa?.ukupnaCijena ?? 0;
 
             ViewData["Cijena"] = ukupnaCijena;
             ViewData["KorpaStavke"] = stavke;
             ViewData["KorpaId"] = korpa.Id;
+            // Ne treba SelectList za KorisnikId i RadnikId jer ih postavljamo automatski
+            // ViewData["KorisnikId"] = new SelectList(_context.Users, "Id", "Email");
+            // ViewData["RadnikId"] = new SelectList(_context.Users, "Id", "Email");
 
-            ViewData["KorisnikId"] = new SelectList(_context.Users, "Id", "Email");
-            ViewData["RadnikId"] = new SelectList(_context.Users, "Id", "Email");
-
+            // Ne treba SelectList za NacinPlacanja jer će korisnik birati dugmetom
             ViewData["NacinPreuzimanja"] = new SelectList(Enum.GetValues(typeof(VrstaPreuzimanja)));
-            ViewData["NacinPlacanja"] = new SelectList(Enum.GetValues(typeof(VrstaPlacanja)));
             return View();
         }
 
-        // POST: Narudzba/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //uklonila sam Id,KorisnikId,RadnikId,StatusNarudzbe, u parametrima
+        // POST: Narudzba/Create (Jedinstvena akcija za oba načina plaćanja)
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("StatusNarudzbe,NacinPlacanja,NacinPreuzimanja,DatumNarudzbe,AdresaDostave")] Narudzba narudzba)
+        public async Task<IActionResult> Create(
+            [Bind("NacinPreuzimanja,DatumNarudzbe,AdresaDostave")] Narudzba narudzba,
+            string submitButton // Dodajemo parametar za prepoznavanje kliknutog dugmeta
+        )
         {
             var korisnik = await _userManager.GetUserAsync(User);
             if (korisnik == null)
-             {
-                 return Redirect("/Identity/Account/Register");
-             }
+            {
+                return Redirect("/Identity/Account/Register");
+            }
+
             var korpa = await _context.Korpa.FirstOrDefaultAsync(k => k.KorisnikId == korisnik.Id);
-
             var stavkeUKorpi = await _context.StavkaKorpe
-             .Where(s => s.KorpaId == korpa.Id)
-             .ToListAsync();
-
+                .Where(s => s.KorpaId == korpa.Id)
+                .ToListAsync();
             if (stavkeUKorpi == null || stavkeUKorpi.Count == 0)
             {
                 TempData["ErrorMessage"] = "Vaša korpa je prazna. Dodajte proizvode prije naručivanja.";
                 return RedirectToAction("Index", "Proizvod");
             }
 
-
-
             narudzba.KorisnikId = korisnik.Id;
-            narudzba.RadnikId = "f7974104-9ab3-4d73-a79b-85f21b1c9f68";
-            narudzba.StatusNarudzbe = StatusNarudzbe.Potvrdjena;
+            narudzba.RadnikId = "f7974104-9ab3-4d73-a79b-85f21b1c9f68"; // Hardkodiran radnik ID
 
-
-
-            // Ukloni greske validacije za ova polja jer ih postavljam rucno
+            // Ukloni greske validacije za polja koja postavljamo rucno
             ModelState.Remove("Korisnik");
             ModelState.Remove("Radnik");
             ModelState.Remove("KorisnikId");
             ModelState.Remove("RadnikId");
+            ModelState.Remove("NacinPlacanja"); // Ukloni NacinPlacanja jer se postavlja na osnovu dugmeta
+
+            // Postavi NacinPlacanja i StatusNarudzbe na osnovu kliknutog dugmeta
+            if (submitButton == "gotovina")
+            {
+                narudzba.NacinPlacanja = VrstaPlacanja.Gotovina;
+                narudzba.StatusNarudzbe = StatusNarudzbe.Potvrdjena; // Odmah potvrđena za gotovinu
+            }
+            else if (submitButton == "kartica")
+            {
+                narudzba.NacinPlacanja = VrstaPlacanja.Kartica;
+              //  narudzba.StatusNarudzbe = StatusNarudzbe.NaCekanjuPlacanja; // Na čekanju za karticu
+            }
+            else
+            {
+                // Ovo bi se trebalo dogoditi samo ako korisnik na neki način pošalje formu bez klika na dugme
+                ModelState.AddModelError("", "Morate odabrati način plaćanja.");
+            }
+
+
             if (ModelState.IsValid)
             {
                 _context.Add(narudzba);
                 await _context.SaveChangesAsync();
-               // var korpa = await _context.Korpa.FirstOrDefaultAsync(k => k.KorisnikId == narudzba.KorisnikId);
-               /* var stavkeUKorpi = await _context.StavkaKorpe
-               .Where(s => s.KorpaId == korpa.Id)
-               .ToListAsync();*/
 
+                // Premjesti stavke iz korpe u stavke narudžbe
                 foreach (var stavka in stavkeUKorpi)
                 {
                     var novaStavka = new StavkaNarudzbe
@@ -188,25 +202,37 @@ namespace K_K.Controllers
                     _context.StavkaNarudzbe.Add(novaStavka);
                 }
                 await _context.SaveChangesAsync();
-                _context.StavkaKorpe.RemoveRange(stavkeUKorpi);
-                await _context.SaveChangesAsync();
 
                 if (narudzba.NacinPlacanja == VrstaPlacanja.Kartica)
                 {
+                    // Za kartično plaćanje, ne brišemo korpu ovdje!
+                    // Korpa se briše tek nakon uspješnog plaćanja u KarticnoPlacanjeControlleru.
                     return RedirectToAction("Unos", "KarticnoPlacanje", new { id = narudzba.Id });
                 }
-                else
+                else // Gotovina
                 {
-                    return RedirectToAction("Index","Proizvod");
+                    // Za gotovinsko plaćanje, brišemo korpu i preusmjeravamo na uspjeh
+                    _context.StavkaKorpe.RemoveRange(stavkeUKorpi);
+                    await _context.SaveChangesAsync();
+                    TempData["SuccessMessage"] = "Narudžba je uspješno kreirana i potvrđena!";
+                    return RedirectToAction("Uspjeh", "Narudzba"); // Preusmjeri na Uspjeh akciju u NarudzbaControlleru
                 }
-               
             }
-            
-            ViewData["KorisnikId"] = new SelectList(_context.Users, "Id", "Email", narudzba.KorisnikId);
-            ViewData["RadnikId"] = new SelectList(_context.Users, "Id", "Email", narudzba.RadnikId);
+
+            // Ako model nije validan, vratite korisnika na formu
+            double ukupnaCijena = korpa?.ukupnaCijena ?? 0;
+            ViewData["Cijena"] = ukupnaCijena;
+            ViewData["KorpaStavke"] = stavkeUKorpi;
+            ViewData["KorpaId"] = korpa.Id;
             ViewData["NacinPreuzimanja"] = new SelectList(Enum.GetValues(typeof(VrstaPreuzimanja)), narudzba.NacinPreuzimanja);
-            ViewData["NacinPlacanja"] = new SelectList(Enum.GetValues(typeof(VrstaPlacanja)), narudzba.NacinPlacanja);
             return View(narudzba);
+        }
+
+        // Akcija za uspjeh nakon gotovinskog plaćanja
+        public IActionResult Uspjeh()
+        {
+            // Ova akcija će prikazati poruku o uspješnoj narudžbi
+            return View();
         }
 
         // GET: Narudzba/Edit/5
@@ -247,26 +273,7 @@ namespace K_K.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("StatusNarudzbe,NacinPlacanja,NacinPreuzimanja,DatumNarudzbe,AdresaDostave")] Narudzba narudzba)
         {
-            /*
-                        if (id != narudzba.Id)
-                        {
-                            //return NotFound();
-                            return Content($"Test Ne postoji narudzba: {id}");
-                        }
-
-                        var korisnik = await _userManager.GetUserAsync(User);
-                        if (korisnik == null)
-                        {
-                            return Redirect("/Identity/Account/Register");
-                        }
-
-
-                        var postojeca = await _context.Narudzba.FindAsync(id);
-                        if (postojeca == null)
-                        {
-                            return NotFound();
-                        }
-            */
+            
             var korisnik = await _userManager.GetUserAsync(User);
             if (korisnik == null)
             {

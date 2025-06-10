@@ -1,6 +1,14 @@
 {
   "Version": 1,
+<<<<<<< HEAD
   "Hash": "0UB4RWVV4wnOJ56zJ8ZHU29FqgS7Z+mowQOaNirnZm4=",
+=======
+<<<<<<< HEAD
+  "Hash": "dm93VHF266ZsQamHWNe64DzXDqoFYHaDbmVRw+jKXlo=",
+=======
+  "Hash": "zD1cMvCvBCFUAHu1wZ8bzPjXDpXJBSjpF/Y234tkHy4=",
+>>>>>>> f8b011d8a604aa1c9d7bfc5e4100929932a250a3
+>>>>>>> 0e3b72fdd48d7caa82e12700af2e7711d7b7a0ac
   "Source": "K&K",
   "BasePath": "_content/K&K",
   "Mode": "Default",
@@ -2876,7 +2884,15 @@
   "Endpoints": [
     {
       "Route": "css/site.7s06qipqco.css",
+<<<<<<< HEAD
       "AssetFile": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\css\\site.css",
+=======
+<<<<<<< HEAD
+      "AssetFile": "C:\\Users\\HP\\Source\\Repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\css\\site.css",
+=======
+      "AssetFile": "C:\\Users\\korisnik\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\css\\site.css",
+>>>>>>> f8b011d8a604aa1c9d7bfc5e4100929932a250a3
+>>>>>>> 0e3b72fdd48d7caa82e12700af2e7711d7b7a0ac
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -2897,7 +2913,15 @@
         },
         {
           "Name": "Last-Modified",
+<<<<<<< HEAD
           "Value": "Tue, 10 Jun 2025 21:34:30 GMT"
+=======
+<<<<<<< HEAD
+          "Value": "Tue, 10 Jun 2025 19:40:21 GMT"
+=======
+          "Value": "Tue, 10 Jun 2025 20:02:01 GMT"
+>>>>>>> f8b011d8a604aa1c9d7bfc5e4100929932a250a3
+>>>>>>> 0e3b72fdd48d7caa82e12700af2e7711d7b7a0ac
         },
         {
           "Name": "Cache-Control",
@@ -2942,7 +2966,15 @@
         },
         {
           "Name": "Last-Modified",
+<<<<<<< HEAD
           "Value": "Tue, 10 Jun 2025 21:34:30 GMT"
+=======
+<<<<<<< HEAD
+          "Value": "Tue, 10 Jun 2025 19:40:21 GMT"
+=======
+          "Value": "Tue, 10 Jun 2025 20:02:01 GMT"
+>>>>>>> f8b011d8a604aa1c9d7bfc5e4100929932a250a3
+>>>>>>> 0e3b72fdd48d7caa82e12700af2e7711d7b7a0ac
         },
         {
           "Name": "Cache-Control",
@@ -6511,7 +6543,15 @@
         },
         {
           "Name": "Last-Modified",
+<<<<<<< HEAD
           "Value": "Sun, 08 Jun 2025 19:59:41 GMT"
+=======
+<<<<<<< HEAD
+          "Value": "Tue, 10 Jun 2025 22:36:07 GMT"
+=======
+          "Value": "Tue, 10 Jun 2025 19:33:46 GMT"
+>>>>>>> f8b011d8a604aa1c9d7bfc5e4100929932a250a3
+>>>>>>> 0e3b72fdd48d7caa82e12700af2e7711d7b7a0ac
         },
         {
           "Name": "Cache-Control",
@@ -6548,7 +6588,15 @@
         },
         {
           "Name": "Last-Modified",
+<<<<<<< HEAD
           "Value": "Sun, 08 Jun 2025 19:59:41 GMT"
+=======
+<<<<<<< HEAD
+          "Value": "Tue, 10 Jun 2025 22:36:07 GMT"
+=======
+          "Value": "Tue, 10 Jun 2025 19:33:46 GMT"
+>>>>>>> f8b011d8a604aa1c9d7bfc5e4100929932a250a3
+>>>>>>> 0e3b72fdd48d7caa82e12700af2e7711d7b7a0ac
         },
         {
           "Name": "Cache-Control",
@@ -6593,7 +6641,15 @@
         },
         {
           "Name": "Last-Modified",
+<<<<<<< HEAD
           "Value": "Sun, 08 Jun 2025 19:59:41 GMT"
+=======
+<<<<<<< HEAD
+          "Value": "Tue, 10 Jun 2025 22:36:07 GMT"
+=======
+          "Value": "Tue, 10 Jun 2025 19:33:46 GMT"
+>>>>>>> f8b011d8a604aa1c9d7bfc5e4100929932a250a3
+>>>>>>> 0e3b72fdd48d7caa82e12700af2e7711d7b7a0ac
         },
         {
           "Name": "Cache-Control",
@@ -6638,7 +6694,15 @@
         },
         {
           "Name": "Last-Modified",
+<<<<<<< HEAD
           "Value": "Sun, 08 Jun 2025 19:59:41 GMT"
+=======
+<<<<<<< HEAD
+          "Value": "Tue, 10 Jun 2025 22:36:07 GMT"
+=======
+          "Value": "Tue, 10 Jun 2025 19:33:46 GMT"
+>>>>>>> f8b011d8a604aa1c9d7bfc5e4100929932a250a3
+>>>>>>> 0e3b72fdd48d7caa82e12700af2e7711d7b7a0ac
         },
         {
           "Name": "Cache-Control",
