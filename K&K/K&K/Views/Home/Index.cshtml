@@ -1,8 +1,56 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Dobrodošli";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Dobro došli u K&K kafić</h1>
-    <p></a>.</p>
-</div>
+
+<section class="hero-section text-center">
+    <div class="hero-overlay">
+        <h1 class="hero-title">
+            Dobrodošli u <span class="brand">K&K kafić</span>
+        </h1>
+        <p class="hero-subtitle">Gdje svaki gutljaj miriše na Afriku</p>
+        <a asp-controller="Proizvod" asp-action="Index" class="btn-menu">Pogledaj Meni</a>
+    </div>
+</section>
+
+
+
+<section class="info-section text-center">
+    <div class="container">
+        <h2 class="info-title">Zašto izabrati nas?</h2>
+        <p class="info-subtitle">Spoj tradicije, kvaliteta i ljubavi u svakoj šolji kafe.</p>
+    </div>
+</section>
+
+
+<section class="features-section py-4">
+    <div class="row text-center">
+        <div class="col-md-4 d-flex justify-content-center">
+            <div class="feature-card">
+                <i class="fas fa-coffee feature-icon"></i>
+                <h5>Najbolja kafa</h5>
+                <p>Svježe pržena iz afričkih zrna, direktno sa plantaža.</p>
+            </div>
+        </div>
+        <div class="col-md-4 d-flex justify-content-center">
+            <div class="feature-card">
+                <i class="fas fa-heart feature-icon"></i>
+                <h5>Sa ljubavlju</h5>
+                <p>Svaki napitak pripremamo s pažnjom za naše goste.</p>
+            </div>
+        </div>
+        <div class="col-md-4 d-flex justify-content-center">
+            <div class="feature-card">
+                <i class="fas fa-clock feature-icon"></i>
+                <h5>Uvijek svježe</h5>
+                <p>Svježina i kvaliteta zagarantovani – svaki dan.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="call-to-action text-center">
+    <h3>Posjeti nas i otkrij pravi ukus Afrike</h3>
+    <a asp-controller="LokacijaKafica" asp-action="Map" class="btn-menu mt-3">Pronađi najbližu lokaciju</a>
+</section>
