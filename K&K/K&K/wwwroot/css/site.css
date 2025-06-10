@@ -1,3 +1,4 @@
+
 html {
   font-size: 14px;
 }
@@ -19,4 +20,424 @@ html {
 
 body {
   margin-bottom: 60px;
+}
+
+:root {
+    --bg-light: #F3F0EB;
+    --text-dark: #2C1E14;
+    --accent: #6B4E3D;        
+    --accent-light: #A6896F;
+    --card-bg: #fff;
+    --btn-bg: #5C4033;
+    --btn-text: #fff;
+    --footer-bg: #3E2C23;
+    --footer-text: #f1f1f1;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: 'Georgia', serif;
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+    padding-bottom: 40px;
+}
+
+.navbar {
+    background-color: #fff;
+    box-shadow: none;
+    padding: 0.8rem 1rem;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    color: var(--text-dark);
+    font-size: 1.5rem;
+}
+
+.nav-link,
+.nav-link:visited,
+.nav-link:focus,
+.nav-link:active {
+    color: var(--text-dark) !important;
+    text-decoration: none;
+}
+
+.nav-link:hover {
+    color: var(--accent);
+}
+
+.dropdown-menu {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.hero-section {
+    padding: 60px 20px;
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    margin-bottom: 40px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.hero-title {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: #7B6E65;
+    margin-bottom: 30px;
+}
+
+.brand {
+    color: #E0C097; /* cappuccino nijansa */
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.6);
+}
+
+
+.btn-menu {
+    background-color: var(--btn-bg);
+    color: var(--btn-text);
+    padding: 10px 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: 0.3s ease;
+    font-weight: 500;
+    display: inline-block;
+}
+
+.btn-menu:hover {
+    background-color: #3B2A20; 
+    color: #fff;
+    text-decoration: none;
+}
+
+
+.features-section {
+    margin-top: 40px;
+}
+
+.feature-card {
+    background-color: var(--card-bg);
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    width: 100%;
+    max-width: 300px;
+    margin: auto;
+}
+
+.feature-icon {
+    font-size: 2rem;
+    color: var(--accent);
+    margin-bottom: 10px;
+}
+
+.footer {
+    background-color: var(--footer-bg);
+    color: var(--footer-text);
+    padding: 40px 20px 20px 20px;
+}
+
+.footer h5 {
+    color: var(--footer-text);
+    font-size: 1.1rem;
+}
+
+.footer a {
+    color: var(--footer-text);
+    text-decoration: underline;
+}
+
+.footer a:hover {
+    text-decoration: none;
+}
+
+.privacy-content {
+    max-width: 700px;
+    margin: auto;
+    padding: 40px 0;
+}
+
+
+.info-section {
+    background-color: var(--accent-light);
+    color: var(--text-dark);
+    padding: 60px 0;
+}
+
+.info-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.info-subtitle {
+    font-size: 1.2rem;
+    color: #3E2C23;
+}
+
+
+.call-to-action {
+    background-color: var(--accent);
+    color: var(--btn-text);
+    padding: 50px 20px;
+    margin-top: 60px;
+    border-radius: 12px;
+}
+
+.call-to-action h3 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+}
+
+
+.hero-title {
+    animation: fadeInUp 1.2s ease;
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero-section {
+    position: relative;
+    padding: 100px 20px;
+    background-image: url('https://images.unsplash.com/photo-1509042239860-f550ce710b93'); /* Slika zrna kafe */
+    background-size: cover;
+    background-position: center;
+    border-radius: 12px;
+    margin-bottom: 40px;
+    color: white;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+}
+
+.hero-overlay {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 60px 20px;
+    border-radius: 12px;
+    max-width: 800px;
+    margin: auto;
+}
+
+.hero-title {
+    font-size: 2.8rem;
+    margin-bottom: 1rem;
+    color: #fff;
+    animation: fadeInUp 1.2s ease;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    font-style: italic;
+    margin-bottom: 2rem;
+    color: #ddd;
+}
+
+.btn-success, .btn-primary, .btn-info {
+    background-color: var(--btn-bg) !important;
+    border-color: var(--btn-bg) !important;
+    color: var(--btn-text) !important;
+    font-weight: 500;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-success:hover, .btn-primary:hover, .btn-info:hover,
+.btn-success:focus, .btn-primary:focus, .btn-info:focus {
+    background-color: #3B2A20 !important;
+    border-color: #3B2A20 !important;
+    color: #fff !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(92, 64, 51, 0.3);
+}
+
+
+.btn-outline-primary, .btn-outline-info, .btn-outline-danger {
+    border-color: var(--accent) !important;
+    color: var(--accent) !important;
+    background-color: transparent;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover, .btn-outline-info:hover {
+    background-color: var(--accent) !important;
+    border-color: var(--accent) !important;
+    color: white !important;
+}
+
+.btn-outline-danger {
+    border-color: #dc3545 !important;
+    color: #dc3545 !important;
+}
+
+.btn-outline-danger:hover {
+    background-color: #dc3545 !important;
+    border-color: #dc3545 !important;
+    color: white !important;
+}
+
+/* Stilovi za manje dugmad */
+.btn-sm {
+    padding: 6px 12px;
+    font-size: 0.875rem;
+    border-radius: 6px;
+}
+
+/* Back to List dugme */
+.btn-secondary {
+    background-color: var(--accent-light) !important;
+    border-color: var(--accent-light) !important;
+    color: var(--text-dark) !important;
+    font-weight: 500;
+}
+
+.btn-secondary:hover, .btn-secondary:focus {
+    background-color: var(--accent) !important;
+    border-color: var(--accent) !important;
+    color: white !important;
+}
+
+
+.btn-group .btn {
+    margin-right: 2px;
+}
+
+.btn-group .btn:last-child {
+    margin-right: 0;
+}
+
+
+.btn[type="submit"] {
+    background-color: var(--btn-bg) !important;
+    border-color: var(--btn-bg) !important;
+    color: var(--btn-text) !important;
+    padding: 12px 30px;
+    font-weight: 600;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.btn[type="submit"]:hover {
+    background-color: #3B2A20 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(92, 64, 51, 0.3);
+}
+
+
+
+.btn-coffee {
+    background-color: var(--btn-bg);
+    color: var(--btn-text);
+    border: 2px solid var(--btn-bg);
+    padding: 8px 16px;
+    border-radius: 25px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.btn-coffee:hover {
+    background-color: #3B2A20;
+    border-color: #3B2A20;
+    color: #fff;
+    text-decoration: none;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.btn-outline-coffee {
+    background-color: transparent;
+    color: var(--btn-bg);
+    border: 2px solid var(--btn-bg);
+    padding: 8px 16px;
+    border-radius: 25px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.btn-outline-coffee:hover {
+    background-color: var(--btn-bg);
+    color: #fff;
+    text-decoration: none;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+
+@media (max-width: 768px) {
+    .navbar .container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .navbar-nav-center {
+        order: 2;
+    }
+    
+    .navbar-brand {
+        order: 1;
+    }
+    
+    .d-flex:last-child {
+        order: 3;
+    }
+    
+    .btn-coffee, .btn-outline-coffee {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+    }
+}
+
+
+.navbar {
+    padding: 1rem 0;
+    min-height: 80px;
+}
+
+.navbar .container {
+    max-width: 1200px;
+}
+
+.navbar-nav-center {
+    flex: 1;
+    justify-content: center;
+}
+
+
+.btn-coffee i,
+.btn-outline-coffee i {
+    margin-right: 5px;
+    transition: transform 0.3s ease;
+}
+
+.btn-coffee:hover i,
+.btn-outline-coffee:hover i {
+    transform: scale(1.1);
 }

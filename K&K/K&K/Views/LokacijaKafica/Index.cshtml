@@ -3,40 +3,99 @@
     ViewData["Title"] = "Lokacije Kafića";
 }
 
-<h1>Lokacije Kafića</h1>
+<style>
+    .page-header {
+        background-color: var(--card-bg);
+        padding: 30px;
+        border-radius: 12px;
+        margin-bottom: 30px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    
+    .page-title {
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .action-buttons {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+    
+    .locations-table {
+        background-color: var(--card-bg);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    
+    .table-header-icon {
+        margin-right: 8px;
+        color: var(--accent);
+    }
+    
+    .no-locations-card {
+        background-color: var(--card-bg);
+        border-radius: 12px;
+        padding: 40px;
+        text-align: center;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    
+    .no-locations-icon {
+        font-size: 4rem;
+        color: var(--accent-light);
+        margin-bottom: 20px;
+    }
+</style>
 
-<p>
-    <a asp-action="Create" class="btn btn-success">
-        <i class="fas fa-plus"></i> Dodaj novu lokaciju
-    </a>
-    <a asp-action="Map" class="btn btn-info">
-        <i class="fas fa-map"></i> Pogledaj na Mapi
-    </a>
-</p>
+<div class="page-header">
+    <h1 class="page-title">
+        <i class="fas fa-map-marker-alt"></i>
+        Lokacije Kafića
+    </h1>
+    
+    <div class="action-buttons">
+        <a asp-action="Create" class="btn btn-success">
+            <i class="fas fa-plus"></i> 
+            Dodaj Novu Lokaciju
+        </a>
+        <a asp-action="Map" class="btn btn-info">
+            <i class="fas fa-map"></i> 
+            Pogledaj na Mapi
+        </a>
+    </div>
+</div>
 
 @if (Model != null && Model.Any())
 {
-    <div class="table-responsive">
-        <table class="table table-striped table-hover">
+    <div class="locations-table">
+        <table class="table table-striped table-hover mb-0">
             <thead class="table-dark">
                 <tr>
                     <th>
-                        <i class="fas fa-map-marker-alt"></i>
+                        <i class="fas fa-map-marker-alt table-header-icon"></i>
                         @Html.DisplayNameFor(model => model.Adresa)
                     </th>
                     <th>
-                        <i class="fas fa-city"></i>
+                        <i class="fas fa-city table-header-icon"></i>
                         @Html.DisplayNameFor(model => model.Grad)
                     </th>
                     <th>
-                        <i class="fas fa-globe"></i>
+                        <i class="fas fa-globe table-header-icon"></i>
                         @Html.DisplayNameFor(model => model.GeografskaSirina)
                     </th>
                     <th>
-                        <i class="fas fa-globe"></i>
+                        <i class="fas fa-globe table-header-icon"></i>
                         @Html.DisplayNameFor(model => model.GeografskaDuzina)
                     </th>
-                    <th>Akcije</th>
+                    <th style="width: 180px;">Akcije</th>
                 </tr>
             </thead>
             <tbody>
@@ -57,13 +116,19 @@
                         </td>
                         <td>
                             <div class="btn-group" role="group">
-                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm" title="Uredi">
+                                <a asp-action="Edit" asp-route-id="@item.Id" 
+                                   class="btn btn-outline-primary btn-sm" 
+                                   title="Uredi">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm" title="Detalji">
+                                <a asp-action="Details" asp-route-id="@item.Id" 
+                                   class="btn btn-outline-info btn-sm" 
+                                   title="Detalji">
                                     <i class="fas fa-info-circle"></i>
                                 </a>
-                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger btn-sm" title="Obriši">
+                                <a asp-action="Delete" asp-route-id="@item.Id" 
+                                   class="btn btn-outline-danger btn-sm" 
+                                   title="Obriši">
                                     <i class="fas fa-trash"></i>
                                 </a>
                             </div>
@@ -76,8 +141,15 @@
 }
 else
 {
-    <div class="alert alert-info">
-        <h4><i class="fas fa-info-circle"></i> Nema dostupnih lokacija</h4>
-        <p>Trenutno nema unesenih lokacija kafića. <a asp-action="Create" class="alert-link">Dodajte prvu lokaciju</a>.</p>
+    <div class="no-locations-card">
+        <div class="no-locations-icon">
+            <i class="fas fa-map-marker-alt"></i>
+        </div>
+        <h4>Nema dostupnih lokacija</h4>
+        <p class="text-muted mb-4">Trenutno nema unesenih lokacija kafića.</p>
+        <a asp-action="Create" class="btn btn-success">
+            <i class="fas fa-plus"></i>
+            Dodajte prvu lokaciju
+        </a>
     </div>
 }
