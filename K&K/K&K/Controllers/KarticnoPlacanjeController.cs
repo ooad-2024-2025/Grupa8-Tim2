@@ -1,14 +1,18 @@
 ﻿using K_K.Data;
 using K_K.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 public class KarticnoPlacanjeController : Controller
 {
     private readonly ApplicationDbContext _context;
+    private readonly UserManager<Osoba> _userManager;
 
-    public KarticnoPlacanjeController(ApplicationDbContext context)
+    public KarticnoPlacanjeController(ApplicationDbContext context, UserManager<Osoba> userManager)
     {
         _context = context;
+        _userManager = userManager;
     }
 
     public IActionResult Index()
@@ -16,50 +20,76 @@ public class KarticnoPlacanjeController : Controller
         return View(new KarticnoPlacanje());
     }
 
-   
+    
     [HttpGet]
-    public IActionResult Unos(int id)
+    public async Task<IActionResult> Unos(int id) // Primamo ID narudžbe
     {
-        ViewBag.NarudzbaId = id;
+        var narudzba = await _context.Narudzba.FindAsync(id);
+        if (narudzba == null)
+        {
+            TempData["ErrorMessage"] = "Narudžba nije spremna za plaćanje ili ne postoji.";
+            return RedirectToAction("Index", "Narudzba");
+        }
 
         var model = new KarticnoPlacanje
         {
-            NarudzbaId = id
+            NarudzbaId = id // Proslijedi ID narudžbe u model
         };
-
-        return View(new KarticnoPlacanje { NarudzbaId = id });
+        return View(model);
     }
-    /* 
-     [HttpPost]
-     [ValidateAntiForgeryToken]
-     public async Task<IActionResult> IzvrsiUplatu(KarticnoPlacanje placanje)
-     {
-         if (!ModelState.IsValid)
-         {
-             TempData["Poruka"] = "Model nije validan.";
-             return RedirectToAction("Greska");
-         }
 
-         var uspjeh = UspjesnostPlacanja(placanje);
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Unos([Bind("Id,BrojKartice,CVV,DatumIsteka,NarudzbaId")] KarticnoPlacanje karticnoPlacanje)
+    {
+        if (ModelState.IsValid)
+        {
+            // Simulacija uspješnog plaćanja (ovdje bi inače bila integracija s payment gateway-om)
+            // Ako je plaćanje uspješno:
+            var narudzba = await _context.Narudzba.FindAsync(karticnoPlacanje.NarudzbaId);
+            if (narudzba != null)
+            {
+                narudzba.StatusNarudzbe = StatusNarudzbe.Potvrdjena; // Ažuriraj status narudžbe
+                _context.Update(narudzba); // Ažuriraj narudžbu u bazi
+                await _context.SaveChangesAsync();
 
-         placanje.VrijemePlacanja = DateTime.Now;
-         placanje.Uspjesno = uspjeh;
+                // Sada kada je plaćanje uspješno, obriši stavke iz korpe
+                var korisnik = await _userManager.GetUserAsync(User);
+                var korpa = await _context.Korpa.FirstOrDefaultAsync(k => k.KorisnikId == korisnik.Id);
+                if (korpa != null)
+                {
+                    var stavkeUKorpi = await _context.StavkaKorpe
+                        .Where(s => s.KorpaId == korpa.Id)
+                        .ToListAsync();
+                    _context.StavkaKorpe.RemoveRange(stavkeUKorpi);
+                    await _context.SaveChangesAsync();
+                }
 
-         _context.KarticnoPlacanjes.Add(placanje);
-         await _context.SaveChangesAsync();
+                // Dodaj podatke o kartičnom plaćanju u bazu ako želite čuvati te transakcije
+                _context.Add(karticnoPlacanje);
+                await _context.SaveChangesAsync();
 
-         if (uspjeh)
-         {
-             ViewData["Poruka"] = "Plaćanje je uspješno izvršeno.";
-             return RedirectToAction("Uspjeh");
-         }
-         else
-         {
-             TempData["Poruka"] = "Greška u validaciji podataka.";
-             return RedirectToAction("Greska");
-         }
-     }
-     */
+                TempData["SuccessMessage"] = "Uspješno ste platili narudžbu!";
+                return RedirectToAction("Uspjeh"); // Preusmjeri na Uspjeh akciju unutar KarticnoPlacanjeController-a
+            }
+            else
+            {
+                ModelState.AddModelError("", "Greška: Narudžba nije pronađena.");
+            }
+        }
+
+        // Ako dođe do ovdje, znači da je validacija neuspješna ili je narudžba null
+        return View(karticnoPlacanje);
+    }
+
+    public IActionResult Uspjeh()
+    {
+        // Prikazuje poruku o uspješnom kartičnom plaćanju
+        return View();
+    }
+
+
+    
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> IzvrsiUplatu(KarticnoPlacanje placanje)
@@ -214,10 +244,7 @@ public class KarticnoPlacanjeController : Controller
         // Na kraju, provjeravamo da li je ukupna suma djeljiva sa 10
         return suma % 10 == 0;
     }
-    public IActionResult Uspjeh()
-    {
-        return View();
-    }
+    
 
     public IActionResult Greska()
     {
