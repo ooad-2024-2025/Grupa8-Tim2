@@ -2,6 +2,7 @@
 using K_K.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace K_K.Controllers
@@ -19,11 +21,13 @@ namespace K_K.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<Osoba> _userManager;
+        private readonly Models.IEmailSender _emailSender;
 
-        public NarudzbaController(ApplicationDbContext context, UserManager<Osoba> userManager)
+        public NarudzbaController(ApplicationDbContext context, UserManager<Osoba> userManager, Models.IEmailSender emailSender)
         {
             _context = context;
             _userManager = userManager;
+            _emailSender = emailSender;
         }
 
         // GET: Narudzba
@@ -275,35 +279,7 @@ namespace K_K.Controllers
                 return NotFound();
             }
 
-            // Ažurirajte samo polja koja su promijenjena
-            /*if (postojeca.StatusNarudzbe != narudzba.StatusNarudzbe)
-             {
-                 postojeca.StatusNarudzbe = narudzba.StatusNarudzbe;
-             }
-
-             if (postojeca.NacinPlacanja != narudzba.NacinPlacanja)
-             {
-                 postojeca.NacinPlacanja = narudzba.NacinPlacanja;
-             }
-
-             if (postojeca.NacinPreuzimanja != narudzba.NacinPreuzimanja)
-             {
-                 postojeca.NacinPreuzimanja = narudzba.NacinPreuzimanja;
-             }
-
-             if (postojeca.DatumNarudzbe != narudzba.DatumNarudzbe)
-             {
-                 postojeca.DatumNarudzbe = narudzba.DatumNarudzbe;
-             }
-
-             // Za string polja, provjerite null i whitespace
-             if (!string.IsNullOrWhiteSpace(narudzba.AdresaDostave) &&
-                 postojeca.AdresaDostave != narudzba.AdresaDostave)
-             {
-                 postojeca.AdresaDostave = narudzba.AdresaDostave;
-             }
-            */
-            // Ova polja uvijek postavite (ako su potrebna)
+            
             narudzba.Id = id;
             narudzba.KorisnikId = korisnik.Id;
            narudzba.RadnikId = "f7974104-9ab3-4d73-a79b-85f21b1c9f68";
@@ -317,8 +293,21 @@ namespace K_K.Controllers
             {
                 try
                 {
+                    var sb = new StringBuilder();
+                    sb.AppendLine("<html><body>");
+                    sb.AppendLine($"<p>Poštovani <strong>{korisnik.Ime} {korisnik.Prezime}</strong>,</p>");
+                    sb.AppendLine("<p>Zahvaljujemo na vašoj narudžbi.</p>");
+                    sb.AppendLine("<p>Vaša narudžba je gotova i možete je preuzeti.</p>");
+                    sb.AppendLine("<p>S poštovanjem,<br/>Tim K&amp;K</p>");
+                    sb.AppendLine("</body></html>");
+
+                    string htmlBody = sb.ToString();
                     _context.Update(narudzba);
                     await _context.SaveChangesAsync();
+                    if (narudzba.StatusNarudzbe == StatusNarudzbe.Gotova)
+                    {
+                        await _emailSender.SendEmailAsync(korisnik.Email, "Potvrda narudžbe", sb.ToString());
+                    }
                     if (narudzba.NacinPlacanja == VrstaPlacanja.Kartica)
                     {
                         return RedirectToAction("Unos","KarticnoPlacanje");
