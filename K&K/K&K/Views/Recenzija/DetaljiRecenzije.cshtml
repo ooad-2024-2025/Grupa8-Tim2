@@ -1,0 +1,57 @@
+﻿@model K_K.Models.Recenzija
+
+@{
+    ViewData["Title"] = "Detalji Recenzije";
+}
+
+<h1>Detalji Recenzije</h1>
+
+<div>
+    <h4>Recenzija za @ViewData["ProizvodNaziv"]</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Ocjena:
+        </dt>
+        <dd class="col-sm-10">
+            @for (int i = 1; i <= Model.Ocjena; i++)
+            {
+                <i class="fas fa-star text-warning"></i>
+            }
+            @for (int i = Model.Ocjena + 1; i <= 5; i++)
+            {
+                <i class="far fa-star"></i>
+            }
+        </dd>
+        <dt class="col-sm-2">
+            Tekst:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Tekst)
+        </dd>
+        <dt class="col-sm-2">
+            Korisnik:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Korisnik.UserName)
+        </dd>
+        <dt class="col-sm-2">
+            Datum dodavanja:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DatumDodavanja)
+        </dd>
+    </dl>
+</div>
+<div>
+    @* Conditionally display Edit and Delete buttons *@
+    @if (ViewData["CurrentUserId"] as string == Model.KorisnikId || (bool)ViewData["IsAdmin"])
+    {
+        <a asp-action="UrediRecenziju" asp-route-id="@Model.Id" class="btn btn-warning">Uredi</a>
+        <form asp-action="IzbrisiRecenziju" asp-route-id="@Model.Id" method="post" class="d-inline" onsubmit="return confirm('Jeste li sigurni da želite obrisati ovu recenziju?');">
+            <button type="submit" class="btn btn-danger">Obriši</button>
+            @Html.AntiForgeryToken()
+        </form>
+    }
+    <a asp-action="PrikaziRecenziju" asp-route-proizvodId="@Model.ProizvodId" class="btn btn-secondary">Nazad na recenzije</a>
+</div>

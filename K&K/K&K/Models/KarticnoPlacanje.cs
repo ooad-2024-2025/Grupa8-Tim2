@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+
+
 
 namespace K_K.Models
 {
@@ -14,7 +17,10 @@ namespace K_K.Models
 
         [ForeignKey("Narudzba")]
         public int NarudzbaId { get; set; }
-        public Narudzba Narudzba { get; set; }
+
+        [BindNever]
+        public Narudzba? Narudzba { get; set; }  
+
 
         [Required]
         public String ImeNaKartici { get; set; }

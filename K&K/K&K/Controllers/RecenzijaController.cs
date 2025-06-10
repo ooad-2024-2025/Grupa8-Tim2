@@ -15,34 +15,19 @@ namespace K_K.Controllers
     {
         private readonly ApplicationDbContext _dataContext;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager; // Dodana injekcija
 
-        public RecenzijaController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        public RecenzijaController(ApplicationDbContext context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
             _dataContext = context;
             _userManager = userManager;
+            _signInManager = signInManager; // Dodana inicijalizacija
         }
 
         [HttpGet]
         public async Task<IActionResult> PrikaziRecenziju(int proizvodId)
         {
-           /* var recenzije = await _dataContext.Recenzija
-                                        .Include(r => r.Korisnik)
-                                        .Where(r => r.ProizvodId == proizvodId)
-                                        .OrderByDescending(r => r.DatumDodavanja)
-                                        .ToListAsync();*/
-
-            // Provjeri da li je AJAX poziv
-           // if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
-            //{
-              //  return PartialView("~/Views/Recenzija/_RecenzijeListaPartial.cshtml", recenzije);
-           // }
-
-
-            /*var recenzije = await _dataContext.Recenzija
-                .Include(r => r.Korisnik)
-                .Where(r => r.ProizvodId == proizvodId)
-                .OrderByDescending(r => r.DatumDodavanja)
-                .ToListAsync();*/ //nije ispravno dohvatalo iz baze
+            
             var recenzije = await _dataContext.Recenzija
                           .Where(r => r.ProizvodId == proizvodId)
                            .ToListAsync();
@@ -70,7 +55,7 @@ namespace K_K.Controllers
             return View(recenzije); // šaljemo listu u view
         }
 
-          
+
 
 
         [HttpGet]
@@ -164,8 +149,8 @@ namespace K_K.Controllers
             // Obavezno ručno postavi polja
             recenzija.KorisnikId = korisnik.Id;
             recenzija.DatumDodavanja = DateTime.Now;
-            recenzija.NarudzbaId = 2;
-            
+            recenzija.NarudzbaId = 30;
+
 
 
             // Ukloni validaciju za polja koja korisnik ne unosi
@@ -223,43 +208,92 @@ namespace K_K.Controllers
             */
 
             if (ModelState.IsValid)
-
-
-            try
-
             {
-                _dataContext.Add(recenzija);
-                await _dataContext.SaveChangesAsync();
-                return Json(new { success = true, message = "Recenzija uspješno dodana!" });
+                try
+                {
+                    _dataContext.Add(recenzija);
+                    await _dataContext.SaveChangesAsync();
+
+                    TempData["PorukaUspjeha"] = "Vaša recenzija je uspješno dodana!";
+                    TempData["ProizvodIdZaPovratak"] = recenzija.ProizvodId; // ProizvodId za povratak na Details view
+
+                    return RedirectToAction("UspjehRecenzije"); // <--- OVO JE KLJUČNO!
+                }
+                catch (Exception ex)
+                {
+                    // U slučaju greške pri spremanju u bazu
+                    ModelState.AddModelError(string.Empty, "Došlo je do greške prilikom spremanja recenzije: " + ex.Message);
+                    // Dohvati proizvod naziv ponovo ako je potrebno za view
+                    var proizvodZaView = await _dataContext.Proizvod.FindAsync(recenzija.ProizvodId);
+                    ViewBag.ProizvodNaziv = proizvodZaView?.Naziv;
+                    return View(recenzija);
+                }
             }
-            catch (Exception ex)
-            {
-                return Json(new { success = false, message = "Došlo je do greške prilikom spremanja recenzije.", error = ex.Message });
-            }
+
+            // Ako ModelState.IsValid nije true (i iznad try-catch bloka), vratite view sa greškama
+            var proizvod = await _dataContext.Proizvod.FindAsync(recenzija.ProizvodId);
+            ViewBag.ProizvodNaziv = proizvod?.Naziv;
             return View(recenzija);
         }
 
-        // GET: Recenzija/UrediRecenziju/5
-        public async Task<IActionResult> UrediRecenziju(int id)
+        [HttpGet]
+        public async Task<IActionResult> DetaljiRecenzije(int id)
         {
-            var korisnik = await _userManager.GetUserAsync(User);
-            if (korisnik == null)
-            {
-                return RedirectToAction("Login", "Account");
-            }
-
-            var recenzija = await _dataContext.Recenzija.FindAsync(id);
+            var recenzija = await _dataContext.Recenzija
+                                            .Include(r => r.Korisnik) // Učitajte korisnika za prikaz detalja
+                                            .Include(r => r.Proizvod) // Učitajte proizvod za pristup nazivu
+                                            .FirstOrDefaultAsync(m => m.Id == id);
 
             if (recenzija == null)
             {
                 return NotFound();
             }
 
-            // Dozvoli uređivanje samo sopstvene recenzije
-            if (recenzija.KorisnikId != korisnik.Id)
+            // Provjeri trenutnog korisnika za uvjetno prikazivanje dugmadi "Uredi" i "Obriši"
+            string currentUserId = null;
+            bool isAdmin = false;
+
+            if (_signInManager.IsSignedIn(User))
+            {
+                var currentUser = await _userManager.GetUserAsync(User);
+                if (currentUser != null)
+                {
+                    currentUserId = currentUser.Id;
+                    isAdmin = await _userManager.IsInRoleAsync(currentUser, "Admin");
+                }
+            }
+
+            // Proslijedi podatke u ViewData za view
+            ViewData["CurrentUserId"] = currentUserId;
+            ViewData["IsAdmin"] = isAdmin;
+            ViewData["ProizvodNaziv"] = recenzija.Proizvod?.Naziv; // Naziv proizvoda za prikaz u viewu
+
+            return View("DetaljiRecenzije", recenzija); // Vraća view "DetaljiRecenzije.cshtml"
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UrediRecenziju(int id)
+        {
+            var korisnik = await _userManager.GetUserAsync(User);
+            if (korisnik == null)
+            {
+                TempData["ErrorMessage"] = "Morate biti prijavljeni da biste uredili recenziju.";
+                return Redirect("/Identity/Account/Login");
+            }
+
+            var recenzija = await _dataContext.Recenzija.FindAsync(id);
+
+            if (recenzija == null)
+            {
+                TempData["ErrorMessage"] = "Recenzija nije pronađena.";
+                return RedirectToAction("Index", "Proizvod");
+            }
+
+            // SIGURNOSNA PROVJERA: Dozvoli uređivanje samo sopstvene recenzije (ili ako je korisnik Admin)
+            if (recenzija.KorisnikId != korisnik.Id && !await _userManager.IsInRoleAsync(korisnik, "Admin"))
             {
                 TempData["ErrorMessage"] = "Nemate dozvolu za uređivanje ove recenzije.";
-                return RedirectToAction("Details", "Proizvod", new { id = recenzija.ProizvodId });
+                return RedirectToAction("DetaljiRecenzije", new { id = recenzija.Id }); // Vratite korisnika na detalje recenzije
             }
 
             var proizvod = await _dataContext.Proizvod.FindAsync(recenzija.ProizvodId);
@@ -268,22 +302,26 @@ namespace K_K.Controllers
                 ViewData["ProizvodNaziv"] = proizvod.Naziv;
             }
 
-            return View(recenzija);
+            // Ispravno: Vraća view "UrediRecenziju.cshtml" sa modelom recenzije
+            return View("UrediRecenziju", recenzija);
         }
 
         // POST: Recenzija/UrediRecenziju/5
+        // Prima podatke iz forme za uređivanje i sprema ih u bazu
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UrediRecenziju(int id, [Bind("Id,ProizvodId,Ocjena,Tekst,NarudzbaId")] Recenzija recenzija)
         {
             if (id != recenzija.Id)
             {
+                TempData["ErrorMessage"] = "Greška: ID recenzije se ne podudara.";
                 return NotFound();
             }
 
             var korisnik = await _userManager.GetUserAsync(User);
             if (korisnik == null)
             {
+                TempData["ErrorMessage"] = "Niste autorizovani za ovu akciju.";
                 return Unauthorized();
             }
 
@@ -291,30 +329,38 @@ namespace K_K.Controllers
 
             if (originalRecenzija == null)
             {
+                TempData["ErrorMessage"] = "Recenzija za uređivanje nije pronađena.";
                 return NotFound();
             }
 
-            if (originalRecenzija.KorisnikId != korisnik.Id)
+            if (originalRecenzija.KorisnikId != korisnik.Id && !await _userManager.IsInRoleAsync(korisnik, "Admin"))
             {
-                TempData["ErrorMessage"] = "Nemate dozvolu za uređivanje ove recenzije.";
-                return RedirectToAction("Details", "Proizvod", new { id = originalRecenzija.ProizvodId });
+                TempData["ErrorMessage"] = "Nemate dozvolu za ažuriranje ove recenzije.";
+                return RedirectToAction("DetaljiRecenzije", new { id = originalRecenzija.Id });
             }
 
+            // Popunite polja koja dolaze iz hidden inputa ili koja se ne mijenjaju
+            recenzija.KorisnikId = originalRecenzija.KorisnikId;
+            recenzija.DatumDodavanja = System.DateTime.Now; // Ažuriraj datum promjene
+
+            // Provjeri validaciju modela (npr. Required, Range atributi)
             if (ModelState.IsValid)
             {
                 try
                 {
-                    originalRecenzija.Ocjena = recenzija.Ocjena;
-                    originalRecenzija.Tekst = recenzija.Tekst; // Koristi Tekst
-                    originalRecenzija.DatumDodavanja = System.DateTime.Now; // Ažuriraj datum promjene
-
-                    _dataContext.Update(originalRecenzija);
+                    // Update entiteta u DbContextu
+                    _dataContext.Entry(originalRecenzija).CurrentValues.SetValues(recenzija);
                     await _dataContext.SaveChangesAsync();
+
+                    TempData["SuccessMessage"] = "Recenzija je uspješno ažurirana!";
+                    // Preusmjeri korisnika nazad na stranicu detalja recenzije
+                    return RedirectToAction("DetaljiRecenzije", new { id = originalRecenzija.Id });
                 }
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!RecenzijaExists(recenzija.Id))
                     {
+                        TempData["ErrorMessage"] = "Recenzija je obrisana od strane drugog korisnika.";
                         return NotFound();
                     }
                     else
@@ -322,16 +368,23 @@ namespace K_K.Controllers
                         throw;
                     }
                 }
-                TempData["SuccessMessage"] = "Recenzija je uspješno ažurirana!";
-                return RedirectToAction("Details", "Proizvod", new { id = originalRecenzija.ProizvodId });
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Došlo je do greške prilikom ažuriranja recenzije: " + ex.Message);
+                }
             }
 
-            var proizvod = await _dataContext.Proizvod.FindAsync(recenzija.ProizvodId);
-            if (proizvod != null)
-            {
-                ViewData["ProizvodNaziv"] = proizvod.Naziv;
-            }
-            return View(recenzija);
+            // Ako ModelState nije validan ili je došlo do greške, ponovo prikaži formu
+            var proizvod = await _dataContext.Proizvod.FindAsync(originalRecenzija.ProizvodId);
+            ViewData["ProizvodNaziv"] = proizvod?.Naziv;
+            return View("UrediRecenziju", originalRecenzija);
+        }
+
+
+        // Dodajte ovu metodu negdje u kontroler (ako je već nemate)
+        private bool RecenzijaExists(int id)
+        {
+            return _dataContext.Recenzija.Any(e => e.Id == id);
         }
 
         // POST: Recenzija/IzbrisiRecenziju/5
@@ -352,7 +405,7 @@ namespace K_K.Controllers
                 return NotFound();
             }
 
-            if (recenzija.KorisnikId != korisnik.Id && !User.IsInRole("Admin"))
+            if (recenzija.KorisnikId != korisnik.Id && !await _userManager.IsInRoleAsync(korisnik, "Admin"))
             {
                 TempData["ErrorMessage"] = "Nemate dozvolu za brisanje ove recenzije.";
                 return RedirectToAction("Details", "Proizvod", new { id = recenzija.ProizvodId });
@@ -367,9 +420,32 @@ namespace K_K.Controllers
             return RedirectToAction("Details", "Proizvod", new { id = proizvodId });
         }
 
-        private bool RecenzijaExists(int id)
+
+        public IActionResult UspjehRecenzije()
         {
-            return _dataContext.Recenzija.Any(e => e.Id == id);
+            // Provjeri da li TempData sadrži ključeve
+            if (TempData.ContainsKey("PorukaUspjeha"))
+            {
+                ViewBag.Poruka = TempData["PorukaUspjeha"];
+            }
+            else
+            {
+                ViewBag.Poruka = "Recenzija je uspješno dodana! (Nema detalja o poruci)"; // Default poruka
+            }
+
+            if (TempData.ContainsKey("ProizvodIdZaPovratak"))
+            {
+                ViewBag.ProizvodId = TempData["ProizvodIdZaPovratak"];
+            }
+            else
+            {
+                ViewBag.ProizvodId = null; // Ili neka defaultna vrijednost ako želite
+            }
+
+            return View();
         }
+
     }
 }
+
+

@@ -223,7 +223,7 @@ namespace K_K.Controllers
                 ModelState.AddModelError("", "Molimo odaberite vrstu pića.");
                 return View(proizvod);
             }
-            
+
             if (ModelState.IsValid)
             {
                 Proizvod finalProizvod = null;
