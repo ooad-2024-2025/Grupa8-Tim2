@@ -32,7 +32,7 @@ namespace K_K.Controllers
             var applicationDbContext = _context.Korpa.Include(k => k.Korisnik);
 
             // return View(await applicationDbContext.ToListAsync());
-           //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             //int korisnikId = int.Parse(userId);
             /*var korpa = await _context.Korpa
                 .Include(k => k.Korisnik)
@@ -40,24 +40,6 @@ namespace K_K.Controllers
             return View(await applicationDbContext.ToListAsync());
 
         }
-        /*
-        public async Task<IActionResult> KorpaView()
-        {
-            var user = await _context.Osoba.FirstOrDefaultAsync(u => u.Email == User.Identity.Name);
-            var korpa = await _context.Korpa.FirstOrDefaultAsync(c => c.KorisnikId == user.Id );
-            if (korpa == null || !_context.Korpa.Any())
-            {
-                // Cart is empty or null, display a popup or redirect to a specific page
-                TempData["CartMessage"] = "Korpa je trenutno prazna!";
-                return RedirectToAction("PraznaKorpa");
-            }
-            var productCarts = _context.Korpa
-    .Include(k => k.Stavke)
-        .ThenInclude(s => s.Proizvod)
-    .Where(k => k.Id == korpa.Id)
-    .ToList();
-            return View(productCarts);
-        }*/
         public async Task<IActionResult> dodajIzNarudzbe(int narudzbaId)
         {
             var korisnik = await _userManager.GetUserAsync(User);
@@ -86,7 +68,7 @@ namespace K_K.Controllers
                 Cijena = s.Cijena
             }).ToList();
 
-            // Zapamtite staro stanje korpe za računanje dodatnih vrijednosti
+            //  staro stanje korpe za računanje dodatnih vrijednosti
             int staraKolicina = korpa?.brojProizvoda ?? 0;
             double staraCijena = korpa?.ukupnaCijena ?? 0;
             int dodatnaKolicina = 0;
@@ -114,7 +96,7 @@ namespace K_K.Controllers
                         postojecaStavka.Cijena = novaStavka.Cijena;
                         dodatnaKolicina += novaStavka.Kolicina;
                         dodatnaCijena += novaStavka.Cijena;
-                       await PromijeniKolicinu(korpa.Id, postojecaStavka.ProizvodId, postojecaStavka.Kolicina);
+                        await PromijeniKolicinu(korpa.Id, postojecaStavka.ProizvodId, postojecaStavka.Kolicina);
                     }
                     else
                     {
@@ -123,21 +105,17 @@ namespace K_K.Controllers
                 }
             }
 
-            // Preračunajte ukupne vrijednosti
+            // ukupne vrijednosti
             //korpa.brojProizvoda = korpa.Stavke.Sum(s => s.Kolicina);
             //korpa.ukupnaCijena = korpa.Stavke.Sum(s => s.Cijena * s.Kolicina);
-            
 
-           
-            
-
-            // Postavite TempData umjesto ViewBag (jer koristite RedirectToAction)
+            //TempData umjesto ViewBag (zbog RedirectToAction)
             TempData["DodatnaKolicina"] = dodatnaKolicina.ToString();
             TempData["DodatnaCijena"] = dodatnaCijena.ToString();
             TempData["PorukaZaKorpu2"] = "Proizvodi su uspešno dodati u korpu";
 
             await _context.SaveChangesAsync();
-            
+
             await AzurirajKorpu(korpa.Id);
 
             return RedirectToAction("KorpaView", "Korpa");
@@ -152,11 +130,9 @@ namespace K_K.Controllers
             }
 
             var korisnikId = korisnik.Id;
-
-            // Get single cart for the user, including items
             var korpa = _context.Korpa
                 .Include(k => k.Stavke)
-                .ThenInclude(s => s.Proizvod)  // optional, if you want product details
+                .ThenInclude(s => s.Proizvod)  
                 .FirstOrDefault(k => k.KorisnikId == korisnikId);
 
             if (korpa == null || korpa.Stavke == null || !korpa.Stavke.Any())
@@ -165,7 +141,6 @@ namespace K_K.Controllers
                 return View();
             }
 
-            // Pass single cart model to the view
             return View(korpa);
         }
 
@@ -211,17 +186,16 @@ namespace K_K.Controllers
                 korpa.Stavke = new List<StavkaKorpe>();
             }
 
-            // Provjeri da li stavka već postoji
+            // da li stavka postoji vec od prije, povecava se kolicina ako postoji
             var postojecaStavka = korpa.Stavke.FirstOrDefault(s => s.ProizvodId == Id);
             if (postojecaStavka != null)
             {
-                // Uvećaj količinu postojeće stavke
                 postojecaStavka.Kolicina++;
                 postojecaStavka.Cijena = postojecaStavka.Kolicina * proizvod.Cijena;
             }
             else
             {
-                // Kreiraj novu stavku
+                //nova stavka
                 var novaStavka = new StavkaKorpe
                 {
                     KorpaId = korpa.Id,
@@ -246,14 +220,10 @@ namespace K_K.Controllers
         }
 
 
-
-
-
-
         [HttpPost]
         public async Task<IActionResult> PromijeniKolicinu(int korpaId, int proizvodId, int kolicina)
         {
-            if(kolicina <= 0)
+            if (kolicina <= 0)
             {
                 return await UkloniStavku(korpaId, proizvodId);
             }
@@ -274,7 +244,7 @@ namespace K_K.Controllers
                 }
             }
 
-            return Json(new {success = true});
+            return Json(new { success = true });
         }
 
         [HttpPost]
@@ -359,7 +329,6 @@ namespace K_K.Controllers
 
             return Json(korpaInfo);
         }
-        // Pomoćna metoda za uklanjanje stavke
         public async Task<IActionResult> UkloniIzKorpe(int stavkaId, int korisnikId)
         {
             var stavka = await _context.StavkaKorpe.FindAsync(stavkaId);
@@ -367,7 +336,7 @@ namespace K_K.Controllers
             {
                 _context.StavkaKorpe.Remove(stavka);
 
-                // Ažuriraj korpu
+                //Azuriranje korpe
                 var korpa = await _context.Korpa.FindAsync(stavka.KorpaId);
                 if (korpa != null)
                 {
@@ -432,6 +401,7 @@ namespace K_K.Controllers
             ViewData["KorisnikId"] = new SelectList(_context.Osoba, "Id", "Email", korpa.KorisnikId);
             return View(korpa);
         }
+
 
         // GET: Korpa/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -525,7 +495,6 @@ namespace K_K.Controllers
             return _context.Korpa.Any(e => e.Id == id);
         }
 
-        // Dodaj ove metode u KorpaController.cs
 
         [HttpPost]
         public IActionResult DodajUKorpuGost(int Id)
@@ -559,7 +528,7 @@ namespace K_K.Controllers
 
             return View();
         }
-       
+
         [HttpPost]
         public async Task<IActionResult> DodajUKorpuNakonPrijave()
         {
@@ -637,7 +606,6 @@ namespace K_K.Controllers
         }
 
 
-
         //nakon prijave/registracije se poziva
         public async Task<IActionResult> KorpaGostView()
         {
@@ -665,7 +633,7 @@ namespace K_K.Controllers
                     TempData.Remove(guestCartKey);
                     TempData.Remove("GuestCartKey");
 
-                    
+
                 }
             }
 

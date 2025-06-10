@@ -115,6 +115,7 @@ namespace K_K.Controllers
 
             ViewData["Cijena"] = ukupnaCijena;
             ViewData["KorpaStavke"] = stavke;
+            ViewData["KorpaId"] = korpa.Id;
 
             ViewData["KorisnikId"] = new SelectList(_context.Osoba, "Id", "Email");
             ViewData["RadnikId"] = new SelectList(_context.Osoba, "Id", "Email");

@@ -34,36 +34,36 @@ namespace K_K.Controllers
         }
 
         // API endpoint za dobijanje lokacija u JSON formatu
-        
-[HttpGet]
-public async Task<IActionResult> GetLokacije()
-{
-    // Debug log
-    System.Diagnostics.Debug.WriteLine($"GetLokacije called at: {DateTime.Now:HH:mm:ss.fff}");
-    Console.WriteLine($"GetLokacije called at: {DateTime.Now:HH:mm:ss.fff}");
-    
-    var lokacije = await _context.LokacijaKafica
-        .Select(l => new {
-            id = l.Id,
-            adresa = l.Adresa,
-            grad = l.Grad,
-            lat = l.GeografskaSirina,
-            lng = l.GeografskaDuzina
-        })
-        .ToListAsync();
 
-    System.Diagnostics.Debug.WriteLine($"Returning {lokacije.Count} locations");
-    Console.WriteLine($"Returning {lokacije.Count} locations");
-    
-    return Json(lokacije);
-}
+        [HttpGet]
+        public async Task<IActionResult> GetLokacije()
+        {
+            // Debug log
+            System.Diagnostics.Debug.WriteLine($"GetLokacije called at: {DateTime.Now:HH:mm:ss.fff}");
+            Console.WriteLine($"GetLokacije called at: {DateTime.Now:HH:mm:ss.fff}");
 
-        
+            var lokacije = await _context.LokacijaKafica
+                .Select(l => new {
+                    id = l.Id,
+                    adresa = l.Adresa,
+                    grad = l.Grad,
+                    lat = l.GeografskaSirina,
+                    lng = l.GeografskaDuzina
+                })
+                .ToListAsync();
+
+            System.Diagnostics.Debug.WriteLine($"Returning {lokacije.Count} locations");
+            Console.WriteLine($"Returning {lokacije.Count} locations");
+
+            return Json(lokacije);
+        }
+
+
         [HttpPost]
         public async Task<IActionResult> NajblizaLokacija([FromBody] KoordinateModel koordinate)
         {
             var lokacije = await _context.LokacijaKafica.ToListAsync();
-            
+
             if (!lokacije.Any())
             {
                 return Json(new { success = false, message = "Nema dostupnih lokacija" });
@@ -79,9 +79,11 @@ public async Task<IActionResult> GetLokacije()
                 .OrderBy(x => x.udaljenost)
                 .First();
 
-            return Json(new {
+            return Json(new
+            {
                 success = true,
-                lokacija = new {
+                lokacija = new
+                {
                     id = najbliza.lokacija.Id,
                     adresa = najbliza.lokacija.Adresa,
                     grad = najbliza.lokacija.Grad,
@@ -92,7 +94,7 @@ public async Task<IActionResult> GetLokacije()
             });
         }
 
-        
+
         private double IzracunajUdaljenost(double lat1, double lon1, double lat2, double lon2)
         {
             var R = 6371; // Radijus Zemlje u kilometrima
@@ -110,7 +112,7 @@ public async Task<IActionResult> GetLokacije()
             return degrees * (Math.PI / 180);
         }
 
-        
+
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -230,7 +232,7 @@ public async Task<IActionResult> GetLokacije()
         }
     }
 
-    
+
     public class KoordinateModel
     {
         public double Latitude { get; set; }
