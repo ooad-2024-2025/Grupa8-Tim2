@@ -111,28 +111,6 @@ namespace K_K.Controllers
                 return Redirect("/Identity/Account/Register");
             }
 
-            // --- Logika provjere da li korisnik SMIJE ostaviti recenziju (ponavlja se zbog sigurnosti) ---
-            // 1. Provjeri da li je korisnik kupio ovaj proizvod putem ove narudžbe
-            // bool kupioProizvod = await _dataContext.Narudzba
-            //   .Where(n => n.Id == narudzbaId && n.KorisnikId == korisnik.Id).AnyAsync(); // Provjerava da li postoji takva narudžba za korisnika
-
-            /* if (!kupioProizvod) // Ako korisnik NEMA tu narudžbu (ili nije njegova)
-             {
-                 TempData["ErrorMessage"] = "Ne možete ostaviti recenziju putem nevažeće narudžbe.";
-                 return RedirectToAction("Details", "Proizvod", new { id = proizvodId });
-             }*/ // zakomentarisala sam samo da mogu pristupiti bez narudzbe
-
-            // 2. Provjeri da li je korisnik već ostavio recenziju za ovaj proizvod (općenito)
-            //var vecPostojiRecenzija = await _dataContext.Recenzija
-            //  .AnyAsync(r => r.ProizvodId == proizvodId && r.KorisnikId == korisnik.Id);
-
-            /*if (vecPostojiRecenzija)
-            {
-                TempData["ErrorMessage"] = "Već ste ostavili recenziju za ovaj proizvod.";
-                return RedirectToAction("Details", "Proizvod", new { id = proizvodId });
-            }*/
-            // --- Kraj logike provjere ---
-
             // Kreiraj novu instancu Recenzije i popuni samo ProizvodId i NarudzbaId (korisnik unosi ostalo)
             var recenzija = new Recenzija
             {
@@ -181,50 +159,7 @@ namespace K_K.Controllers
             ModelState.Remove("DatumDodavanja");
 
 
-            // --- Ponovna sigurnosna provjera (uvijek ponoviti na POST akcijama) ---
-            /*bool kupioProizvod = await _dataContext.Narudzba
-                                    .Where(n => n.Id == recenzija.NarudzbaId && n.KorisnikId == korisnik.Id)
-                                    .AnyAsync();
-            if (!kupioProizvod)
-
-        public async Task<IActionResult> OstaviRecenziju([FromBody] Recenzija recenzija)
-        {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (string.IsNullOrEmpty(userId))
-            {
-                return Json(new { success = false, message = "Korisnik nije prijavljen." });
-            }
-
-            recenzija.KorisnikId = userId;
-            recenzija.DatumDodavanja = DateTime.Now;
-
-            // Ukloni validaciju za NarudzbaId ako nije obavezna
-            ModelState.Remove("NarudzbaId");
-           // ModelState.Remove("Korisnik");
-           // ModelState.Remove("Proizvod");
-            //ModelState.Remove("Narudzba");
-
-            // Provjeri da li korisnik već ima recenziju za ovaj proizvod
-            var postojiRecenzija = await _dataContext.Recenzija
-                .AnyAsync(r => r.ProizvodId == recenzija.ProizvodId && r.KorisnikId == userId);
-
-            if (postojiRecenzija)
-
-            {
-                return Json(new { success = false, message = "Već ste ostavili recenziju za ovaj proizvod." });
-            }
-
-            if (!ModelState.IsValid)
-            {
-                var errors = ModelState.Values
-                                       .SelectMany(v => v.Errors)
-                                       .Select(e => e.ErrorMessage)
-                                       .ToList();
-                return Json(new { success = false, message = "Validacija neuspješna.", errors = errors });
-            }
-
-            // --- Kraj sigurnosne provjere ---
-            */
+         
 
             if (ModelState.IsValid)
             {

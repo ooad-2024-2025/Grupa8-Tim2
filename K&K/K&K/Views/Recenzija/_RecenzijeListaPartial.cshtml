@@ -1,63 +1,8 @@
-﻿@* @model List<K_K.Models.Recenzija>
-
-@* Dohvatite CurrentUserId i IsAdmin iz ViewData 
-@{
-    string currentUserId = ViewData["CurrentUserId"] as string;
-    bool isAdmin = (bool)(ViewData["IsAdmin"] ?? false);
-}
-
-@if (!Model.Any())
-{
-    <p class="text-muted">Još nema recenzija za ovaj proizvod.</p>
-}
-else
-{
-    <div class="list-group">
-        @foreach (var recenzija in Model)
-        {
-            <div class="list-group-item mb-3">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <strong>@(recenzija.Korisnik?.UserName ?? "Anonimni korisnik")</strong>
-                        <div class="text-warning">
-                            @for (int i = 1; i <= recenzija.Ocjena; i++)
-                            {
-                                <i class="fas fa-star"></i>
-                            }
-                            @for (int i = recenzija.Ocjena + 1; i <= 5; i++)
-                            {
-                                <i class="far fa-star"></i>
-                            }
-                        </div>
-                        <p>@recenzija.Tekst</p>
-                    </div>
-                    @* Dugmad za Uredi i Obriši 
-                    <div class="text-end">
-                        @if (User.Identity.IsAuthenticated &&
-                       (recenzija.KorisnikId == User.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier")?.Value ||
-                       User.IsInRole("Admin")))
-                        {
-                            <a asp-action="UrediRecenziju" asp-route-id="@recenzija.Id" class="btn btn-sm btn-warning me-2">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            <form asp-action="IzbrisiRecenziju" asp-route-id="@recenzija.Id" method="post" style="display:inline;" onsubmit="return confirm('Jeste li sigurni da želite obrisati ovu recenziju?');">
-                                @Html.AntiForgeryToken()
-                                <button type="submit" class="btn btn-sm btn-danger">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </form>
-                        }
-                    </div>
-                </div>
-            </div>
-        }
-
-    </div>
-}*@
-@model IEnumerable<K_K.Models.Recenzija>
+﻿@model IEnumerable<K_K.Models.Recenzija>
 
 @{
     // Morate osigurati da su ove varijable proslijeđene u PartialView kroz ViewData ili Model
+    // (Ovaj dio je ostao za provjeru Uredi/Obriši, ali "Detalji" dugme ne zavisi od njih)
     string trenutniKorisnikId = ViewData["KorisnikId"]?.ToString() ?? "";
     bool isAdmin = ViewData["IsAdmin"] != null && (bool)ViewData["IsAdmin"];
 }
@@ -75,7 +20,7 @@ else
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Ocjena: @item.Ocjena / 5</h5>
-
+                        @*
                         @if (item.Korisnik != null)
                         {
                             <h6 class="card-subtitle mb-2 text-muted">
@@ -86,22 +31,28 @@ else
                         {
                             <h6 class="card-subtitle mb-2 text-muted">Korisnik: Nepoznat</h6>
                         }
+                        *@
 
                         <p class="card-text">@item.Tekst</p>
                         <small class="text-muted">Dodano: @item.DatumDodavanja.ToShortDateString()</small>
                         <br />
 
-                        @if (trenutniKorisnikId == item.KorisnikId || isAdmin)
-                        {
-                            <a asp-action="UrediRecenziju" asp-route-id="@item.Id" class="btn btn-sm btn-primary mt-2">Uredi</a>
-                            <form asp-action="IzbrisiRecenziju" asp-route-id="@item.Id" method="post" class="d-inline">
-                                @Html.AntiForgeryToken()
-                                <button type="submit" class="btn btn-sm btn-danger mt-2"
-                                        onclick="return confirm('Jeste li sigurni da želite obrisati ovu recenziju?');">
-                                    Obriši
-                                </button>
-                            </form>
-                        }
+                        <div class="d-flex flex-wrap gap-2 mt-2">
+                            @* Dodan margin-top za razmak *@
+                            <a asp-action="DetaljiRecenzije" asp-controller="Recenzija" asp-route-id="@item.Id" class="btn btn-sm btn-info">Detalji</a>
+
+                            @if (trenutniKorisnikId == item.KorisnikId || isAdmin)
+                            {
+                                <a asp-action="UrediRecenziju" asp-route-id="@item.Id" class="btn btn-sm btn-primary">Uredi</a>
+                                <form asp-action="IzbrisiRecenziju" asp-route-id="@item.Id" method="post" class="d-inline">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-sm btn-danger"
+                                            onclick="return confirm('Jeste li sigurni da želite obrisati ovu recenziju?');">
+                                        Obriši
+                                    </button>
+                                </form>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
