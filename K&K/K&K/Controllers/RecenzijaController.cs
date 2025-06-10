@@ -24,21 +24,40 @@ namespace K_K.Controllers
             _signInManager = signInManager; // Dodana inicijalizacija
         }
 
-        [HttpGet]
+
         public async Task<IActionResult> PrikaziRecenziju(int proizvodId)
         {
-            
+            // Ovdje je ključno da se Korisnik učita da ne bi bio null u viewu
             var recenzije = await _dataContext.Recenzija
-                          .Where(r => r.ProizvodId == proizvodId)
-                           .ToListAsync();
+                                            .Where(r => r.ProizvodId == proizvodId)
+                                            .OrderByDescending(r => r.DatumDodavanja)
+                                            .ToListAsync();
+
             var proizvod = await _dataContext.Proizvod
-          .Where(r => r.Id == proizvodId)
-           .FirstOrDefaultAsync();
+                                            .Where(r => r.Id == proizvodId)
+                                            .FirstOrDefaultAsync();
+
+            // Proslijedite potrebne podatke u ViewData, jer PartialView ne prima sve iz ViewBaga
+            ViewData["ProizvodId"] = proizvodId;
+            ViewData["KorisnikId"] = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            ViewData["IsAdmin"] = User.IsInRole("Admin");
+
+            // ProizvodNaziv možete zadržati u ViewBag-u ako se koristi samo u punom View-u
+            ViewBag.ProizvodNaziv = proizvod?.Naziv;
 
 
-            ViewBag.ProizvodNaziv = proizvod.Naziv; // Za prikaz naziva proizvoda na RecenzijeView
-            ViewData["ProizvodId"] = proizvodId; // Za povratak na Details view
-            return View("RecenzijeView", recenzije); // Pretpostavljam da imate RecenzijeView.cshtml
+            // Provjerite da li je poziv AJAX-om
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+            {
+                // Vratite samo parcijalni view sa listom recenzija
+                return PartialView("~/Views/Recenzija/_RecenzijeListaPartial.cshtml", recenzije);
+            }
+            else
+            {
+                // Ako nije AJAX poziv, vratite cijeli view (ako vam to uopće treba)
+                // Ovo bi se dešavalo samo ako direktno pristupite URL-u /Recenzija/PrikaziRecenziju?proizvodId=X
+                return View("RecenzijeView", recenzije);
+            }
         }
 
         [HttpGet]
@@ -119,7 +138,7 @@ namespace K_K.Controllers
             {
                 //ProizvodId = proizvodId,
                 ProizvodId = proizvodId,
-                NarudzbaId = 2,
+                NarudzbaId = 30,
                 KorisnikId = korisnik.Id // Popuni korisnikId odmah
             };
 
@@ -306,11 +325,9 @@ namespace K_K.Controllers
             return View("UrediRecenziju", recenzija);
         }
 
-        // POST: Recenzija/UrediRecenziju/5
-        // Prima podatke iz forme za uređivanje i sprema ih u bazu
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UrediRecenziju(int id, [Bind("Id,ProizvodId,Ocjena,Tekst,NarudzbaId")] Recenzija recenzija)
+        public async Task<IActionResult> UrediRecenziju(int id, [Bind("Id,ProizvodId,Ocjena,Tekst,NarudzbaId,KorisnikId")] Recenzija recenzija) // DODANO KorisnikId
         {
             if (id != recenzija.Id)
             {
@@ -339,21 +356,23 @@ namespace K_K.Controllers
                 return RedirectToAction("DetaljiRecenzije", new { id = originalRecenzija.Id });
             }
 
-            // Popunite polja koja dolaze iz hidden inputa ili koja se ne mijenjaju
-            recenzija.KorisnikId = originalRecenzija.KorisnikId;
-            recenzija.DatumDodavanja = System.DateTime.Now; // Ažuriraj datum promjene
+            // NEMA POTREBE za recenzija.KorisnikId = originalRecenzija.KorisnikId; ovdje
+            // NEMA POTREBE za recenzija.DatumDodavanja = System.DateTime.Now; ovdje
+            // DatumDodavanja možete ažurirati poslije, ali ga ne morate prosljeđivati iz forme
 
-            // Provjeri validaciju modela (npr. Required, Range atributi)
             if (ModelState.IsValid)
             {
                 try
                 {
-                    // Update entiteta u DbContextu
+                    // Ažurirajte DatumDodavanja na trenutno vrijeme za zapis o izmjeni
+                    originalRecenzija.DatumDodavanja = System.DateTime.Now;
+
+                    // Koristite SetValues za preostala polja koja dolaze iz forme
+                    // To su Ocjena i Tekst, kao i Id, ProizvodId, NarudzbaId, KorisnikId iz hidden polja
                     _dataContext.Entry(originalRecenzija).CurrentValues.SetValues(recenzija);
                     await _dataContext.SaveChangesAsync();
 
                     TempData["SuccessMessage"] = "Recenzija je uspješno ažurirana!";
-                    // Preusmjeri korisnika nazad na stranicu detalja recenzije
                     return RedirectToAction("DetaljiRecenzije", new { id = originalRecenzija.Id });
                 }
                 catch (DbUpdateConcurrencyException)
@@ -377,9 +396,8 @@ namespace K_K.Controllers
             // Ako ModelState nije validan ili je došlo do greške, ponovo prikaži formu
             var proizvod = await _dataContext.Proizvod.FindAsync(originalRecenzija.ProizvodId);
             ViewData["ProizvodNaziv"] = proizvod?.Naziv;
-            return View("UrediRecenziju", originalRecenzija);
+            return View("UrediRecenziju", recenzija);
         }
-
 
         // Dodajte ovu metodu negdje u kontroler (ako je već nemate)
         private bool RecenzijaExists(int id)
