@@ -5,12 +5,15 @@
     {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       "AbsoluteMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|c:\\users\\user\\source\\repos\\grupa8-tim2\\k\u0026k\\k\u0026k\\areas\\identity\\pages\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|solutionrelative:k\u0026k\\areas\\identity\\pages\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
 =======
 <<<<<<< HEAD
+=======
+>>>>>>> 893733bd490f08bc75525715584ca2dcc92ef5e5
 =======
 >>>>>>> 893733bd490f08bc75525715584ca2dcc92ef5e5
       "AbsoluteMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|c:\\users\\hp\\source\\repos\\grupa8-tim2\\k\u0026k\\k\u0026k\\controllers\\recenzijacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -268,6 +271,9 @@
       "AbsoluteMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|c:\\users\\hp\\source\\repos\\grupa8-tim2\\k\u0026k\\k\u0026k\\views\\_viewstart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
 =======
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> 893733bd490f08bc75525715584ca2dcc92ef5e5
+=======
 >>>>>>> 893733bd490f08bc75525715584ca2dcc92ef5e5
 =======
 >>>>>>> 893733bd490f08bc75525715584ca2dcc92ef5e5
@@ -556,12 +562,30 @@
           "DockedWidth": 200,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "SelectedChildIndex": 5,
 =======
 <<<<<<< HEAD
           "SelectedChildIndex": 14,
 =======
           "SelectedChildIndex": 14,
+=======
+          "SelectedChildIndex": 14,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "VrstaHrane.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\VrstaHrane.cs",
+              "RelativeDocumentMoniker": "K\u0026K\\Models\\VrstaHrane.cs",
+              "ToolTip": "C:\\Users\\HP\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Models\\VrstaHrane.cs",
+              "RelativeToolTip": "K\u0026K\\Models\\VrstaHrane.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-10T16:11:20.658Z",
+=======
+          "SelectedChildIndex": 2,
+>>>>>>> 893733bd490f08bc75525715584ca2dcc92ef5e5
           "Children": [
             {
               "$type": "Document",
@@ -817,6 +841,9 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAJAAAAAAAAAA==",
 =======
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> 893733bd490f08bc75525715584ca2dcc92ef5e5
+=======
 >>>>>>> 893733bd490f08bc75525715584ca2dcc92ef5e5
 =======
 >>>>>>> 893733bd490f08bc75525715584ca2dcc92ef5e5
