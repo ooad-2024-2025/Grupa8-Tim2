@@ -1,45 +1,69 @@
 ﻿@model K_K.Models.KarticnoPlacanje
 
 @{
-    ViewData["Title"] = "Unos kartičnog plaćanja";
+    ViewData["Title"] = "Kartično plaćanje";
 }
 
-<h2>Unesite podatke o kartici</h2>
-
-<form asp-action="IzvrsiUplatu" asp-controller="KarticnoPlacanje" method="post">
-    @Html.AntiForgeryToken()
-
-    <div class="form-group">
-        <label asp-for="ImeNaKartici"></label>
-        <input asp-for="ImeNaKartici" class="form-control" />
-        <span asp-validation-for="ImeNaKartici" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="BrojKartice"></label>
-        <input asp-for="BrojKartice" class="form-control" />
-        <span asp-validation-for="BrojKartice" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="CVV"></label>
-        <input asp-for="CVV" class="form-control" />
-        <span asp-validation-for="CVV" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="DatumIsteka"></label>
-        <input asp-for="DatumIsteka" type="date" class="form-control" />
-        <span asp-validation-for="DatumIsteka" class="text-danger"></span>
-    </div>
+<div class="container mt-5">
+    
+    <a asp-action="Create"
+       asp-controller="Narudzba"
+       class="btn btn-outline-secondary mb-3">
+        Vrati se na unos narudžbe
+    </a>
 
 
+    <h2 class="text-center mb-4">Kartično plaćanje</h2>
 
-    <button type="submit" class="btn btn-primary">Plati</button>
-</form>
+    <form asp-action="IzvrsiUplatu" asp-controller="KarticnoPlacanje" method="post" class="row g-3 p-4 shadow-lg rounded bg-white">
+        @Html.AntiForgeryToken()
+
+        <div class="col-md-6">
+            <label asp-for="ImeNaKartici" class="form-label"></label>
+            <input asp-for="ImeNaKartici" class="form-control" placeholder="Unesite vaše ime" />
+            <span asp-validation-for="ImeNaKartici" class="text-danger small"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="BrojKartice" class="form-label"></label>
+            <input asp-for="BrojKartice" class="form-control" placeholder="Unesite broj kartice" />
+            <span asp-validation-for="BrojKartice" class="text-danger small"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="CVV" class="form-label"></label>
+            <input asp-for="CVV" class="form-control" placeholder="Unesite CVV" />
+            <span asp-validation-for="CVV" class="text-danger small"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="DatumIsteka" class="form-label"></label>
+            <input asp-for="DatumIsteka" type="date" class="form-control" />
+            <span asp-validation-for="DatumIsteka" class="text-danger small"></span>
+        </div>
+
+        <input type="hidden" asp-for="NarudzbaId" />
+
+        <div class="col-12 text-center">
+            <button type="submit" class="btn btn-outline-dark px-5">Plati</button>
+        </div>
+    </form>
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger mt-4">
+            <h5>Greške u unosu:</h5>
+            <ul>
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <li>@error.ErrorMessage</li>
+                }
+            </ul>
+        </div>
+    }
+
+</div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    <partial name="_ValidationScriptsPartial" />
 }

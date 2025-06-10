@@ -12,7 +12,7 @@ namespace K_K.Models
         [ForeignKey("Proizvod")]
         public int ProizvodId { get; set; }
 
-        [ForeignKey("Osoba")]
+        [ForeignKey(nameof(Korisnik))]
         public String KorisnikId { get; set; }
 
         [ForeignKey("Narudzba")]

@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Greška pri plaćanju";
+}
+
+<div class="text-center mt-5">
+    <h2 class="text-danger">Došlo je do greške prilikom plaćanja.</h2>
+
+    @if (TempData["Poruka"] != null)
+    {
+        <div class="alert alert-warning mt-3">
+            @TempData["Poruka"]
+        </div>
+    }
+
+    <a asp-action="Unos" asp-controller="KarticnoPlacanje" asp-route-id="1" class="btn btn-outline-warning mt-4">
+        Pokušaj ponovo
+    </a>
+</div>

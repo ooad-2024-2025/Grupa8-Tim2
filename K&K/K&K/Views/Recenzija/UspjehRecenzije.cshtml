@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Recenzija uspješno dodana!";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card text-center shadow-lg border-0 rounded-lg">
+                <div class="card-header bg-success text-white py-4">
+                    <h3 class="fw-light my-2">Uspješno! <i class="fas fa-check-circle ms-2"></i></h3>
+                </div>
+                <div class="card-body p-4 p-md-5">
+                    @if (ViewBag.Poruka != null)
+                    {
+                        <p class="lead mb-4">@ViewBag.Poruka</p>
+                    }
+                    else
+                    {
+                        <p class="lead mb-4">Vaša recenzija je uspješno dodana. Hvala vam!</p>
+                    }
+                    <hr class="my-4">
+                    <a asp-controller="Proizvod" asp-action="Details" asp-route-id="@ViewBag.ProizvodId" class="btn btn-outline-primary btn-lg fw-bold">
+                        <i class="fas fa-eye me-2"></i> Vratite se na detalje proizvoda
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

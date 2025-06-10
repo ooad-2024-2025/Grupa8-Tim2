@@ -159,7 +159,7 @@
                 </div>
             </div>
 
-            @*RECENZIJE PREGLED*@
+           @*RECENZIJE PREGLED*@
             @if (ViewBag.Recenzije != null)
             {
                 <div class="card shadow-sm">
@@ -189,26 +189,6 @@
                                 </h5>
                             </div>
 
-                            <div class="latest-reviews">
-                                @foreach (var recenzija in ViewBag.Recenzije.Take(3))
-                                {
-                                    <div class="border-bottom pb-2 mb-2">
-                                        <div class="d-flex justify-content-between">
-                                            <small class="fw-bold">@recenzija.Korisnik?.UserName</small>
-                                            <small class="text-muted">
-                                                @for (int i = 1; i <= recenzija.Ocjena; i++)
-                                                {
-                                                    <i class="fas fa-star text-warning"></i>
-                                                }
-                                            </small>
-                                        </div>
-                                        @if (!string.IsNullOrEmpty(recenzija.Komentar))
-                                        {
-                                            <small class="text-muted">@recenzija.Komentar</small>
-                                        }
-                                    </div>
-                                }
-                            </div>
 
                             @if (ViewBag.BrojRecenzija > 3)
                             {
@@ -225,6 +205,7 @@
         </div>
     </div>
 </div>
+
 
 
 
@@ -321,3 +302,6 @@
         }
     </script>
 }
+
+
+
