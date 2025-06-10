@@ -25,6 +25,7 @@
                     }
 
                     <form asp-action="Create" method="post" enctype="multipart/form-data">
+                        @*<input asp-for="Slika" type="hidden" value="" />*@
                         <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
                         @*Tip proizvoda*@ 
@@ -117,9 +118,7 @@
                                 <img id="previewImg" src="" alt="Pregled" style="max-width: 200px; max-height: 200px;" class="img-thumbnail">
                                 <div class="mt-2">
                                     <small class="text-muted" id="fileInfo"></small>
-                                    <button type="button" class="btn btn-sm btn-outline-danger ms-2" id="removeImage">
-                                        <i class="fas fa-times"></i> Ukloni
-                                    </button>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -203,10 +202,6 @@
              }
          });
 
-         // Ukloni sliku
-         document.getElementById('removeImage').addEventListener('click', function() {
-             document.querySelector('input[name="slikaFile"]').value = '';
-             document.getElementById('imagePreview').style.display = 'none';
-         });
+         
     </script>
 }
