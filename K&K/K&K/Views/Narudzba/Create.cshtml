@@ -5,7 +5,7 @@
     var korpaStavke = ViewData["KorpaStavke"] as List<K_K.Models.StavkaKorpe>;
     double ukupno = korpaStavke?.Sum(s => s.Cijena) ?? 0;
     double porez = ukupno * 0.17;
-    double ukupnoSaPorezom = ukupno + porez;
+    double bezPoreza = ukupno - porez;
 }
 
 <h1>Kreiranje narudžbe</h1>
@@ -136,8 +136,8 @@
                     <hr class="my-4">
 
                     <div class="row mb-2">
-                        <div class="col-8">Subtotal:</div>
-                        <div class="col-4 text-end">@ukupno.ToString("F2") KM</div>
+                        <div class="col-8">Bez poreza:</div>
+                        <div class="col-4 text-end">@bezPoreza.ToString("F2") KM</div>
                     </div>
                     <div class="row mb-2">
                         <div class="col-8">PDV (17%):</div>
@@ -146,7 +146,7 @@
                     <hr>
                     <div class="row mb-3">
                         <div class="col-8"><strong>Ukupno:</strong></div>
-                        <div class="col-4 text-end"><strong class="fs-5">@ukupnoSaPorezom.ToString("F2") KM</strong></div>
+                        <div class="col-4 text-end"><strong class="fs-5">@ukupno.ToString("F2") KM</strong></div>
                     </div>
 
                     <div class="alert alert-info">
