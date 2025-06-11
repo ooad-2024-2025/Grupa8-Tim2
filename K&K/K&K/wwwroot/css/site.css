@@ -1,4 +1,3 @@
-
 html {
   font-size: 14px;
 }
@@ -60,8 +59,9 @@ main {
 
 .navbar-brand {
     font-weight: bold;
-    color: var(--text-dark);
+    color: var(--text-dark) !important;
     font-size: 1.5rem;
+    font-family: 'Georgia', serif;
 }
 
 .nav-link,
@@ -74,6 +74,24 @@ main {
 
 .nav-link:hover {
     color: var(--accent);
+}
+
+/* Stilovi za korpa link da bude kao i ostali nav linkovi */
+.nav-link-cart {
+    color: var(--text-dark) !important;
+    text-decoration: none;
+    font-family: 'Georgia', serif;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.nav-link-cart:hover {
+    color: var(--accent) !important;
+    text-decoration: none;
+}
+
+.nav-link-cart i {
+    margin-right: 5px;
 }
 
 .dropdown-menu {
