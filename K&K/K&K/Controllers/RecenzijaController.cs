@@ -186,12 +186,12 @@ namespace K_K.Controllers
             if (korisnik == null)
                 return Unauthorized();
             var narudzba = await _dataContext.StavkaNarudzbe
-        .Include(s => s.Narudzba)
-        .Where(s => s.ProizvodId == recenzija.ProizvodId &&
-                   s.Narudzba.KorisnikId == korisnik.Id &&
-                   s.Narudzba.StatusNarudzbe == StatusNarudzbe.Potvrdjena)
-        .Select(s => s.Narudzba)
-        .FirstOrDefaultAsync();
+                .Include(s => s.Narudzba)
+                .Where(s => s.ProizvodId == recenzija.ProizvodId &&
+                       s.Narudzba.KorisnikId == korisnik.Id &&
+                       s.Narudzba.StatusNarudzbe == StatusNarudzbe.Potvrdjena)
+                .Select(s => s.Narudzba)
+                .FirstOrDefaultAsync();
 
 
             var imaLiNarudzbu = await _dataContext.StavkaNarudzbe.
