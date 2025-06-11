@@ -159,7 +159,7 @@ namespace K_K.Controllers
             }
 
             narudzba.KorisnikId = korisnik.Id;
-            narudzba.RadnikId = "f7974104-9ab3-4d73-a79b-85f21b1c9f68"; // Hardkodiran radnik ID
+            narudzba.RadnikId = "fac1ec38-8f12-4245-b2cd-99384264863b"; // Hardkodiran radnik ID
 
             // Ukloni greske validacije za polja koja postavljamo rucno
             ModelState.Remove("Korisnik");
@@ -177,7 +177,7 @@ namespace K_K.Controllers
             else if (submitButton == "kartica")
             {
                 narudzba.NacinPlacanja = VrstaPlacanja.Kartica;
-                narudzba.StatusNarudzbe = StatusNarudzbe.NaCekanju;
+                narudzba.StatusNarudzbe = StatusNarudzbe.NaCekanju; 
               //  narudzba.StatusNarudzbe = StatusNarudzbe.NaCekanjuPlacanja; // Na čekanju za karticu
             }
             else

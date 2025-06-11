@@ -5,53 +5,53 @@
 
 <style>
     .page-header {
-        background-color: var(--card-bg);
-        padding: 30px;
-        border-radius: 12px;
-        margin-bottom: 30px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    background-color: var(--card-bg);
+    padding: 30px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
-    
+
     .page-title {
-        font-size: 2.2rem;
-        font-weight: 700;
-        color: var(--text-dark);
-        margin-bottom: 20px;
-        display: flex;
-        align-items: center;
-        gap: 15px;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
     }
-    
+
     .action-buttons {
-        display: flex;
-        gap: 15px;
-        flex-wrap: wrap;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
     }
-    
+
     .locations-table {
-        background-color: var(--card-bg);
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
-    
+
     .table-header-icon {
-        margin-right: 8px;
-        color: var(--accent);
+    margin-right: 8px;
+    color: var(--accent);
     }
-    
+
     .no-locations-card {
-        background-color: var(--card-bg);
-        border-radius: 12px;
-        padding: 40px;
-        text-align: center;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
-    
+
     .no-locations-icon {
-        font-size: 4rem;
-        color: var(--accent-light);
-        margin-bottom: 20px;
+    font-size: 4rem;
+    color: var(--accent-light);
+    margin-bottom: 20px;
     }
 </style>
 
@@ -60,12 +60,16 @@
         <i class="fas fa-map-marker-alt"></i>
         Lokacije Kafića
     </h1>
-    
+
     <div class="action-buttons">
-        <a asp-action="Create" class="btn btn-success">
-            <i class="fas fa-plus"></i> 
-            Dodaj Novu Lokaciju
-        </a>
+        @if(User.IsInRole("Administrator"))
+        {
+            <a asp-action="Create" class="btn btn-success">
+                <i class="fas fa-plus"></i>
+                Dodaj Novu Lokaciju
+            </a>
+        }
+        
         <a asp-action="Map" class="btn btn-info">
             <i class="fas fa-map"></i> 
             Pogledaj na Mapi
@@ -115,22 +119,28 @@
                             @item.GeografskaDuzina.ToString("F4")
                         </td>
                         <td>
+
                             <div class="btn-group" role="group">
-                                <a asp-action="Edit" asp-route-id="@item.Id" 
-                                   class="btn btn-outline-primary btn-sm" 
-                                   title="Uredi">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <a asp-action="Details" asp-route-id="@item.Id" 
-                                   class="btn btn-outline-info btn-sm" 
-                                   title="Detalji">
+                                <a asp-action="Details" asp-route-id="@item.Id"
+                                class="btn btn-outline-info btn-sm"
+                                title="Detalji">
                                     <i class="fas fa-info-circle"></i>
                                 </a>
-                                <a asp-action="Delete" asp-route-id="@item.Id" 
-                                   class="btn btn-outline-danger btn-sm" 
-                                   title="Obriši">
-                                    <i class="fas fa-trash"></i>
-                                </a>
+                                @if(User.IsInRole("Administrator"))
+                                {
+                                    <a asp-action="Edit" asp-route-id="@item.Id"
+                                       class="btn btn-outline-primary btn-sm"
+                                       title="Uredi">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+
+                                    <a asp-action="Delete" asp-route-id="@item.Id"
+                                       class="btn btn-outline-danger btn-sm"
+                                       title="Obriši">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                }
+                                
                             </div>
                         </td>
                     </tr>

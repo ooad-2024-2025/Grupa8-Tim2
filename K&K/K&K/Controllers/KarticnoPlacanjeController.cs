@@ -36,7 +36,7 @@ public class KarticnoPlacanjeController : Controller
         {
             NarudzbaId = id // Proslijedi ID narudžbe u model
         };
-        await ObrisiStareNeplaceneNarudzbe(id);
+        await ObrisiStareNeplaceneNarudzbe(id); 
         return View(model);
     }
     private async Task ObrisiStareNeplaceneNarudzbe(int id)
@@ -65,7 +65,6 @@ public class KarticnoPlacanjeController : Controller
                 }
 
                 await _context.SaveChangesAsync();
-                Console.WriteLine($"Obrisano {stareNarudzbe.Count} starih neplaćenih narudžbi");
             }
         }
         catch (Exception ex)
@@ -190,7 +189,7 @@ public class KarticnoPlacanjeController : Controller
             var korisnik = await _userManager.GetUserAsync(User);
             if (korisnik != null)
             {
-                var korpa = await _context.Korpa.FirstOrDefaultAsync(k => k.KorisnikId == korisnik.Id);//nadji mu ku
+                var korpa = await _context.Korpa.FirstOrDefaultAsync(k => k.KorisnikId == korisnik.Id);//nadji mu korpu pa brisi iz nje sve
                 if (korpa != null)
                 {
                     var stavkeUKorpi = await _context.StavkaKorpe

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using K_K.Data;
 using K_K.Models;
 using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace K_K.Controllers
 {
@@ -130,6 +131,7 @@ namespace K_K.Controllers
             return View(lokacijaKafica);
         }
 
+        [Authorize(Roles = "Administrator")]
         public IActionResult Create()
         {
             return View();
@@ -137,6 +139,7 @@ namespace K_K.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Create([Bind("Id,Adresa,Grad,GeografskaSirina,GeografskaDuzina")] LokacijaKafica lokacijaKafica)
         {
             if (ModelState.IsValid)
@@ -148,6 +151,7 @@ namespace K_K.Controllers
             return View(lokacijaKafica);
         }
 
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -165,6 +169,7 @@ namespace K_K.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Adresa,Grad,GeografskaSirina,GeografskaDuzina")] LokacijaKafica lokacijaKafica)
         {
             if (id != lokacijaKafica.Id)
@@ -195,6 +200,7 @@ namespace K_K.Controllers
             return View(lokacijaKafica);
         }
 
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -214,6 +220,7 @@ namespace K_K.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var lokacijaKafica = await _context.LokacijaKafica.FindAsync(id);

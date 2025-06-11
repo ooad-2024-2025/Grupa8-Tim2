@@ -11,7 +11,7 @@ namespace K_K.Models
         [Key]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Morate izabrati velicinu!")]
+        [Required(ErrorMessage = "Morate izabrati veli?inu!")]
         public Velicina Velicina { get; set; }
 
         [Required(ErrorMessage = "Naziv proizvoda je obavezan!")]

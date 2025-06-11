@@ -24,11 +24,11 @@
                 <div class="col-md-3">
                     <label for="searchTerm" class="form-label">Pretraži</label>
                     <input type="text"
-                           name="searchTerm"
-                           id="searchTerm"
-                           value="@ViewBag.SearchTerm"
-                           placeholder="Naziv ili opis proizvoda..."
-                           class="form-control" />
+                    name="searchTerm"
+                    id="searchTerm"
+                    value="@ViewBag.SearchTerm"
+                    placeholder="Naziv ili opis proizvoda..."
+                    class="form-control" />
                 </div>
 
                 @*Tip proizvoda*@
@@ -72,26 +72,26 @@
                 <div class="col-md-1">
                     <label for="minPrice" class="form-label">Min KM</label>
                     <input type="number"
-                           name="minPrice"
-                           id="minPrice"
-                           value="@ViewBag.MinPrice"
-                           placeholder="0.00"
-                           class="form-control"
-                           step="0.01"
-                           min="0" />
+                    name="minPrice"
+                    id="minPrice"
+                    value="@ViewBag.MinPrice"
+                    placeholder="0.00"
+                    class="form-control"
+                    step="0.01"
+                    min="0" />
                 </div>
 
                 @*Maksimalna cijena*@
                 <div class="col-md-1">
                     <label for="maxPrice" class="form-label">Max KM</label>
                     <input type="number"
-                           name="maxPrice"
-                           id="maxPrice"
-                           value="@ViewBag.MaxPrice"
-                           placeholder="100.00"
-                           class="form-control"
-                           step="0.01"
-                           min="0" />
+                    name="maxPrice"
+                    id="maxPrice"
+                    value="@ViewBag.MaxPrice"
+                    placeholder="100.00"
+                    class="form-control"
+                    step="0.01"
+                    min="0" />
                 </div>
 
                 @*Sortiranje*@
@@ -119,15 +119,16 @@
     </div>
 
     @*Admin dugme za dodavanje proizvoda*@
-    @*@if (User.IsInRole("Admin"))*@
-    
+    @if (User.IsInRole("Administrator"))
+    {
         <div class="mb-3">
             <a asp-action="Create" class="btn btn-success">
                 <i class="fas fa-plus"></i> Dodaj Novi Proizvod
             </a>
 
         </div>
-    
+    }
+
 
     @*Tempdata poruke*@
     @if (TempData["SuccessMessage"] != null)
@@ -158,7 +159,7 @@
                         <div class="card-img-top-wrapper" style="height: 200px; overflow: hidden;">
                             @if (!string.IsNullOrEmpty(proizvod.Slika))
                             {
-                                
+
                                 <img src="@proizvod.Slika" class="card-img-top" style="height: 200px; object-fit: cover;" alt="@proizvod.Naziv" />
 
                             }
@@ -172,7 +173,7 @@
 
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">@proizvod.Naziv</h5>
-                            
+
                             @*Prikaz tipa i kategorije proizvoda*@
                             <div class="mb-2">
                                 @if (proizvod is Hrana hrana)
@@ -212,7 +213,7 @@
                                         }
                                     </span>
                                 }
-                                
+
                                 @*prikaz velicine*@
                                 <span class="badge bg-secondary">
                                     @if (proizvod.Velicina == Velicina.Mala)
@@ -235,13 +236,13 @@
 
                                 <div class="btn-group" role="group">
                                     <a asp-action="Details" asp-route-id="@proizvod.Id"
-                                       class="btn btn-outline-primary btn-sm"
-                                       title="Detalji">
+                                    class="btn btn-outline-primary btn-sm"
+                                    title="Detalji">
                                         <i class="fas fa-eye"></i>
                                     </a>
 
-                                    @*@if (User.IsInRole("Admin"))*@
-                                    
+                                    @if (User.IsInRole("Administrator"))
+                                    {
                                         <a asp-action="Edit" asp-route-id="@proizvod.Id"
                                            class="btn btn-outline-warning btn-sm"
                                            title="Uredi">
@@ -252,7 +253,8 @@
                                            title="Obriši">
                                             <i class="fas fa-trash"></i>
                                         </a>
-                                    
+                                    }
+                             
 
                                     @*@if (User.Identity.IsAuthenticated)*@
                                     @*ovo sam dodala da popravim korpu popraviti cu*@
