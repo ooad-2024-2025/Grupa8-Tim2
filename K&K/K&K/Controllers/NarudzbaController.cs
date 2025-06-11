@@ -68,22 +68,32 @@ namespace K_K.Controllers
         // GET: Narudzba/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            var korisnik = await _userManager.GetUserAsync(User);
             if (id == null)
             {
                 return NotFound();
             }
-
+            if (korisnik == null)
+            {
+                return Unauthorized();
+            }
             /* var narudzba = await _context.Narudzba
              .Include(n => n.Korisnik)
              //.Include(n => n.Radnik)
              .FirstOrDefaultAsync(n => n.Id == id);*/
-            var narudzba = await _context.Narudzba.FindAsync(id);
+            var narudzba = await _context.Narudzba.
+                FindAsync(id);
 
             if (narudzba == null)
             {
                 return NotFound();
             }
-
+            if (narudzba.KorisnikId != korisnik.Id &&
+                !User.IsInRole("Administrator") &&
+                !User.IsInRole("Radnik"))
+            {
+                return NotFound();
+            }
             var stavke = await _context.StavkaNarudzbe
              .Where(s => s.NarudzbaId == id)
              .Include(s => s.Proizvod) 

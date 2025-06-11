@@ -1,319 +1,323 @@
 {
   "Files": [
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/obj/Debug/net8.0/scopedcss/projectbundle/K&K.bundle.scp.css",
-      "PackagePath": "staticwebassets/K&K.bundle.scp.css"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\K&K.bundle.scp.css",
+      "PackagePath": "staticwebassets\\K&K.gb4yuw7rlu.bundle.scp.css"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/css/site.css",
-      "PackagePath": "staticwebassets/css/site.css"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\css\\site.css",
+      "PackagePath": "staticwebassets\\css\\site.css"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/favicon.ico",
-      "PackagePath": "staticwebassets/favicon.ico"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\favicon.ico",
+      "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/images/proizvodi/2474ecd4-d887-4508-8a35-40e0ab401347.jpg",
-      "PackagePath": "staticwebassets/images/proizvodi/2474ecd4-d887-4508-8a35-40e0ab401347.jpg"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\images\\proizvodi\\2474ecd4-d887-4508-8a35-40e0ab401347.jpg",
+      "PackagePath": "staticwebassets\\images\\proizvodi\\2474ecd4-d887-4508-8a35-40e0ab401347.jpg"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/images/proizvodi/26fab730-1d62-48d7-a071-e909617bbf2a.jpg",
-      "PackagePath": "staticwebassets/images/proizvodi/26fab730-1d62-48d7-a071-e909617bbf2a.jpg"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\images\\proizvodi\\26fab730-1d62-48d7-a071-e909617bbf2a.jpg",
+      "PackagePath": "staticwebassets\\images\\proizvodi\\26fab730-1d62-48d7-a071-e909617bbf2a.jpg"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/images/proizvodi/2b6746aa-d56b-40a6-8558-1a6b2063be71.jpg",
-      "PackagePath": "staticwebassets/images/proizvodi/2b6746aa-d56b-40a6-8558-1a6b2063be71.jpg"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\images\\proizvodi\\2b6746aa-d56b-40a6-8558-1a6b2063be71.jpg",
+      "PackagePath": "staticwebassets\\images\\proizvodi\\2b6746aa-d56b-40a6-8558-1a6b2063be71.jpg"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/images/proizvodi/340b1dc2-0822-4ab6-8348-dc37b0eaee2c.png",
-      "PackagePath": "staticwebassets/images/proizvodi/340b1dc2-0822-4ab6-8348-dc37b0eaee2c.png"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\images\\proizvodi\\340b1dc2-0822-4ab6-8348-dc37b0eaee2c.png",
+      "PackagePath": "staticwebassets\\images\\proizvodi\\340b1dc2-0822-4ab6-8348-dc37b0eaee2c.png"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/images/proizvodi/4f40559b-bc57-4ba9-826c-18262be8faee.jpg",
-      "PackagePath": "staticwebassets/images/proizvodi/4f40559b-bc57-4ba9-826c-18262be8faee.jpg"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\images\\proizvodi\\4f40559b-bc57-4ba9-826c-18262be8faee.jpg",
+      "PackagePath": "staticwebassets\\images\\proizvodi\\4f40559b-bc57-4ba9-826c-18262be8faee.jpg"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/images/proizvodi/6bee9021-5abd-4324-97a2-283ca338667c.jpg",
-      "PackagePath": "staticwebassets/images/proizvodi/6bee9021-5abd-4324-97a2-283ca338667c.jpg"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\images\\proizvodi\\6bee9021-5abd-4324-97a2-283ca338667c.jpg",
+      "PackagePath": "staticwebassets\\images\\proizvodi\\6bee9021-5abd-4324-97a2-283ca338667c.jpg"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/images/proizvodi/7c1a2650-10f8-4f1f-9722-060ddee46bd4.jpg",
-      "PackagePath": "staticwebassets/images/proizvodi/7c1a2650-10f8-4f1f-9722-060ddee46bd4.jpg"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\images\\proizvodi\\7c1a2650-10f8-4f1f-9722-060ddee46bd4.jpg",
+      "PackagePath": "staticwebassets\\images\\proizvodi\\7c1a2650-10f8-4f1f-9722-060ddee46bd4.jpg"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/images/proizvodi/9c03fb65-0358-4991-a82b-2fd2b161ec47.png",
-      "PackagePath": "staticwebassets/images/proizvodi/9c03fb65-0358-4991-a82b-2fd2b161ec47.png"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\images\\proizvodi\\9c03fb65-0358-4991-a82b-2fd2b161ec47.png",
+      "PackagePath": "staticwebassets\\images\\proizvodi\\9c03fb65-0358-4991-a82b-2fd2b161ec47.png"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/images/proizvodi/cae84388-a7b8-4309-b215-f8d59d107b22.png",
-      "PackagePath": "staticwebassets/images/proizvodi/cae84388-a7b8-4309-b215-f8d59d107b22.png"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\images\\proizvodi\\cae84388-a7b8-4309-b215-f8d59d107b22.png",
+      "PackagePath": "staticwebassets\\images\\proizvodi\\cae84388-a7b8-4309-b215-f8d59d107b22.png"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/images/proizvodi/dbcbfb69-1037-488a-9523-a2a785ff1d18.jpg",
-      "PackagePath": "staticwebassets/images/proizvodi/dbcbfb69-1037-488a-9523-a2a785ff1d18.jpg"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\images\\proizvodi\\dbcbfb69-1037-488a-9523-a2a785ff1d18.jpg",
+      "PackagePath": "staticwebassets\\images\\proizvodi\\dbcbfb69-1037-488a-9523-a2a785ff1d18.jpg"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/images/proizvodi/dc089917-ce34-49fd-8287-5e675aaf6c1c.png",
-      "PackagePath": "staticwebassets/images/proizvodi/dc089917-ce34-49fd-8287-5e675aaf6c1c.png"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\images\\proizvodi\\dc089917-ce34-49fd-8287-5e675aaf6c1c.png",
+      "PackagePath": "staticwebassets\\images\\proizvodi\\dc089917-ce34-49fd-8287-5e675aaf6c1c.png"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/images/proizvodi/e5b1301d-2115-419d-b6b8-027470b84391.jpg",
-      "PackagePath": "staticwebassets/images/proizvodi/e5b1301d-2115-419d-b6b8-027470b84391.jpg"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\images\\proizvodi\\e5b1301d-2115-419d-b6b8-027470b84391.jpg",
+      "PackagePath": "staticwebassets\\images\\proizvodi\\e5b1301d-2115-419d-b6b8-027470b84391.jpg"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/images/proizvodi/eb88da22-8e6d-47e2-852d-4e1fab53b2ad.jpg",
-      "PackagePath": "staticwebassets/images/proizvodi/eb88da22-8e6d-47e2-852d-4e1fab53b2ad.jpg"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\images\\proizvodi\\eb88da22-8e6d-47e2-852d-4e1fab53b2ad.jpg",
+      "PackagePath": "staticwebassets\\images\\proizvodi\\eb88da22-8e6d-47e2-852d-4e1fab53b2ad.jpg"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/images/proizvodi/f2b8a23b-7826-4bbd-a528-182bf1f964c1.jpg",
-      "PackagePath": "staticwebassets/images/proizvodi/f2b8a23b-7826-4bbd-a528-182bf1f964c1.jpg"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\images\\proizvodi\\f2b8a23b-7826-4bbd-a528-182bf1f964c1.jpg",
+      "PackagePath": "staticwebassets\\images\\proizvodi\\f2b8a23b-7826-4bbd-a528-182bf1f964c1.jpg"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/js/site.js",
-      "PackagePath": "staticwebassets/js/site.js"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\js\\site.js",
+      "PackagePath": "staticwebassets\\js\\site.js"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/LICENSE",
-      "PackagePath": "staticwebassets/lib/bootstrap"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\LICENSE",
+      "PackagePath": "staticwebassets\\lib\\bootstrap"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.css",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.css"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.css.map",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.css.map"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.min.css",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.min.css"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.min.css.map",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.min.css.map"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.css",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.rtl.css"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.css.map",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.rtl.css.map"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css.map",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css.map"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.css",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.css"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.css.map",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.css.map"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.min.css",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.min.css"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.min.css.map",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.min.css.map"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.css",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.rtl.css"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.css.map",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.rtl.css.map"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css.map",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css.map"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.css",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.css"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.css.map",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.css.map"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.min.css",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.min.css"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.min.css.map",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.min.css.map"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.css",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.rtl.css"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.css.map",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.rtl.css.map"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css.map",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css.map"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/css/bootstrap.css",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.css"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/css/bootstrap.css.map",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.css.map"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css.map"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/css/bootstrap.min.css",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.min.css"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/css/bootstrap.min.css.map",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.min.css.map"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.css",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.rtl.css"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.css.map",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.rtl.css.map"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.min.css",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.rtl.min.css"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.min.css.map",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.rtl.min.css.map"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.js",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.bundle.js"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.js.map",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.bundle.js.map"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js.map",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.bundle.min.js.map"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.js",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.esm.js"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.js.map",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.esm.js.map"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.min.js",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.esm.min.js"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.min.js.map",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.esm.min.js.map"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/js/bootstrap.js",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.js"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/js/bootstrap.js.map",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.js.map"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js.map"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/js/bootstrap.min.js",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.min.js"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/bootstrap/dist/js/bootstrap.min.js.map",
-      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.min.js.map"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/jquery-validation-unobtrusive/LICENSE.txt",
-      "PackagePath": "staticwebassets/lib/jquery-validation-unobtrusive/LICENSE.txt"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
-      "PackagePath": "staticwebassets/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js",
-      "PackagePath": "staticwebassets/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/jquery-validation/LICENSE.md",
-      "PackagePath": "staticwebassets/lib/jquery-validation/LICENSE.md"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\LICENSE.md"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/jquery-validation/dist/additional-methods.js",
-      "PackagePath": "staticwebassets/lib/jquery-validation/dist/additional-methods.js"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.js"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/jquery-validation/dist/additional-methods.min.js",
-      "PackagePath": "staticwebassets/lib/jquery-validation/dist/additional-methods.min.js"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.min.js"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/jquery-validation/dist/jquery.validate.js",
-      "PackagePath": "staticwebassets/lib/jquery-validation/dist/jquery.validate.js"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.js"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/jquery-validation/dist/jquery.validate.min.js",
-      "PackagePath": "staticwebassets/lib/jquery-validation/dist/jquery.validate.min.js"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.min.js"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/jquery/LICENSE.txt",
-      "PackagePath": "staticwebassets/lib/jquery/LICENSE.txt"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery\\LICENSE.txt"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/jquery/dist/jquery.js",
-      "PackagePath": "staticwebassets/lib/jquery/dist/jquery.js"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.js"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/jquery/dist/jquery.min.js",
-      "PackagePath": "staticwebassets/lib/jquery/dist/jquery.min.js"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.js"
     },
     {
-      "Id": "/Users/lamijamaglic/Desktop/Grupa8-Tim2/K&K/K&K/wwwroot/lib/jquery/dist/jquery.min.map",
-      "PackagePath": "staticwebassets/lib/jquery/dist/jquery.min.map"
+      "Id": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K&K\\K&K\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
-      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.K&K.Microsoft.AspNetCore.StaticWebAssets.props",
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.K&K.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.K&K.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     },
     {
-      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.build.K&K.props",
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.K&K.props",
       "PackagePath": "build\\K&K.props"
     },
     {
-      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildMultiTargeting.K&K.props",
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.K&K.props",
       "PackagePath": "buildMultiTargeting\\K&K.props"
     },
     {
-      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildTransitive.K&K.props",
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.K&K.props",
       "PackagePath": "buildTransitive\\K&K.props"
     }
   ],
