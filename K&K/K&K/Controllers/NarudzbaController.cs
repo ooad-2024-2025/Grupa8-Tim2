@@ -56,7 +56,8 @@ namespace K_K.Controllers
                 return Unauthorized(); // ili redirect na login
             }
             var narudzbe = await _context.Narudzba
-                        .Where(n=>n.KorisnikId==korisnik.Id) 
+                        .Where(n=>n.KorisnikId==korisnik.Id &&
+                n.StatusNarudzbe != StatusNarudzbe.NaCekanju)
                         .ToListAsync();
 
             return View(narudzbe);
@@ -129,6 +130,7 @@ namespace K_K.Controllers
 
             // Ne treba SelectList za NacinPlacanja jer će korisnik birati dugmetom
             ViewData["NacinPreuzimanja"] = new SelectList(Enum.GetValues(typeof(VrstaPreuzimanja)));
+            ViewData["DanasnjiDatum"] = DateTime.Now.ToString("dd-MM-yyyy");
             return View();
         }
 
@@ -175,6 +177,7 @@ namespace K_K.Controllers
             else if (submitButton == "kartica")
             {
                 narudzba.NacinPlacanja = VrstaPlacanja.Kartica;
+                narudzba.StatusNarudzbe = StatusNarudzbe.NaCekanju;
               //  narudzba.StatusNarudzbe = StatusNarudzbe.NaCekanjuPlacanja; // Na čekanju za karticu
             }
             else

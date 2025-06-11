@@ -24,8 +24,9 @@ public class KarticnoPlacanjeController : Controller
     [HttpGet]
     public async Task<IActionResult> Unos(int id) // Primamo ID narudžbe
     {
+        
         var narudzba = await _context.Narudzba.FindAsync(id);
-        if (narudzba == null)
+        if (narudzba == null || narudzba.StatusNarudzbe != StatusNarudzbe.NaCekanju)
         {
             TempData["ErrorMessage"] = "Narudžba nije spremna za plaćanje ili ne postoji.";
             return RedirectToAction("Index", "Narudzba");
@@ -35,7 +36,42 @@ public class KarticnoPlacanjeController : Controller
         {
             NarudzbaId = id // Proslijedi ID narudžbe u model
         };
+        await ObrisiStareNeplaceneNarudzbe(id);
         return View(model);
+    }
+    private async Task ObrisiStareNeplaceneNarudzbe(int id)
+    {
+        try
+        {
+            //narudzbe starije od 30 min
+            var cutoffTime = DateTime.Now.AddMinutes(-30);
+
+            var stareNarudzbe = await _context.Narudzba
+                .Where(n => n.StatusNarudzbe == StatusNarudzbe.NaCekanju &&
+                            n.DatumNarudzbe < cutoffTime && n.Id != id)
+                .ToListAsync();
+
+            if (stareNarudzbe.Any())
+            {
+                foreach (var narudzba in stareNarudzbe)
+                {
+                    
+                    var stavke = await _context.StavkaNarudzbe
+                        .Where(s => s.NarudzbaId == narudzba.Id)
+                        .ToListAsync();
+                    _context.StavkaNarudzbe.RemoveRange(stavke);
+
+                    _context.Narudzba.Remove(narudzba);
+                }
+
+                await _context.SaveChangesAsync();
+                Console.WriteLine($"Obrisano {stareNarudzbe.Count} starih neplaćenih narudžbi");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Greška pri brisanju starih narudžbi: {ex.Message}");
+        }
     }
 
     [HttpPost]
@@ -151,7 +187,34 @@ public class KarticnoPlacanjeController : Controller
                 return View("Unos", placanje); // Vrati se na formu sa dodatom greškom
             }
 
-            // ... (ostatak koda ako je plaćanje uspješno: snimanje u bazu, preusmjeravanje na Uspjeh) ...
+            var korisnik = await _userManager.GetUserAsync(User);
+            if (korisnik != null)
+            {
+                var korpa = await _context.Korpa.FirstOrDefaultAsync(k => k.KorisnikId == korisnik.Id);//nadji mu ku
+                if (korpa != null)
+                {
+                    var stavkeUKorpi = await _context.StavkaKorpe
+                        .Where(s => s.KorpaId == korpa.Id)
+                        .ToListAsync();
+
+                    if (stavkeUKorpi.Any())
+                    {
+                        _context.StavkaKorpe.RemoveRange(stavkeUKorpi);
+
+                        korpa.brojProizvoda = 0;
+                        korpa.ukupnaCijena = 0;
+                        _context.Update(korpa);
+                    }
+                }
+            }
+
+            if (narudzba != null)
+            {
+                narudzba.StatusNarudzbe = StatusNarudzbe.Potvrdjena;
+                _context.Update(narudzba);
+            }
+
+        // ... (ostatak koda ako je plaćanje uspješno: snimanje u bazu, preusmjeravanje na Uspjeh) ...
             placanje.VrijemePlacanja = DateTime.Now;
             placanje.Uspjesno = true;
 

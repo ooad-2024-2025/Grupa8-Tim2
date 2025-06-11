@@ -60,7 +60,8 @@
 
                     <div class="form-group mb-3">
                         <label asp-for="DatumNarudzbe" class="control-label"></label>
-                        <input asp-for="DatumNarudzbe" type="date" class="form-control" /> @* Postavljamo type="date" za bolji UI *@
+                        <input asp-for="DatumNarudzbe" type="text" class="form-control"
+                               value="@ViewData["DanasnjiDatum"]" readonly /> @* Postavljamo type="date" za bolji UI *@
                         <span asp-validation-for="DatumNarudzbe" class="text-danger"></span>
                     </div>
 
@@ -89,7 +90,7 @@
             <div class="card-body">
                 @if (korpaStavke != null && korpaStavke.Any())
                 {
-                    <!-- Stavke iz korpe -->
+                    
                     @foreach (var stavka in korpaStavke)
                     {
                         <div class="row align-items-center mb-3 p-3 border rounded" data-stavka-id="@stavka.Id" data-proizvod-id="@stavka.ProizvodId">
@@ -178,7 +179,7 @@
     }
     <script>
         var korpaId = @(korpaId ?? 0);
-        // Funkcija za ažuriranje količine (ostaje ista)
+        //azuriranje kolicine
         function updateQuantity(stavkaId, change) {
             fetch('/Korpa/UpdateQuantity', {
                 method: 'POST',
@@ -199,7 +200,7 @@
             .catch(error => console.error('Error:', error));
         }
 
-        // Funkcija za uklanjanje stavke (ostaje ista)
+        // uklanjanje stavke
         function removeItem(stavkaId) {
             if (confirm('Da li ste sigurni da želite ukloniti ovu stavku?')) {
                 fetch('/Korpa/Remove', {
@@ -221,7 +222,7 @@
                 .catch(error => console.error('Error:', error));
             }
         }
-        // Nema više updateSubmitButton funkcije jer imamo fiksna dva dugmeta
+        //OVDJE: sklonila updateSumbitButton jer imaju fiksna dugmad, kao u korpi
 
         //FUNKCIJE OD SINOC:
                   // Loading funkcije
@@ -233,7 +234,7 @@
             $('#loading-spinner').addClass('d-none');
         }
 
-        // Funkcija za ažuriranje količine stavke
+        // Funkcija za azuriranje kolicine stavke
         function updateItemQuantity(stavkaElement, novaKolicina) {
             var proizvodId = stavkaElement.getAttribute('data-proizvod-id');
 
@@ -300,7 +301,6 @@
             }
         }
 
-        // Funkcija za ažuriranje lokalnog prikaza
         function updateLocalDisplay() {
             if (korpaId === 0) return;
 
@@ -311,12 +311,12 @@
                     var porez = ukupno * 0.17;
                     var bezPoreza = ukupno - porez;
 
-                    // Ažuriranje ukupnih iznosa
+                    //azuriranje ukupnih iznosa
                     $('#subtotal').text(bezPoreza.toFixed(2) + ' KM');
                     $('#pdv').text(porez.toFixed(2) + ' KM');
                     $('#ukupno-sve').text(ukupno.toFixed(2) + ' KM');
 
-                    // Ažuriranje pojedinačnih stavki
+                    //azuriranje pojedinačnih stavki
                     if (data.stavke && data.stavke.length > 0) {
                         data.stavke.forEach(function(stavka) {
                             var stavkaElement = document.querySelector('[data-proizvod-id="' + stavka.proizvodId + '"]');
@@ -327,7 +327,7 @@
                         });
                     }
 
-                    // Ako nema stavki, reload stranicu
+                    //ako nema stavki, reload stranicu
                     if (!data.stavke || data.stavke.length === 0) {
                         location.reload();
                     }
@@ -338,9 +338,9 @@
             });
         }
 
-        // Event listener za kada se stranica učita
+        //event listener za kada se stranica ucitaa
         document.addEventListener("DOMContentLoaded", function () {
-            // Event delegation za dinamičke elemente
+            //event delegation za dinamičke elemente
             document.addEventListener('click', function(e) {
                 var stavkaElement = e.target.closest('[data-stavka-id]');
                 if (!stavkaElement) return;
