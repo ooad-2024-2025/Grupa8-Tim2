@@ -56,7 +56,7 @@ namespace K_K.Controllers
                         .Include(s => s.Narudzba)
                         .AnyAsync(s => s.ProizvodId == proizvodId &&
                                       s.Narudzba.KorisnikId == korisnik.Id &&
-                                      s.Narudzba.StatusNarudzbe == StatusNarudzbe.Potvrdjena);
+                                      s.Narudzba.StatusNarudzbe == StatusNarudzbe.Gotova);
 
                     var imaLiRecenziju = await _dataContext.Recenzija
                         .AnyAsync(r => r.ProizvodId == proizvodId && r.KorisnikId == korisnik.Id);
@@ -134,7 +134,7 @@ namespace K_K.Controllers
                 Include(s => s.Narudzba)
                 .AnyAsync(s => s.ProizvodId == proizvodId &&
                             s.Narudzba.KorisnikId == korisnik.Id && 
-                            s.Narudzba.StatusNarudzbe == StatusNarudzbe.Potvrdjena);
+                            s.Narudzba.StatusNarudzbe == StatusNarudzbe.Gotova);
             if(!imaLiNarudzbu)
             {
                 TempData["ErrorMessage"] = "Možete ostaviti recenziju samo za proizvode koje ste naručili.";
@@ -151,7 +151,7 @@ namespace K_K.Controllers
             var narudzba = await _dataContext.StavkaNarudzbe.
                 Include(s => s.Narudzba).Where(s => s.ProizvodId == proizvodId &&
                                                s.Narudzba.KorisnikId == korisnik.Id &&
-                                               s.Narudzba.StatusNarudzbe == StatusNarudzbe.Potvrdjena)
+                                               s.Narudzba.StatusNarudzbe == StatusNarudzbe.Gotova)
                 .Select(s => s.Narudzba)
                 .FirstOrDefaultAsync();
             // Kreiraj novu instancu Recenzije i popuni samo ProizvodId i NarudzbaId (korisnik unosi ostalo)
@@ -189,7 +189,7 @@ namespace K_K.Controllers
                 .Include(s => s.Narudzba)
                 .Where(s => s.ProizvodId == recenzija.ProizvodId &&
                        s.Narudzba.KorisnikId == korisnik.Id &&
-                       s.Narudzba.StatusNarudzbe == StatusNarudzbe.Potvrdjena)
+                       s.Narudzba.StatusNarudzbe == StatusNarudzbe.Gotova)
                 .Select(s => s.Narudzba)
                 .FirstOrDefaultAsync();
 
@@ -198,7 +198,7 @@ namespace K_K.Controllers
                 Include(s => s.Narudzba)
                 .AnyAsync(s => s.ProizvodId == recenzija.ProizvodId &&
                             s.Narudzba.KorisnikId == korisnik.Id &&
-                            s.Narudzba.StatusNarudzbe == StatusNarudzbe.Potvrdjena);
+                            s.Narudzba.StatusNarudzbe == StatusNarudzbe.Gotova);
             if (!imaLiNarudzbu)
             {
                 TempData["ErrorMessage"] = "Možete ostaviti recenziju samo za proizvode koje ste naručili.";

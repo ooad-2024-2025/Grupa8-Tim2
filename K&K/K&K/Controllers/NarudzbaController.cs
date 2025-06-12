@@ -32,37 +32,43 @@ namespace K_K.Controllers
 
         // GET: Narudzba
         public async Task<IActionResult> Index()
-        {/* //ovo dodati kad dodamo uloge
-            IQueryable<Narudzba> narudzbeQuery = _context.Narudzba
-                                                .Include(n => n.Korisnik)
-                                                .Include(n => n.Radnik);
-            if (!User.IsInRole("Admin"))
-            {
-                // Korisnik nije admin, prikaži samo njegove narudžbe
-                string userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+        {
+            List<Narudzba> narudzbe;
 
-                if (userId == null)
+            if (!User.IsInRole("Admin") && !User.IsInRole("Radnik")) // ispravka: Admin ili Radnik
+            {
+                // Obični korisnik - vidi samo svoje narudžbe
+                var korisnik = await _userManager.GetUserAsync(User);
+                if (korisnik == null)
                 {
                     return Unauthorized();
                 }
 
-                narudzbeQuery = narudzbeQuery.Where(n => n.KorisnikId == userId);
+                narudzbe = await _context.Narudzba
+                    .Include(n => n.Korisnik)
+                    .Include(n => n.Radnik)
+                    .Where(n => n.KorisnikId == korisnik.Id)
+                    .ToListAsync();
             }
-
-            var narudzbe = await narudzbeQuery.ToListAsync();*/
-            var korisnik = await _userManager.GetUserAsync(User);
-            if (korisnik == null)
+            else if (User.IsInRole("Admin"))
             {
-                return Unauthorized(); // ili redirect na login
+                //admin vidi sve narudzbe 
+                narudzbe = await _context.Narudzba
+                    .Include(n => n.Korisnik)
+                    .Include(n => n.Radnik)
+                    .ToListAsync();
             }
-            var narudzbe = await _context.Narudzba
-                        .Where(n=>n.KorisnikId==korisnik.Id &&
-                n.StatusNarudzbe != StatusNarudzbe.NaCekanju)
-                        .ToListAsync();
+            else 
+            {
+                //radnik vidi samo narudzbe koje nisu gotove
+                narudzbe = await _context.Narudzba
+                    .Include(n => n.Korisnik)
+                    .Include(n => n.Radnik)
+                    .Where(n => n.StatusNarudzbe != StatusNarudzbe.Gotova)
+                    .ToListAsync();
+            }
 
             return View(narudzbe);
-            //var applicationDbContext = _context.Narudzba.Include(n => n.Korisnik).Include(n => n.Radnik);
-            //return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Narudzba/Details/5
@@ -169,7 +175,10 @@ namespace K_K.Controllers
             }
 
             narudzba.KorisnikId = korisnik.Id;
-            narudzba.RadnikId = "fac1ec38-8f12-4245-b2cd-99384264863b"; // Hardkodiran radnik ID
+            var radnici = await _userManager.GetUsersInRoleAsync("Radnik");
+            var radnikId = radnici.FirstOrDefault()?.Id;
+            narudzba.RadnikId = radnikId;
+            //narudzba.RadnikId = "fac1ec38-8f12-4245-b2cd-99384264863b"; // Hardkodiran radnik ID
 
             // Ukloni greske validacije za polja koja postavljamo rucno
             ModelState.Remove("Korisnik");
@@ -293,16 +302,21 @@ namespace K_K.Controllers
                 return Redirect("/Identity/Account/Register");
             }
 
-            //var postojeca = await _context.Narudzba.FindAsync(id);
-            if (narudzba == null)
+            var postojeca = await _context.Narudzba.FindAsync(id);
+            if (postojeca == null)
             {
                 return NotFound();
             }
 
             
             narudzba.Id = id;
-            narudzba.KorisnikId = korisnik.Id;
-           narudzba.RadnikId = "f7974104-9ab3-4d73-a79b-85f21b1c9f68";
+            narudzba.KorisnikId = postojeca.KorisnikId;
+            var korisnikNarudzbe = await _userManager.FindByIdAsync(narudzba.KorisnikId);
+            //narudzba.KorisnikId = korisnik.Id;
+            var radnici = await _userManager.GetUsersInRoleAsync("Radnik");
+            var radnikId = radnici.FirstOrDefault()?.Id;
+            narudzba.RadnikId = radnikId;
+            
 
             ModelState.Remove("Korisnik");
             ModelState.Remove("Radnik");
@@ -315,18 +329,18 @@ namespace K_K.Controllers
                 {
                     var sb = new StringBuilder();
                     sb.AppendLine("<html><body>");
-                    sb.AppendLine($"<p>Poštovani <strong>{korisnik.Ime} {korisnik.Prezime}</strong>,</p>");
+                    sb.AppendLine($"<p>Poštovani <strong>{korisnikNarudzbe.Ime} {korisnikNarudzbe.Prezime}</strong>,</p>");
                     sb.AppendLine("<p>Zahvaljujemo na vašoj narudžbi.</p>");
                     sb.AppendLine("<p>Vaša narudžba je gotova i možete je preuzeti.</p>");
                     sb.AppendLine("<p>S poštovanjem,<br/>Tim K&amp;K</p>");
                     sb.AppendLine("</body></html>");
 
                     string htmlBody = sb.ToString();
-                    _context.Update(narudzba);
+                    _context.Update(postojeca);
                     await _context.SaveChangesAsync();
                     if (narudzba.StatusNarudzbe == StatusNarudzbe.Gotova)
                     {
-                        await _emailSender.SendEmailAsync(korisnik.Email, "Potvrda narudžbe", sb.ToString());
+                        await _emailSender.SendEmailAsync(korisnikNarudzbe.Email, "Potvrda narudžbe", sb.ToString());
                     }
                     if (narudzba.NacinPlacanja == VrstaPlacanja.Kartica)
                     {
