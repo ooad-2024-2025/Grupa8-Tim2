@@ -5,7 +5,8 @@
     var korpaStavke = ViewData["KorpaStavke"] as List<K_K.Models.StavkaKorpe>;
     double ukupno = korpaStavke?.Sum(s => s.Cijena) ?? 0;
     double porez = ukupno * 0.17;
-    double ukupnoSaPorezom = ukupno + porez;
+    double bezPoreza = ukupno - porez;
+    var korpaId = ViewData["KorpaId"];
 }
 
 <h1>Kreiranje narudžbe</h1>
@@ -59,7 +60,8 @@
 
                     <div class="form-group mb-3">
                         <label asp-for="DatumNarudzbe" class="control-label"></label>
-                        <input asp-for="DatumNarudzbe" type="date" class="form-control" /> @* Postavljamo type="date" za bolji UI *@
+                        <input asp-for="DatumNarudzbe" type="text" class="form-control"
+                               value="@ViewData["DanasnjiDatum"]" readonly /> @* Postavljamo type="date" za bolji UI *@
                         <span asp-validation-for="DatumNarudzbe" class="text-danger"></span>
                     </div>
 
@@ -88,9 +90,10 @@
             <div class="card-body">
                 @if (korpaStavke != null && korpaStavke.Any())
                 {
+                    
                     @foreach (var stavka in korpaStavke)
                     {
-                        <div class="row align-items-center mb-3 p-3 border rounded">
+                        <div class="row align-items-center mb-3 p-3 border rounded" data-stavka-id="@stavka.Id" data-proizvod-id="@stavka.ProizvodId">
                             <div class="col-3">
                                 @if (!string.IsNullOrEmpty(stavka.Proizvod?.Slika))
                                 {
@@ -109,23 +112,20 @@
                                 <h6 class="mb-1">@stavka.Proizvod?.Naziv</h6>
                                 <small class="text-muted">@stavka.Proizvod?.Opis</small>
                                 <div class="d-flex align-items-center mt-2">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary me-2"
-                                            onclick="updateQuantity(@stavka.Id, -1)">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary me-2 btn-quantity-minus">
                                         -
                                     </button>
-                                    <span class="mx-2 fw-bold">@stavka.Kolicina</span>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary ms-2"
-                                            onclick="updateQuantity(@stavka.Id, 1)">
+                                    <span class="mx-2 fw-bold stavka-kolicina">@stavka.Kolicina</span>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary ms-2 btn-quantity-plus">
                                         +
                                     </button>
                                 </div>
                             </div>
                             <div class="col-3 text-end">
-                                <div class="fw-bold">@((stavka.Cijena).ToString("F2")) KM</div>
-                                <small class="text-muted">@stavka.Cijena.ToString("F2") KM svaki</small>
+                                <div class="fw-bold stavka-ukupno">@((stavka.Cijena).ToString("F2")) KM</div>
+                                <small class="text-muted">@stavka.Proizvod?.Cijena.ToString("F2") KM svaki</small>
                                 <div class="mt-2">
-                                    <button type="button" class="btn btn-sm btn-outline-danger"
-                                            onclick="removeItem(@stavka.Id)">
+                                    <button type="button" class="btn btn-sm btn-outline-danger btn-remove-item">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </div>
@@ -133,20 +133,21 @@
                         </div>
                     }
 
+
                     <hr class="my-4">
 
                     <div class="row mb-2">
-                        <div class="col-8">Subtotal:</div>
-                        <div class="col-4 text-end">@ukupno.ToString("F2") KM</div>
+                        <div class="col-8">Bez poreza:</div>
+                        <div class="col-4 text-end" id="subtotal">@bezPoreza.ToString("F2") KM</div>
                     </div>
                     <div class="row mb-2">
                         <div class="col-8">PDV (17%):</div>
-                        <div class="col-4 text-end">@porez.ToString("F2") KM</div>
+                        <div class="col-4 text-end" id="pdv">@porez.ToString("F2") KM</div>
                     </div>
                     <hr>
                     <div class="row mb-3">
                         <div class="col-8"><strong>Ukupno:</strong></div>
-                        <div class="col-4 text-end"><strong class="fs-5">@ukupnoSaPorezom.ToString("F2") KM</strong></div>
+                        <div class="col-4 text-end"><strong class="fs-5" id="ukupno-sve">@ukupno.ToString("F2") KM</strong></div>
                     </div>
 
                     <div class="alert alert-info">
@@ -177,7 +178,8 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     <script>
-        // Funkcija za ažuriranje količine (ostaje ista)
+        var korpaId = @(korpaId ?? 0);
+        //azuriranje kolicine
         function updateQuantity(stavkaId, change) {
             fetch('/Korpa/UpdateQuantity', {
                 method: 'POST',
@@ -198,7 +200,7 @@
             .catch(error => console.error('Error:', error));
         }
 
-        // Funkcija za uklanjanje stavke (ostaje ista)
+        // uklanjanje stavke
         function removeItem(stavkaId) {
             if (confirm('Da li ste sigurni da želite ukloniti ovu stavku?')) {
                 fetch('/Korpa/Remove', {
@@ -220,6 +222,142 @@
                 .catch(error => console.error('Error:', error));
             }
         }
-        // Nema više updateSubmitButton funkcije jer imamo fiksna dva dugmeta
+        //OVDJE: sklonila updateSumbitButton jer imaju fiksna dugmad, kao u korpi
+
+        //FUNKCIJE OD SINOC:
+                  // Loading funkcije
+        function showLoading() {
+            $('#loading-spinner').removeClass('d-none');
+        }
+
+        function hideLoading() {
+            $('#loading-spinner').addClass('d-none');
+        }
+
+        // Funkcija za azuriranje kolicine stavke
+        function updateItemQuantity(stavkaElement, novaKolicina) {
+            var proizvodId = stavkaElement.getAttribute('data-proizvod-id');
+
+            if (novaKolicina < 1) {
+                removeItem(stavkaElement);
+                return;
+            }
+
+            if (korpaId === 0) {
+                console.error('Korpa ID nije definisan');
+                return;
+            }
+
+            showLoading();
+
+            $.post('/Korpa/PromijeniKolicinu', {
+                korpaId: korpaId,
+                proizvodId: proizvodId,
+                kolicina: novaKolicina
+            })
+            .done(function(data) {
+                if (data && data.success) {
+                    updateLocalDisplay();
+                }
+            })
+            .fail(function() {
+                console.error('Greška pri ažuriranju količine.');
+                alert('Greška pri ažuriranju količine.');
+            })
+            .always(function() {
+                hideLoading();
+            });
+        }
+
+        // Funkcija za uklanjanje stavke
+        function removeItem(stavkaElement) {
+            if (confirm('Da li ste sigurni da želite ukloniti ovu stavku?')) {
+                var proizvodId = stavkaElement.getAttribute('data-proizvod-id');
+
+                if (korpaId === 0) {
+                    console.error('Korpa ID nije definisan');
+                    return;
+                }
+
+                showLoading();
+
+                $.post('/Korpa/UkloniStavku', {
+                    korpaId: korpaId,
+                    proizvodId: proizvodId
+                })
+                .done(function(data) {
+                    if (data && data.success) {
+                        stavkaElement.remove();
+                        updateLocalDisplay();
+                    }
+                })
+                .fail(function() {
+                    console.error('Greška pri uklanjanju stavke.');
+                    alert('Greška pri uklanjanju stavke.');
+                })
+                .always(function() {
+                    hideLoading();
+                });
+            }
+        }
+
+        function updateLocalDisplay() {
+            if (korpaId === 0) return;
+
+            $.get('/Korpa/GetKorpaInfo', { korpaId: korpaId })
+            .done(function(data) {
+                if (data && data.success) {
+                    var ukupno = data.ukupnaCijena || 0;
+                    var porez = ukupno * 0.17;
+                    var bezPoreza = ukupno - porez;
+
+                    //azuriranje ukupnih iznosa
+                    $('#subtotal').text(bezPoreza.toFixed(2) + ' KM');
+                    $('#pdv').text(porez.toFixed(2) + ' KM');
+                    $('#ukupno-sve').text(ukupno.toFixed(2) + ' KM');
+
+                    //azuriranje pojedinačnih stavki
+                    if (data.stavke && data.stavke.length > 0) {
+                        data.stavke.forEach(function(stavka) {
+                            var stavkaElement = document.querySelector('[data-proizvod-id="' + stavka.proizvodId + '"]');
+                            if (stavkaElement) {
+                                stavkaElement.querySelector('.stavka-kolicina').textContent = stavka.kolicina;
+                                stavkaElement.querySelector('.stavka-ukupno').textContent = stavka.cijena.toFixed(2) + ' KM';
+                            }
+                        });
+                    }
+
+                    //ako nema stavki, reload stranicu
+                    if (!data.stavke || data.stavke.length === 0) {
+                        location.reload();
+                    }
+                }
+            })
+            .fail(function() {
+                console.error('Greška pri dohvatanju informacija o korpi.');
+            });
+        }
+
+        //event listener za kada se stranica ucitaa
+        document.addEventListener("DOMContentLoaded", function () {
+            //event delegation za dinamičke elemente
+            document.addEventListener('click', function(e) {
+                var stavkaElement = e.target.closest('[data-stavka-id]');
+                if (!stavkaElement) return;
+
+                if (e.target.classList.contains('btn-quantity-plus')) {
+                    var trenutnaKolicina = parseInt(stavkaElement.querySelector('.stavka-kolicina').textContent);
+                    updateItemQuantity(stavkaElement, trenutnaKolicina + 1);
+                }
+                else if (e.target.classList.contains('btn-quantity-minus')) {
+                    var trenutnaKolicina = parseInt(stavkaElement.querySelector('.stavka-kolicina').textContent);
+                    updateItemQuantity(stavkaElement, trenutnaKolicina - 1);
+                }
+                else if (e.target.classList.contains('btn-remove-item') || e.target.closest('.btn-remove-item')) {
+                    removeItem(stavkaElement);
+                }
+            });
+        });
+
     </script>
 }

@@ -23,7 +23,7 @@
                             <div class="product-info p-3 bg-light rounded">
                                 @if (!string.IsNullOrEmpty(proizvod.Slika))
                                 {
-                                    <img src="~/images/proizvodi/@proizvod.Slika"
+                                    <img src="@proizvod.Slika"
                                          alt="@proizvod.Naziv"
                                          class="img-thumbnail mb-2"
                                          style="max-width: 100px; max-height: 100px;" />

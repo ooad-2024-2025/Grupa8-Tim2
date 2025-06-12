@@ -113,21 +113,22 @@
                                 <div class="d-flex flex-wrap gap-2">
 
                                     <a asp-controller="Korpa"
-                                       asp-action="DodajUKorpu"
-                                       asp-route-id="@Model.Id"
-                                       class="btn btn-success btn-lg">
+                                    asp-action="DodajUKorpu"
+                                    asp-route-id="@Model.Id"
+                                    class="btn btn-success btn-lg">
                                         <i class="fas fa-shopping-cart"></i> Dodaj u korpu
                                     </a>
 
                                     @*SAMO ADMINISTRATOR CE MOCI DA VIDI UREDI I OBRISI*@
-                                    @*@if (User.IsInRole("Admin"))*@
-
-                                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">
-                                        <i class="fas fa-edit"></i> Uredi
-                                    </a>
-                                    <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">
-                                        <i class="fas fa-trash"></i> Obriši
-                                    </a>
+                                    @if (User.IsInRole("Administrator"))
+                                    {
+                                        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">
+                                            <i class="fas fa-edit"></i> Uredi
+                                        </a>
+                                        <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">
+                                            <i class="fas fa-trash"></i> Obriši
+                                        </a>
+                                    }
 
                                 </div>
                             </div>

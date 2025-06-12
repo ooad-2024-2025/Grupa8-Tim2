@@ -142,7 +142,7 @@ namespace K_K.Controllers
         }
 
         // GET: Proizvod/Create
-        //[Authorize(Roles = "Admin")], kad dodam autority
+        [Authorize(Roles = "Administrator")]
         public IActionResult Create()
         {
             return View();
@@ -153,7 +153,7 @@ namespace K_K.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[Authorize(Roles = "Admin")], isto moram dodat
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Create([Bind("Id,Velicina,Naziv,Opis,Slika,Cijena")] Proizvod proizvod,
                                                 string tipProizvoda, VrstaHrane? vrstaHrane,
                                                 VrstaPica? vrstaPica, IFormFile slikaFile)
@@ -267,6 +267,7 @@ namespace K_K.Controllers
         }
 
         // GET: Proizvod/Edit/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -287,7 +288,7 @@ namespace K_K.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[Authorize(Roles = "Admin")], DODAT!!!
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Velicina,Naziv,Opis,Slika,Cijena")] Proizvod proizvod, IFormFile slikaFile)
         {
             if (id != proizvod.Id)
@@ -390,7 +391,7 @@ namespace K_K.Controllers
         }
 
         // GET: Proizvod/Delete/5
-        //[Authorize(Roles = "Admin")] DODAT
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -411,7 +412,7 @@ namespace K_K.Controllers
         // POST: Proizvod/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        //[Authorize(Roles = "Admin")] DODAT
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var proizvod = await _context.Proizvod.FindAsync(id);

@@ -6,12 +6,18 @@
     int proizvodId = (int)(ViewData["ProizvodId"] ?? 0);
     string trenutniKorisnikId = ViewData["KorisnikId"]?.ToString() ?? "";
     bool isAdmin = ViewData["IsAdmin"] != null && (bool)ViewData["IsAdmin"];
-}<div class="mb-4">
+    bool mozeLiRecenziju = ViewData["MozeLiRecenziju"] != null && (bool)ViewData["MozeLiRecenziju"];
+}
+<div class="mb-4">
     @* Dodajemo div za dugme sa donjom marginom *@
     @* Ažurirano: asp-action sada pokazuje na OstaviRecenziju *@
-    <a asp-action="OstaviRecenziju" asp-controller="Recenzija" asp-route-proizvodId="@proizvodId" class="btn btn-primary btn-lg">
-        <i class="fas fa-plus-circle me-2"></i> Unesi novu recenziju
-    </a>
+    @if(mozeLiRecenziju)
+    {
+        <a asp-action="OstaviRecenziju" asp-controller="Recenzija" asp-route-proizvodId="@proizvodId" class="btn btn-primary btn-lg">
+            <i class="fas fa-plus-circle me-2"></i> Unesi novu recenziju
+        </a>
+    }
+   
 </div>
 
 @if (!Model.Any())

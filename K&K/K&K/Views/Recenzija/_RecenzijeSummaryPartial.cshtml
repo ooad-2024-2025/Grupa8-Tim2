@@ -25,7 +25,7 @@
     }
 </div>
 
-@if (ViewBag.Recenzije != null && ViewBag.Recenzije.Any())
+@if (ViewBag.Recenzije != null && ViewBag.BrojRecenzija >0)
 {
     <div class="latest-reviews" id="latestReviewsContainer">
         @foreach (var recenzija in ViewBag.Recenzije) @* Ovdje već imate take(3) u kontroleru *@

@@ -45,7 +45,27 @@ namespace K_K.Controllers
             // ProizvodNaziv možete zadržati u ViewBag-u ako se koristi samo u punom View-u
             ViewBag.ProizvodNaziv = proizvod?.Naziv;
 
+            bool mozeLiRecenziju = false;
+            if (User.Identity.IsAuthenticated)
+            {
+                var korisnik = await _userManager.GetUserAsync(User);
+                if (korisnik != null)
+                {
 
+                    var imaLiNarudzbu = await _dataContext.StavkaNarudzbe
+                        .Include(s => s.Narudzba)
+                        .AnyAsync(s => s.ProizvodId == proizvodId &&
+                                      s.Narudzba.KorisnikId == korisnik.Id &&
+                                      s.Narudzba.StatusNarudzbe == StatusNarudzbe.Potvrdjena);
+
+                    var imaLiRecenziju = await _dataContext.Recenzija
+                        .AnyAsync(r => r.ProizvodId == proizvodId && r.KorisnikId == korisnik.Id);
+
+                    mozeLiRecenziju = imaLiNarudzbu && !imaLiRecenziju;
+                }
+            }
+            ViewData["MozeLiRecenziju"] = mozeLiRecenziju;
+            //ViewBag.MozeLiRecenziju = mozeLiRecenziju;
             // Provjerite da li je poziv AJAX-om
             if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
             {
@@ -110,13 +130,36 @@ namespace K_K.Controllers
                 //return RedirectToAction("Login", "Account", new { returnUrl = Url.Action("OstaviRecenziju", new { proizvodId = proizvodId, narudzbaId = narudzbaId }) });
                 return Redirect("/Identity/Account/Register");
             }
-
+            var imaLiNarudzbu = await _dataContext.StavkaNarudzbe.
+                Include(s => s.Narudzba)
+                .AnyAsync(s => s.ProizvodId == proizvodId &&
+                            s.Narudzba.KorisnikId == korisnik.Id && 
+                            s.Narudzba.StatusNarudzbe == StatusNarudzbe.Potvrdjena);
+            if(!imaLiNarudzbu)
+            {
+                TempData["ErrorMessage"] = "Možete ostaviti recenziju samo za proizvode koje ste naručili.";
+                return RedirectToAction("Details", "Proizvod", new { id = proizvodId });
+            }
+            var imaLiRecenziju = await _dataContext.Recenzija.
+                        AnyAsync(r => r.ProizvodId == proizvodId &&
+                                 r.KorisnikId == korisnik.Id);
+            if(imaLiRecenziju)
+            {
+                TempData["ErrorMessage"] = "Već ste ostavili recenziju za ovaj proizvod";
+                return RedirectToAction("Details", "Proizvod", new { id = proizvodId });
+            }
+            var narudzba = await _dataContext.StavkaNarudzbe.
+                Include(s => s.Narudzba).Where(s => s.ProizvodId == proizvodId &&
+                                               s.Narudzba.KorisnikId == korisnik.Id &&
+                                               s.Narudzba.StatusNarudzbe == StatusNarudzbe.Potvrdjena)
+                .Select(s => s.Narudzba)
+                .FirstOrDefaultAsync();
             // Kreiraj novu instancu Recenzije i popuni samo ProizvodId i NarudzbaId (korisnik unosi ostalo)
             var recenzija = new Recenzija
             {
                 //ProizvodId = proizvodId,
                 ProizvodId = proizvodId,
-                NarudzbaId = 30,
+                NarudzbaId = narudzba.Id,
                 KorisnikId = korisnik.Id // Popuni korisnikId odmah
             };
 
@@ -142,11 +185,37 @@ namespace K_K.Controllers
             var korisnik = await _userManager.GetUserAsync(User);
             if (korisnik == null)
                 return Unauthorized();
+            var narudzba = await _dataContext.StavkaNarudzbe
+                .Include(s => s.Narudzba)
+                .Where(s => s.ProizvodId == recenzija.ProizvodId &&
+                       s.Narudzba.KorisnikId == korisnik.Id &&
+                       s.Narudzba.StatusNarudzbe == StatusNarudzbe.Potvrdjena)
+                .Select(s => s.Narudzba)
+                .FirstOrDefaultAsync();
 
+
+            var imaLiNarudzbu = await _dataContext.StavkaNarudzbe.
+                Include(s => s.Narudzba)
+                .AnyAsync(s => s.ProizvodId == recenzija.ProizvodId &&
+                            s.Narudzba.KorisnikId == korisnik.Id &&
+                            s.Narudzba.StatusNarudzbe == StatusNarudzbe.Potvrdjena);
+            if (!imaLiNarudzbu)
+            {
+                TempData["ErrorMessage"] = "Možete ostaviti recenziju samo za proizvode koje ste naručili.";
+                return RedirectToAction("Details", "Proizvod", new { id = recenzija.ProizvodId });
+            }
+            var imaLiRecenziju = await _dataContext.Recenzija.
+                        AnyAsync(r => r.ProizvodId == recenzija.ProizvodId &&
+                                 r.KorisnikId == korisnik.Id);
+            if (imaLiRecenziju)
+            {
+                TempData["ErrorMessage"] = "Već ste ostavili recenziju za ovaj proizvod";
+                return RedirectToAction("Details", "Proizvod", new { id = recenzija.ProizvodId });
+            }
             // Obavezno ručno postavi polja
             recenzija.KorisnikId = korisnik.Id;
             recenzija.DatumDodavanja = DateTime.Now;
-            recenzija.NarudzbaId = 30;
+            recenzija.NarudzbaId = narudzba.Id;
 
 
 

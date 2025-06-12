@@ -56,7 +56,8 @@ namespace K_K.Controllers
                 return Unauthorized(); // ili redirect na login
             }
             var narudzbe = await _context.Narudzba
-                        .Where(n=>n.KorisnikId==korisnik.Id) 
+                        .Where(n=>n.KorisnikId==korisnik.Id &&
+                n.StatusNarudzbe != StatusNarudzbe.NaCekanju)
                         .ToListAsync();
 
             return View(narudzbe);
@@ -67,22 +68,32 @@ namespace K_K.Controllers
         // GET: Narudzba/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            var korisnik = await _userManager.GetUserAsync(User);
             if (id == null)
             {
                 return NotFound();
             }
-
+            if (korisnik == null)
+            {
+                return Unauthorized();
+            }
             /* var narudzba = await _context.Narudzba
              .Include(n => n.Korisnik)
              //.Include(n => n.Radnik)
              .FirstOrDefaultAsync(n => n.Id == id);*/
-            var narudzba = await _context.Narudzba.FindAsync(id);
+            var narudzba = await _context.Narudzba.
+                FindAsync(id);
 
             if (narudzba == null)
             {
                 return NotFound();
             }
-
+            if (narudzba.KorisnikId != korisnik.Id &&
+                !User.IsInRole("Administrator") &&
+                !User.IsInRole("Radnik"))
+            {
+                return NotFound();
+            }
             var stavke = await _context.StavkaNarudzbe
              .Where(s => s.NarudzbaId == id)
              .Include(s => s.Proizvod) 
@@ -129,6 +140,7 @@ namespace K_K.Controllers
 
             // Ne treba SelectList za NacinPlacanja jer će korisnik birati dugmetom
             ViewData["NacinPreuzimanja"] = new SelectList(Enum.GetValues(typeof(VrstaPreuzimanja)));
+            ViewData["DanasnjiDatum"] = DateTime.Now.ToString("dd-MM-yyyy");
             return View();
         }
 
@@ -157,7 +169,7 @@ namespace K_K.Controllers
             }
 
             narudzba.KorisnikId = korisnik.Id;
-            narudzba.RadnikId = "f7974104-9ab3-4d73-a79b-85f21b1c9f68"; // Hardkodiran radnik ID
+            narudzba.RadnikId = "fac1ec38-8f12-4245-b2cd-99384264863b"; // Hardkodiran radnik ID
 
             // Ukloni greske validacije za polja koja postavljamo rucno
             ModelState.Remove("Korisnik");
@@ -175,6 +187,7 @@ namespace K_K.Controllers
             else if (submitButton == "kartica")
             {
                 narudzba.NacinPlacanja = VrstaPlacanja.Kartica;
+                narudzba.StatusNarudzbe = StatusNarudzbe.NaCekanju; 
               //  narudzba.StatusNarudzbe = StatusNarudzbe.NaCekanjuPlacanja; // Na čekanju za karticu
             }
             else
