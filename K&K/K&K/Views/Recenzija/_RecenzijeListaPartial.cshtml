@@ -27,7 +27,7 @@ else
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Ocjena: @item.Ocjena / 5</h5>
-                        @*
+                        
                         @if (item.Korisnik != null)
                         {
                             <h6 class="card-subtitle mb-2 text-muted">
@@ -38,7 +38,7 @@ else
                         {
                             <h6 class="card-subtitle mb-2 text-muted">Korisnik: Nepoznat</h6>
                         }
-                        *@
+                        
 
                         <p class="card-text">@item.Tekst</p>
                         <small class="text-muted">Dodano: @item.DatumDodavanja.ToShortDateString()</small>
