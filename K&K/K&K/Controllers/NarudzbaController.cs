@@ -269,6 +269,7 @@ namespace K_K.Controllers
             }
 
             var narudzba = await _context.Narudzba.FindAsync(id);
+            TempData["narudzba"]=narudzba;
 
             if (narudzba == null)
             {
@@ -316,6 +317,10 @@ namespace K_K.Controllers
             var radnici = await _userManager.GetUsersInRoleAsync("Radnik");
             var radnikId = radnici.FirstOrDefault()?.Id;
             narudzba.RadnikId = radnikId;
+            //dodala sam jer se ne azurira status narudzbe
+            postojeca.StatusNarudzbe = narudzba.StatusNarudzbe;
+            postojeca.AdresaDostave = narudzba.AdresaDostave;
+            postojeca.NacinPlacanja = narudzba. NacinPlacanja;  
             
 
             ModelState.Remove("Korisnik");

@@ -35,6 +35,14 @@
                             Korpa
                         </a>
                     </div>
+                    @if (!User.IsInRole("Radnik") && !User.IsInRole("Administrator"))
+                    {
+                        <a class="nav-link" asp-controller="Narudzba" asp-action="Index">Moje narudžbe</a>
+                    }
+                    else
+                    {
+                        <a class="nav-link" asp-controller="Narudzba" asp-action="Index">Narudžbe</a>
+                    }
                 </div>
                 <partial name="_LoginPartial" />
             </div>
