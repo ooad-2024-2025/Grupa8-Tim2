@@ -4,7 +4,13 @@
 @{
     ViewData["Title"] = "Prijava";
 }
-
+@if (TempData["RecenzijaPrijava"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fas fa-exclamation-circle"></i> @TempData["RecenzijaPrijava"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
 <h1>@ViewData["Title"]</h1>
 <div class="row">
     <div class="col-md-4">

@@ -130,6 +130,12 @@ namespace K_K.Controllers
                 //return RedirectToAction("Login", "Account", new { returnUrl = Url.Action("OstaviRecenziju", new { proizvodId = proizvodId, narudzbaId = narudzbaId }) });
                 return Redirect("/Identity/Account/Register");
             }
+            var postojiProizvod = await _dataContext.Proizvod.AnyAsync(p => p.Id == proizvodId);
+            if(!postojiProizvod)
+            {
+                TempData["ProizvodNotFound"] = "Proizvod nije pronađen!";
+                return RedirectToAction("Index", "Proizvod");
+            }
             var imaLiNarudzbu = await _dataContext.StavkaNarudzbe.
                 Include(s => s.Narudzba)
                 .AnyAsync(s => s.ProizvodId == proizvodId &&
@@ -137,7 +143,7 @@ namespace K_K.Controllers
                             s.Narudzba.StatusNarudzbe == StatusNarudzbe.Gotova);
             if(!imaLiNarudzbu)
             {
-                TempData["ErrorMessage"] = "Možete ostaviti recenziju samo za proizvode koje ste naručili.";
+                TempData["RecenzijaGreska"] = "Možete ostaviti recenziju samo za proizvode koje ste naručili.";
                 return RedirectToAction("Details", "Proizvod", new { id = proizvodId });
             }
             var imaLiRecenziju = await _dataContext.Recenzija.
@@ -145,7 +151,7 @@ namespace K_K.Controllers
                                  r.KorisnikId == korisnik.Id);
             if(imaLiRecenziju)
             {
-                TempData["ErrorMessage"] = "Već ste ostavili recenziju za ovaj proizvod";
+                TempData["RecenzijaGreska"] = "Već ste ostavili recenziju za ovaj proizvod";
                 return RedirectToAction("Details", "Proizvod", new { id = proizvodId });
             }
             var narudzba = await _dataContext.StavkaNarudzbe.
@@ -201,7 +207,7 @@ namespace K_K.Controllers
                             s.Narudzba.StatusNarudzbe == StatusNarudzbe.Gotova);
             if (!imaLiNarudzbu)
             {
-                TempData["ErrorMessage"] = "Možete ostaviti recenziju samo za proizvode koje ste naručili.";
+                TempData["RecenzijaGreska"] = "Možete ostaviti recenziju samo za proizvode koje ste naručili.";
                 return RedirectToAction("Details", "Proizvod", new { id = recenzija.ProizvodId });
             }
             var imaLiRecenziju = await _dataContext.Recenzija.
@@ -209,7 +215,7 @@ namespace K_K.Controllers
                                  r.KorisnikId == korisnik.Id);
             if (imaLiRecenziju)
             {
-                TempData["ErrorMessage"] = "Već ste ostavili recenziju za ovaj proizvod";
+                TempData["RecenzijaGreska"] = "Već ste ostavili recenziju za ovaj proizvod";
                 return RedirectToAction("Details", "Proizvod", new { id = recenzija.ProizvodId });
             }
             // Obavezno ručno postavi polja
@@ -300,7 +306,7 @@ namespace K_K.Controllers
             var korisnik = await _userManager.GetUserAsync(User);
             if (korisnik == null)
             {
-                TempData["ErrorMessage"] = "Morate biti prijavljeni da biste uredili recenziju.";
+                TempData["RecenzijaPrijava"] = "Morate biti prijavljeni da biste uredili recenziju.";
                 return Redirect("/Identity/Account/Login");
             }
 
@@ -308,14 +314,14 @@ namespace K_K.Controllers
 
             if (recenzija == null)
             {
-                TempData["ErrorMessage"] = "Recenzija nije pronađena.";
+                TempData["RecenzijaNotFound"] = "Recenzija nije pronađena.";
                 return RedirectToAction("Index", "Proizvod");
             }
 
             // SIGURNOSNA PROVJERA: Dozvoli uređivanje samo sopstvene recenzije (ili ako je korisnik Admin)
             if (recenzija.KorisnikId != korisnik.Id && !await _userManager.IsInRoleAsync(korisnik, "Admin"))
             {
-                TempData["ErrorMessage"] = "Nemate dozvolu za uređivanje ove recenzije.";
+                TempData["RecenzijaEditError"] = "Nemate dozvolu za uređivanje ove recenzije.";
                 return RedirectToAction("DetaljiRecenzije", new { id = recenzija.Id }); // Vratite korisnika na detalje recenzije
             }
 
@@ -356,7 +362,7 @@ namespace K_K.Controllers
 
             if (originalRecenzija.KorisnikId != korisnik.Id && !await _userManager.IsInRoleAsync(korisnik, "Admin"))
             {
-                TempData["ErrorMessage"] = "Nemate dozvolu za ažuriranje ove recenzije.";
+                TempData["RecenzijaEditError"] = "Nemate dozvolu za ažuriranje ove recenzije.";
                 return RedirectToAction("DetaljiRecenzije", new { id = originalRecenzija.Id });
             }
 
@@ -376,7 +382,7 @@ namespace K_K.Controllers
                     _dataContext.Entry(originalRecenzija).CurrentValues.SetValues(recenzija);
                     await _dataContext.SaveChangesAsync();
 
-                    TempData["SuccessMessage"] = "Recenzija je uspješno ažurirana!";
+                    TempData["RecenzijaEDIT"] = "Recenzija je uspješno ažurirana!";
                     return RedirectToAction("DetaljiRecenzije", new { id = originalRecenzija.Id });
                 }
                 catch (DbUpdateConcurrencyException)
@@ -429,7 +435,7 @@ namespace K_K.Controllers
 
             if (recenzija.KorisnikId != korisnik.Id && !await _userManager.IsInRoleAsync(korisnik, "Admin"))
             {
-                TempData["ErrorMessage"] = "Nemate dozvolu za brisanje ove recenzije.";
+                TempData["RecenzijaDeleteError"] = "Nemate dozvolu za brisanje ove recenzije.";
                 return RedirectToAction("Details", "Proizvod", new { id = recenzija.ProizvodId });
             }
 
@@ -438,7 +444,7 @@ namespace K_K.Controllers
             _dataContext.Recenzija.Remove(recenzija);
             await _dataContext.SaveChangesAsync();
 
-            TempData["SuccessMessage"] = "Recenzija je uspješno obrisana!";
+            TempData["RecenzijaDeleteOk"] = "Recenzija je uspješno obrisana!";
             return RedirectToAction("Details", "Proizvod", new { id = proizvodId });
         }
 

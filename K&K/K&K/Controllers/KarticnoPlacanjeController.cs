@@ -28,8 +28,9 @@ public class KarticnoPlacanjeController : Controller
         var narudzba = await _context.Narudzba.FindAsync(id);
         if (narudzba == null || narudzba.StatusNarudzbe != StatusNarudzbe.NaCekanju)
         {
-            TempData["ErrorMessage"] = "Narudžba nije spremna za plaćanje ili ne postoji.";
+            TempData["KarticnoPlacanjeError"] = "Narudžba nije spremna za plaćanje ili ne postoji.";
             return RedirectToAction("Index", "Narudzba");
+            
         }
 
         var model = new KarticnoPlacanje
@@ -44,11 +45,10 @@ public class KarticnoPlacanjeController : Controller
         try
         {
             //narudzbe starije od 30 min
-            var cutoffTime = DateTime.Now.AddMinutes(-30);
+            //var cutoffTime = DateTime.Now.AddMinutes(-30);
 
             var stareNarudzbe = await _context.Narudzba
-                .Where(n => n.StatusNarudzbe == StatusNarudzbe.NaCekanju &&
-                            n.DatumNarudzbe < cutoffTime && n.Id != id)
+                .Where(n => n.StatusNarudzbe == StatusNarudzbe.NaCekanju && n.Id != id)
                 .ToListAsync();
 
             if (stareNarudzbe.Any())
@@ -104,7 +104,7 @@ public class KarticnoPlacanjeController : Controller
                 _context.Add(karticnoPlacanje);
                 await _context.SaveChangesAsync();
 
-                TempData["SuccessMessage"] = "Uspješno ste platili narudžbu!";
+                TempData["KarticnoPlacanjeSuccess"] = "Uspješno ste platili narudžbu!";
                 return RedirectToAction("Uspjeh"); // Preusmjeri na Uspjeh akciju unutar KarticnoPlacanjeController-a
             }
             else
@@ -220,7 +220,7 @@ public class KarticnoPlacanjeController : Controller
             _context.KarticnoPlacanjes.Add(placanje);
             await _context.SaveChangesAsync();
 
-            TempData["Poruka"] = "Plaćanje je uspješno izvršeno.";
+            TempData["KarticnoPlacanjeSuccess"] = "Plaćanje je uspješno izvršeno.";
             return RedirectToAction("Uspjeh");
         
     }

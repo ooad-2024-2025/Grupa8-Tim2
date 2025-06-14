@@ -40,6 +40,12 @@
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Registruj se</button>
+            <div class="mt-3">
+                <p class="text-center">
+                    Već imate nalog?
+                    <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">Prijavite se ovdje</a>
+                </p>
+            </div>
         </form>
     </div>
     @*<div class="col-md-6 col-md-offset-2">

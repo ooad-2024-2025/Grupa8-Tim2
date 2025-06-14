@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using MimeKit;
 using MailKit.Net.Smtp;
+using System.Net.Security;
 //using Microsoft.Extensions.Options;
 namespace K_K.Models
 {
@@ -21,6 +22,10 @@ namespace K_K.Models
             email.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = htmlBody };
 
             using var smtp = new SmtpClient();
+            smtp.ServerCertificateValidationCallback = (sender, certificate, chain, errors) => {
+                return errors == SslPolicyErrors.None ||
+                   errors == SslPolicyErrors.RemoteCertificateChainErrors;
+            };
             await smtp.ConnectAsync(_settings.SmtpServer, _settings.Port, MailKit.Security.SecureSocketOptions.StartTls);
             await smtp.AuthenticateAsync(_settings.UserName, _settings.Password);
             await smtp.SendAsync(email);

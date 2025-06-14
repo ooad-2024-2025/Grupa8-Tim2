@@ -12,10 +12,10 @@
             <p class="card-text lead">
                 Hvala vam na kupovini. Vaša narudžba je primljena i bit će obrađena uskoro.
             </p>
-            @if (TempData["SuccessMessage"] != null)
+            @if (TempData["KarticnoPlacanjeSuccess"] != null)
             {
                 <div class="alert alert-success mt-3" role="alert">
-                    @TempData["SuccessMessage"]
+                    @TempData["KarticnoPlacanjeSuccess"]
                 </div>
             }
             <hr>

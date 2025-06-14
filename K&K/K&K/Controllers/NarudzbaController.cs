@@ -12,6 +12,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace K_K.Controllers
 {
@@ -33,9 +34,10 @@ namespace K_K.Controllers
         // GET: Narudzba
         public async Task<IActionResult> Index()
         {
+            
             List<Narudzba> narudzbe;
 
-            if (!User.IsInRole("Admin") && !User.IsInRole("Radnik")) // ispravka: Admin ili Radnik
+            if (!User.IsInRole("Admin") && !User.IsInRole("Radnik"))
             {
                 // Obični korisnik - vidi samo svoje narudžbe
                 var korisnik = await _userManager.GetUserAsync(User);
@@ -122,16 +124,17 @@ namespace K_K.Controllers
             var korpa = await _context.Korpa.FirstOrDefaultAsync(k => k.KorisnikId == korisnik.Id);
             if (korpa == null)
             {
-                TempData["ErrorMessage"] = "Korpa ne postoji.";
+                TempData["GreskaKorpa"] = "Korpa ne postoji.";
                 return RedirectToAction("Index", "Proizvod");
             }
             var stavke = await _context.StavkaKorpe
                .Where(s => s.KorpaId == korpa.Id)
+               .Include(s => s.Proizvod)
                .ToListAsync();
 
             if (!stavke.Any()) // Provjera da li korpa ima stavki prije prikaza forme
             {
-                TempData["ErrorMessage"] = "Vaša korpa je prazna. Dodajte proizvode prije naručivanja.";
+                TempData["GreskaKorpa"] = "Vaša korpa je prazna. Dodajte proizvode prije naručivanja.";
                 return RedirectToAction("Index", "Proizvod");
             }
 
@@ -146,15 +149,19 @@ namespace K_K.Controllers
 
             // Ne treba SelectList za NacinPlacanja jer će korisnik birati dugmetom
             ViewData["NacinPreuzimanja"] = new SelectList(Enum.GetValues(typeof(VrstaPreuzimanja)));
-            ViewData["DanasnjiDatum"] = DateTime.Now.ToString("dd-MM-yyyy");
-            return View();
+            //ViewData["DanasnjiDatum"] = DateTime.Now.ToString("dd-MM-yyyy");
+            var narudzba = new Narudzba
+            {
+                DatumNarudzbe = DateTime.Now
+            };
+            return View(narudzba);
         }
 
         // POST: Narudzba/Create (Jedinstvena akcija za oba načina plaćanja)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-            [Bind("NacinPreuzimanja,DatumNarudzbe,AdresaDostave")] Narudzba narudzba,
+            [Bind("NacinPreuzimanja,AdresaDostave")] Narudzba narudzba,
             string submitButton // Dodajemo parametar za prepoznavanje kliknutog dugmeta
         )
         {
@@ -170,7 +177,7 @@ namespace K_K.Controllers
                 .ToListAsync();
             if (stavkeUKorpi == null || stavkeUKorpi.Count == 0)
             {
-                TempData["ErrorMessage"] = "Vaša korpa je prazna. Dodajte proizvode prije naručivanja.";
+                TempData["GreskaKorpa"] = "Vaša korpa je prazna. Dodajte proizvode prije naručivanja.";
                 return RedirectToAction("Index", "Proizvod");
             }
 
@@ -178,6 +185,7 @@ namespace K_K.Controllers
             var radnici = await _userManager.GetUsersInRoleAsync("Radnik");
             var radnikId = radnici.FirstOrDefault()?.Id;
             narudzba.RadnikId = radnikId;
+            narudzba.DatumNarudzbe = DateTime.Now;
             //narudzba.RadnikId = "fac1ec38-8f12-4245-b2cd-99384264863b"; // Hardkodiran radnik ID
 
             // Ukloni greske validacije za polja koja postavljamo rucno
@@ -236,7 +244,7 @@ namespace K_K.Controllers
                     // Za gotovinsko plaćanje, brišemo korpu i preusmjeravamo na uspjeh
                     _context.StavkaKorpe.RemoveRange(stavkeUKorpi);
                     await _context.SaveChangesAsync();
-                    TempData["SuccessMessage"] = "Narudžba je uspješno kreirana i potvrđena!";
+                    TempData["NarudzbaUSPJEH"] = "Narudžba je uspješno kreirana i potvrđena!";
                     return RedirectToAction("Uspjeh", "Narudzba"); // Preusmjeri na Uspjeh akciju u NarudzbaControlleru
                 }
             }
