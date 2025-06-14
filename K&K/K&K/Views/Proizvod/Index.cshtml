@@ -131,18 +131,39 @@
 
 
     @*Tempdata poruke*@
-    @if (TempData["SuccessMessage"] != null)
+    @if (TempData["ProizvodKreiran"] != null)
     {
         <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <i class="fas fa-check-circle"></i> @TempData["SuccessMessage"]
+            <i class="fas fa-check-circle"></i> @TempData["ProizvodKreiran"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+    @if (TempData["ProizvodAzuriran"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle"></i> @TempData["ProizvodAzuriran"]
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     }
 
-    @if (TempData["ErrorMessage"] != null)
+    @if (TempData["GreskaKorpa"] != null)
     {
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <i class="fas fa-exclamation-circle"></i> @TempData["ErrorMessage"]
+            <i class="fas fa-exclamation-circle"></i> @TempData["GreskaKorpa"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+    @if (TempData["RecenzijaNotFound"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-circle"></i> @TempData["RecenzijaNotFound"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+    @if (TempData["ProizvodNotFound"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-circle"></i> @TempData["ProizvodNotFound"]
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     }

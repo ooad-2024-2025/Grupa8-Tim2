@@ -15,14 +15,14 @@
                     </h4>
                 </div>
                 <div class="card-body">
-                    @*TempData poruke*@
+                    @*TempData poruke
                     @if (TempData["ErrorMessage"] != null)
                     {
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             <i class="fas fa-exclamation-circle"></i> @TempData["ErrorMessage"]
                             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                         </div>
-                    }
+                    }*@
 
                     <form asp-action="Create" method="post" enctype="multipart/form-data">
                         @*<input asp-for="Slika" type="hidden" value="" />*@

@@ -74,10 +74,7 @@
 @{
     ViewData["Title"] = "Edit";
 }
-@if (TempData["SuccessMessage"] != null)
-{
-    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
-}
+
 @if (Model == null)
 {
     <h1>Narudžba nije pronađena</h1>
@@ -146,7 +143,7 @@ else
 }
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Nazad na listu narudžbi</a>
 </div>
 
 @section Scripts {

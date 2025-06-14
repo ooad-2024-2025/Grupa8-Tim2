@@ -259,7 +259,7 @@ namespace K_K.Controllers
                 }
                 _context.Add(finalProizvod);
                 await _context.SaveChangesAsync();
-                TempData["SuccessMessage"] = "Proizvod je uspješno kreiran.";
+                TempData["ProizvodKreiran"] = "Proizvod je uspješno kreiran.";
                 return RedirectToAction(nameof(Index));
             }
 
@@ -372,7 +372,7 @@ namespace K_K.Controllers
                 {
                     _context.Update(proizvod);
                     await _context.SaveChangesAsync();
-                    TempData["SuccessMessage"] = "Proizvod je uspješno ažuriran!";
+                    TempData["ProizvodAzuriran"] = "Proizvod je uspješno ažuriran!";
                 }
                 catch (DbUpdateConcurrencyException)
                 {

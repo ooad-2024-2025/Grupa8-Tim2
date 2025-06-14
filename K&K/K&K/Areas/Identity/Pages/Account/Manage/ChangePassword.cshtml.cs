@@ -107,7 +107,11 @@ namespace K_K.Areas.Identity.Pages.Account.Manage
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
-
+            if (Input.OldPassword == Input.NewPassword)
+            {
+                ModelState.AddModelError(string.Empty, "Unijeli ste istu lozinku!");
+                return Page();
+            }
             var changePasswordResult = await _userManager.ChangePasswordAsync(user, Input.OldPassword, Input.NewPassword);
             if (!changePasswordResult.Succeeded)
             {
@@ -120,7 +124,7 @@ namespace K_K.Areas.Identity.Pages.Account.Manage
 
             await _signInManager.RefreshSignInAsync(user);
             _logger.LogInformation("User changed their password successfully.");
-            StatusMessage = "Your password has been changed.";
+            StatusMessage = "Uspješno ste promijenili lozinku!";
 
             return RedirectToPage();
         }

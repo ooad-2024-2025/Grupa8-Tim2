@@ -61,11 +61,11 @@
                     <div class="form-group mb-3">
                         <label asp-for="DatumNarudzbe" class="control-label"></label>
                         <input asp-for="DatumNarudzbe" type="text" class="form-control"
-                               value="@ViewData["DanasnjiDatum"]" readonly /> @* Postavljamo type="date" za bolji UI *@
+                               value="@Model.DatumNarudzbe.ToString("dd/MM/yyyy")" readonly /> @* Postavljamo type="date" za bolji UI *@
                         <span asp-validation-for="DatumNarudzbe" class="text-danger"></span>
                     </div>
 
-                    <div class="form-group mb-3">
+                    <div class="form-group mb-3"data-field="AdresaDostave" style="display: none;">
                         <label asp-for="AdresaDostave" class="control-label"></label>
                         <input asp-for="AdresaDostave" class="form-control" />
                         <span asp-validation-for="AdresaDostave" class="text-danger"></span>
@@ -110,7 +110,7 @@
                             </div>
                             <div class="col-6">
                                 <h6 class="mb-1">@stavka.Proizvod?.Naziv</h6>
-                                <small class="text-muted">@stavka.Proizvod?.Opis</small>
+                                @*<small class="text-muted">@stavka.Proizvod?.Opis</small>*@
                                 <div class="d-flex align-items-center mt-2">
                                     <button type="button" class="btn btn-sm btn-outline-secondary me-2 btn-quantity-minus">
                                         -
@@ -357,6 +357,25 @@
                     removeItem(stavkaElement);
                 }
             });
+        });
+         document.addEventListener("DOMContentLoaded", function () {
+            const nacinPreuzimanja = document.getElementById('NacinPreuzimanja');
+            const adresaGroup = document.querySelector('[data-field="AdresaDostave"]');
+
+            function toggleAdresaDostave() {
+                const selectedValue = nacinPreuzimanja.value;
+                if (selectedValue === '1') { // 1 = Dostava
+                    adresaGroup.style.display = 'block';
+                    adresaGroup.querySelector('input').required = true;
+                } else {
+                    adresaGroup.style.display = 'none';
+                    adresaGroup.querySelector('input').required = false;
+                    adresaGroup.querySelector('input').value = '';
+                }
+            }
+
+            toggleAdresaDostave();
+            nacinPreuzimanja.addEventListener('change', toggleAdresaDostave);
         });
 
     </script>

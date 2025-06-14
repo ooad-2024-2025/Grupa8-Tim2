@@ -17,15 +17,15 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Korisnik.Email)
         </dd>
-        
+
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Radnik)
         </dt>
-        
+
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Radnik.Email)
         </dd>
-        
+
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.StatusNarudzbe)
         </dt>
@@ -56,7 +56,7 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.AdresaDostave)
         </dd>
-       
+
     </dl>
 </div>
 <div>
@@ -71,7 +71,8 @@
     ViewData["Title"] = "Detalji Narudžbe";
     var stavke = ViewData["stavke"] as List<K_K.Models.StavkaNarudzbe>;
     var pdv = @stavke.Sum(s => s.Cijena) * 0.17;
-    var ukupno = pdv + @stavke.Sum(s => s.Cijena);
+    var bezPDV = stavke.Sum(s => s.Cijena) - pdv;
+    var ukupno = @stavke.Sum(s => s.Cijena);
 
 }
 
@@ -214,6 +215,7 @@
                                         <th class="text-end text-primary">
                                             @ukupno.ToString("F2") KM
                                         </th>
+
                                     </tr>
                                 </tfoot>
                             </table>

@@ -27,7 +27,7 @@
                                     <li><hr class="dropdown-divider" /></li>
                                     <li><a class="dropdown-item" asp-controller="LokacijaKafica" asp-action="Create">Dodaj Lokaciju</a></li>
                                 }
-                                
+
                             </ul>
                         </div>
                         <a class="nav-link" asp-controller="Home" asp-action="Privacy">Privatnost</a>
@@ -35,14 +35,18 @@
                             Korpa
                         </a>
                     </div>
-                    @if (!User.IsInRole("Radnik") && !User.IsInRole("Administrator"))
+                    @if(User.Identity.IsAuthenticated)
                     {
-                        <a class="nav-link" asp-controller="Narudzba" asp-action="Index">Moje narudžbe</a>
+                        @if (!User.IsInRole("Radnik") && !User.IsInRole("Administrator"))
+                        {
+                            <a class="nav-link" asp-controller="Narudzba" asp-action="Index">Moje narudžbe</a>
+                        }
+                        else
+                        {
+                            <a class="nav-link" asp-controller="Narudzba" asp-action="Index">Narudžbe</a>
+                        }
                     }
-                    else
-                    {
-                        <a class="nav-link" asp-controller="Narudzba" asp-action="Index">Narudžbe</a>
-                    }
+                    
                 </div>
                 <partial name="_LoginPartial" />
             </div>

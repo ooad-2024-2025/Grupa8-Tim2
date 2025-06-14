@@ -3,7 +3,20 @@
 @{
     ViewData["Title"] = "Detalji recenzije";
 }
-
+@if (TempData["RecenzijaEDIT"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fas fa-check-circle"></i> @TempData["RecenzijaEDIT"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+@if (TempData["RecenzijaEditError"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fas fa-exclamation-circle"></i> @TempData["RecenzijaEditError"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
 <div class="container mt-4">
     <h2>Detalji recenzije za proizvod: @Model.Proizvod?.Naziv</h2>
     <hr />

@@ -112,7 +112,7 @@ namespace K_K.Controllers
             //TempData umjesto ViewBag (zbog RedirectToAction)
             TempData["DodatnaKolicina"] = dodatnaKolicina.ToString();
             TempData["DodatnaCijena"] = dodatnaCijena.ToString();
-            TempData["PorukaZaKorpu2"] = "Proizvodi su uspešno dodati u korpu";
+            TempData["PorukaZaKorpu2"] = "Proizvodi su uspješno dodani u korpu";
 
             await _context.SaveChangesAsync();
 
@@ -549,7 +549,7 @@ namespace K_K.Controllers
                 TempData.Remove(guestCartKey);
                 TempData.Remove("GuestCartKey");
 
-                TempData["SuccessMessage"] = "Proizvod je uspješno dodan u korpu!";
+                TempData["SuccessMessage1"] = "Proizvod je uspješno dodan u korpu!";
             }
 
             return RedirectToAction("KorpaView");

@@ -129,7 +129,7 @@ namespace K_K.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "Neispravni podaci, pokušajte ponovo.");
                     return Page();
                 }
             }
