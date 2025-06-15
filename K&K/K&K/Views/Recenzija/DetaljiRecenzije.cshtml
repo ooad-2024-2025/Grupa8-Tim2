@@ -53,18 +53,23 @@
             bool isAdmin = ViewData["IsAdmin"] != null && (bool)ViewData["IsAdmin"];
         }
 
-        @if (currentUserId == Model.KorisnikId || isAdmin)
+
+        @if (currentUserId == Model.KorisnikId)
         {
-            <a asp-action="UrediRecenziju" asp-route-id="@Model.Id" class="btn btn-primary">Uredi ovu recenziju</a>
+            <a asp-action="UrediRecenziju" asp-route-id="@Model.Id" class="btn btn-sm btn-primary">Uredi</a>
+        }
+
+        @if (currentUserId == Model.KorisnikId || User.IsInRole("Administrator"))
+        {
             <form asp-action="IzbrisiRecenziju" asp-route-id="@Model.Id" method="post" class="d-inline">
                 @Html.AntiForgeryToken()
-                <button type="submit" class="btn btn-danger"
+                <button type="submit" class="btn btn-sm btn-danger"
                         onclick="return confirm('Jeste li sigurni da želite obrisati ovu recenziju?');">
                     Obriši
                 </button>
             </form>
         }
 
-        <a asp-action="PrikaziRecenziju" asp-route-proizvodId="@Model.ProizvodId" class="btn btn-secondary">Nazad na sve recenzije</a>
+        <a asp-action="PrikaziRecenziju" asp-route-proizvodId="@Model.ProizvodId" class="btn btn-secondary">Pogledaj sve recenzije</a>
     </div>
 </div>

@@ -1,5 +1,6 @@
 ﻿using K_K.Data;
 using K_K.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,32 +15,34 @@ public class KarticnoPlacanjeController : Controller
         _context = context;
         _userManager = userManager;
     }
-
+    [Authorize(Roles = "Korisnik")]
     public IActionResult Index()
     {
         return View(new KarticnoPlacanje());
     }
 
-    
+
     [HttpGet]
+    [Authorize(Roles = "Korisnik")]
     public async Task<IActionResult> Unos(int id) // Primamo ID narudžbe
     {
-        
+
         var narudzba = await _context.Narudzba.FindAsync(id);
         if (narudzba == null || narudzba.StatusNarudzbe != StatusNarudzbe.NaCekanju)
         {
             TempData["KarticnoPlacanjeError"] = "Narudžba nije spremna za plaćanje ili ne postoji.";
             return RedirectToAction("Index", "Narudzba");
-            
+
         }
 
         var model = new KarticnoPlacanje
         {
             NarudzbaId = id // Proslijedi ID narudžbe u model
         };
-        await ObrisiStareNeplaceneNarudzbe(id); 
+        await ObrisiStareNeplaceneNarudzbe(id);
         return View(model);
     }
+    [Authorize(Roles = "Korisnik")]
     private async Task ObrisiStareNeplaceneNarudzbe(int id)
     {
         try
@@ -55,7 +58,7 @@ public class KarticnoPlacanjeController : Controller
             {
                 foreach (var narudzba in stareNarudzbe)
                 {
-                    
+
                     var stavke = await _context.StavkaNarudzbe
                         .Where(s => s.NarudzbaId == narudzba.Id)
                         .ToListAsync();
@@ -75,6 +78,7 @@ public class KarticnoPlacanjeController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "Korisnik")]
     public async Task<IActionResult> Unos([Bind("Id,BrojKartice,CVV,DatumIsteka,NarudzbaId")] KarticnoPlacanje karticnoPlacanje)
     {
         if (ModelState.IsValid)
@@ -124,9 +128,10 @@ public class KarticnoPlacanjeController : Controller
     }
 
 
-    
+
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "Korisnik")]
     public async Task<IActionResult> IzvrsiUplatu(KarticnoPlacanje placanje)
     {
         // Debug ispis svih validacijskih grešaka
@@ -140,89 +145,89 @@ public class KarticnoPlacanjeController : Controller
             }
         }
 
-        
-            // ... (prvi dio koda, uključujući provjeru ModelState.IsValid za Data Annotations) ...
 
-            if (!ModelState.IsValid)
-            {
-                ViewBag.NarudzbaId = placanje.NarudzbaId;
-                return View("Unos", placanje); // Vraćanje na formu ako Data Annotations nisu prošle
-            }
+        // ... (prvi dio koda, uključujući provjeru ModelState.IsValid za Data Annotations) ...
 
-            // --- OVDJE JE KLJUČNI DIO ZA PRIKAZ GREŠKE NA EKRANU ---
+        if (!ModelState.IsValid)
+        {
+            ViewBag.NarudzbaId = placanje.NarudzbaId;
+            return View("Unos", placanje); // Vraćanje na formu ako Data Annotations nisu prošle
+        }
 
-            string specificnaGreska = null; // Promjenljiva za poruku o grešci na ekranu
+        // --- OVDJE JE KLJUČNI DIO ZA PRIKAZ GREŠKE NA EKRANU ---
 
-            var narudzba = _context.Narudzba.Find(placanje.NarudzbaId);
-            if (narudzba == null)
-            {
-                specificnaGreska = "Narudžba sa datim ID-jem ne postoji. Molimo provjerite podatke.";
-            }
-            else if (string.IsNullOrEmpty(placanje.BrojKartice) || placanje.BrojKartice.Length < 12 || placanje.BrojKartice.Length > 16)
-            {
-                specificnaGreska = "Broj kartice mora imati između 12 i 16 cifara. Molimo ispravite.";
-            }
-            else if (!LuhnValidacija(placanje.BrojKartice))
-            {
-                specificnaGreska = "Broj kartice nije validan (Luhn provjera neuspješna). Unesite ispravan broj.";
-            }
-            else if (string.IsNullOrEmpty(placanje.CVV) || placanje.CVV.Length != 3 || !placanje.CVV.All(char.IsDigit))
-            {
-                specificnaGreska = "CVV mora imati tačno 3 cifre i biti numerički.";
-            }
-            else if (placanje.DatumIsteka < DateTime.Now)
-            {
-                specificnaGreska = "Datum isteka kartice je u prošlosti. Molimo unesite budući datum.";
-            }
+        string specificnaGreska = null; // Promjenljiva za poruku o grešci na ekranu
 
-            // Ako je specificnaGreska postavljena, to znači da postoji greška u poslovnoj logici
-            if (specificnaGreska != null)
-            {
-                // Dodajemo ovu poruku u ModelState, što je način da je proslijedimo View-u
-                // string.Empty znači da se greška odnosi na cijelu formu, ne na specifično polje
-                ModelState.AddModelError(string.Empty, specificnaGreska);
+        var narudzba = _context.Narudzba.Find(placanje.NarudzbaId);
+        if (narudzba == null)
+        {
+            specificnaGreska = "Narudžba sa datim ID-jem ne postoji. Molimo provjerite podatke.";
+        }
+        else if (string.IsNullOrEmpty(placanje.BrojKartice) || placanje.BrojKartice.Length < 12 || placanje.BrojKartice.Length > 16)
+        {
+            specificnaGreska = "Broj kartice mora imati između 12 i 16 cifara. Molimo ispravite.";
+        }
+        else if (!LuhnValidacija(placanje.BrojKartice))
+        {
+            specificnaGreska = "Broj kartice nije validan (Luhn provjera neuspješna). Unesite ispravan broj.";
+        }
+        else if (string.IsNullOrEmpty(placanje.CVV) || placanje.CVV.Length != 3 || !placanje.CVV.All(char.IsDigit))
+        {
+            specificnaGreska = "CVV mora imati tačno 3 cifre i biti numerički.";
+        }
+        else if (placanje.DatumIsteka < DateTime.Now)
+        {
+            specificnaGreska = "Datum isteka kartice je u prošlosti. Molimo unesite budući datum.";
+        }
 
-                ViewBag.NarudzbaId = placanje.NarudzbaId;
-                return View("Unos", placanje); // Vrati se na formu sa dodatom greškom
-            }
+        // Ako je specificnaGreska postavljena, to znači da postoji greška u poslovnoj logici
+        if (specificnaGreska != null)
+        {
+            // Dodajemo ovu poruku u ModelState, što je način da je proslijedimo View-u
+            // string.Empty znači da se greška odnosi na cijelu formu, ne na specifično polje
+            ModelState.AddModelError(string.Empty, specificnaGreska);
 
-            var korisnik = await _userManager.GetUserAsync(User);
-            if (korisnik != null)
+            ViewBag.NarudzbaId = placanje.NarudzbaId;
+            return View("Unos", placanje); // Vrati se na formu sa dodatom greškom
+        }
+
+        var korisnik = await _userManager.GetUserAsync(User);
+        if (korisnik != null)
+        {
+            var korpa = await _context.Korpa.FirstOrDefaultAsync(k => k.KorisnikId == korisnik.Id);//nadji mu korpu pa brisi iz nje sve
+            if (korpa != null)
             {
-                var korpa = await _context.Korpa.FirstOrDefaultAsync(k => k.KorisnikId == korisnik.Id);//nadji mu korpu pa brisi iz nje sve
-                if (korpa != null)
+                var stavkeUKorpi = await _context.StavkaKorpe
+                    .Where(s => s.KorpaId == korpa.Id)
+                    .ToListAsync();
+
+                if (stavkeUKorpi.Any())
                 {
-                    var stavkeUKorpi = await _context.StavkaKorpe
-                        .Where(s => s.KorpaId == korpa.Id)
-                        .ToListAsync();
+                    _context.StavkaKorpe.RemoveRange(stavkeUKorpi);
 
-                    if (stavkeUKorpi.Any())
-                    {
-                        _context.StavkaKorpe.RemoveRange(stavkeUKorpi);
-
-                        korpa.brojProizvoda = 0;
-                        korpa.ukupnaCijena = 0;
-                        _context.Update(korpa);
-                    }
+                    korpa.brojProizvoda = 0;
+                    korpa.ukupnaCijena = 0;
+                    _context.Update(korpa);
                 }
             }
+        }
 
-            if (narudzba != null)
-            {
-                narudzba.StatusNarudzbe = StatusNarudzbe.Potvrdjena;
-                _context.Update(narudzba);
-            }
+        if (narudzba != null)
+        {
+            narudzba.StatusNarudzbe = StatusNarudzbe.Potvrdjena;
+            _context.Update(narudzba);
+        }
 
         // ... (ostatak koda ako je plaćanje uspješno: snimanje u bazu, preusmjeravanje na Uspjeh) ...
-            placanje.VrijemePlacanja = DateTime.Now;
-            placanje.Uspjesno = true;
+        placanje.VrijemePlacanja = DateTime.Now;
+        placanje.Uspjesno = true;
 
-            _context.KarticnoPlacanjes.Add(placanje);
-            await _context.SaveChangesAsync();
+        _context.KarticnoPlacanjes.Add(placanje);
+        await _context.SaveChangesAsync();
 
-            TempData["KarticnoPlacanjeSuccess"] = "Plaćanje je uspješno izvršeno.";
-            return RedirectToAction("Uspjeh");
-        
+        TempData["KarticnoPlacanjeSuccess"] = "Plaćanje je uspješno izvršeno.";
+        return RedirectToAction("Uspjeh");
+
     }
 
 
@@ -306,7 +311,7 @@ public class KarticnoPlacanjeController : Controller
         // Na kraju, provjeravamo da li je ukupna suma djeljiva sa 10
         return suma % 10 == 0;
     }
-    
+
 
     public IActionResult Greska()
     {
