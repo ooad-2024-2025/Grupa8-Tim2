@@ -43,7 +43,7 @@ namespace K_K.Controllers
                 if (korpa.Stavke != null && korpa.Stavke.Any())
                 {
                     korpa.brojProizvoda = korpa.Stavke.Sum(s => s.Kolicina);
-                    korpa.ukupnaCijena = korpa.Stavke.Sum(s => s.Kolicina * s.Cijena);
+                    korpa.ukupnaCijena = korpa.Stavke.Sum(s => s.Cijena);
                 }
                 else
                 {
@@ -379,137 +379,7 @@ namespace K_K.Controllers
             return RedirectToAction("KorpaView", new { korisnikId = korisnikId });
         }
 
-        // GET: Korpa/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var korpa = await _context.Korpa
-                .Include(k => k.Korisnik)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (korpa == null)
-            {
-                return NotFound();
-            }
-
-            return View(korpa);
-        }
-
-        // GET: Korpa/Create
-        public IActionResult Create()
-        {
-            ViewData["KorisnikId"] = new SelectList(_context.Users, "Id", "Email");
-            return View();
-        }
-
-        // POST: Korpa/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,KorisnikId")] Korpa korpa)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(korpa);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["KorisnikId"] = new SelectList(_context.Users, "Id", "Email", korpa.KorisnikId);
-            return View(korpa);
-        }
-
-
-        // GET: Korpa/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var korpa = await _context.Korpa.FindAsync(id);
-            if (korpa == null)
-            {
-                return NotFound();
-            }
-            ViewData["KorisnikId"] = new SelectList(_context.Users, "Id", "Email", korpa.KorisnikId);
-            return View(korpa);
-        }
-
-        // POST: Korpa/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,KorisnikId")] Korpa korpa)
-        {
-            if (id != korpa.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(korpa);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!KorpaExists(korpa.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["KorisnikId"] = new SelectList(_context.Users, "Id", "Email", korpa.KorisnikId);
-            return View(korpa);
-        }
-
-        // GET: Korpa/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var korpa = await _context.Korpa
-                .Include(k => k.Korisnik)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (korpa == null)
-            {
-                return NotFound();
-            }
-
-            return View(korpa);
-        }
-
-        // POST: Korpa/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var korpa = await _context.Korpa.FindAsync(id);
-            if (korpa != null)
-            {
-                _context.Korpa.Remove(korpa);
-            }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
+        
         private bool KorpaExists(int id)
         {
             return _context.Korpa.Any(e => e.Id == id);

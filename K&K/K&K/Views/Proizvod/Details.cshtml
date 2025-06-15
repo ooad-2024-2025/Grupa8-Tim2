@@ -133,7 +133,7 @@
                                 @*DUGMAD DODAJ, DELETE, EDIT*@
 
                                 <div class="d-flex flex-wrap gap-2">
-                                    @if (User.IsInRole("Korisnik"))
+                                    @if (!User.IsInRole("Administrator") && !User.IsInRole("Radnik"))
                                     { @*ne znam jel treba i provjera User.Identity.IsAuthenticated*@
                                         <a asp-controller="Korpa"
                                            asp-action="DodajUKorpu"

@@ -158,7 +158,7 @@ namespace K_K.Controllers
                                                 string tipProizvoda, VrstaHrane? vrstaHrane,
                                                 VrstaPica? vrstaPica, IFormFile slikaFile)
         {
-            ModelState.Remove("Slika");
+            //ModelState.Remove("Slika");
             if (slikaFile != null && slikaFile.Length > 0)
             {
                 try
@@ -178,7 +178,7 @@ namespace K_K.Controllers
 
                     proizvod.Slika = fileName;
                     */
-                    if (slikaFile.Length > 2 * 1024 * 1024) // 2MB
+                    if (slikaFile.Length > 2 * 1024 * 1024) // 2MB ok
                     {
                         ModelState.AddModelError("", "Slika je prevelika. Maksimalno 2MB.");
                         return View(proizvod);
@@ -191,7 +191,7 @@ namespace K_K.Controllers
                         return View(proizvod);
                     }
 
-                    // Konverzija u Base64
+                    // Konverzija u Base64-sa laba
                     using (var memoryStream = new MemoryStream())
                     {
                         await slikaFile.CopyToAsync(memoryStream);
@@ -206,6 +206,13 @@ namespace K_K.Controllers
                     return View(proizvod);
                 }
             }
+            ModelState.Remove("Slika");
+
+            if (string.IsNullOrEmpty(proizvod.Slika))
+            {
+                ModelState.AddModelError("Slika", "Slika proizvoda je obavezna!");
+            }
+
             if (string.IsNullOrEmpty(tipProizvoda))
             {
                 ModelState.AddModelError("", "Molimo odaberite tip proizvoda.");

@@ -43,13 +43,13 @@
                                             @if (korpa.Korisnik != null)
                                             {
                                                 <span class="text-primary">@korpa.Korisnik.PunoIme</span>
-                                    
+
                                                 <br>
                                                 <small class="text-muted">@korpa.Korisnik.Email</small>
                                                 @if (!string.IsNullOrEmpty(korpa.Korisnik.Adresa))
                                                 {
                                                     <br>
-                                    
+
                                                     <small class="text-muted"><i class="fas fa-map-marker-alt"></i> @korpa.Korisnik.Adresa</small>
                                                 }
                                             }
@@ -110,10 +110,10 @@
                                                                         <span class="badge-dark">@stavka.Kolicina</span>
                                                                     </td>
                                                                     <td class="text-right">
-                                                                        @stavka.Cijena.ToString("C")
+                                                                        @((stavka.Cijena / stavka.Kolicina).ToString("C"))
                                                                     </td>
                                                                     <td class="text-right font-weight-bold">
-                                                                        @((stavka.Kolicina * stavka.Cijena).ToString("C"))
+                                                                        @stavka.Cijena.ToString("C")
                                                                     </td>
                                                                 </tr>
                                                                 brojStavke++;

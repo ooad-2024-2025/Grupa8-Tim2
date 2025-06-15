@@ -277,7 +277,7 @@
                                     }
 
 
-                                    @if (User.Identity.IsAuthenticated && User.IsInRole("Korisnik"))
+                                    @if (!User.IsInRole("Administrator") && !User.IsInRole("Radnik"))
                                     {
 
                                         <form asp-controller="Korpa"

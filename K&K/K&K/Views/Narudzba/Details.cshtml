@@ -180,7 +180,7 @@
                                         <th scope="col">#</th>
                                         <th scope="col">Proizvod</th>
                                         <th scope="col" class="text-center">Količina</th>
-                                        <th scope="col" class="text-end">Cijena</th>
+                                        <th scope="col" class="text-end">Cijena po kom.</th>
                                         <th scope="col" class="text-end">Ukupno</th>
                                     </tr>
                                 </thead>
@@ -202,7 +202,7 @@
                                             <td class="text-center">
                                                 <span class="badge bg-light text-dark">@stavka.Kolicina</span>
                                             </td>
-                                            <td class="text-end">@stavka.Cijena.ToString("F2") KM</td>
+                                            <td class="text-end">@((stavka.Cijena / stavka.Kolicina).ToString("F2")) KM</td>
                                             <td class="text-end">
                                                 <strong>@stavka.Cijena.ToString("F2") KM</strong>
                                             </td>

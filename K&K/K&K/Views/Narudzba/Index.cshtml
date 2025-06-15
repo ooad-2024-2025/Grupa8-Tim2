@@ -474,8 +474,8 @@
     {
         return status.ToString() switch
         {
-            "Potvrdjena" => "badge-primary",
-            "Gotova" => "badge-success",
+            "Potvrdjena" => "bg-warning text-dark",
+            "Gotova" => "bg-success",
             _ => "badge-secondary"
         };
     }

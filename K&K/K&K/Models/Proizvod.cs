@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -11,12 +11,12 @@ namespace K_K.Models
         [Key]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Morate izabrati veli?inu!")]
+        [Required(ErrorMessage = "Morate izabrati veličinu!")]
         public Velicina Velicina { get; set; }
 
         [Required(ErrorMessage = "Naziv proizvoda je obavezan!")]
         [StringLength(maximumLength: 30, MinimumLength = 3, ErrorMessage = "Naziv mora imati 3 karaktera.")]
-        [RegularExpression(@"[A-Z| |a-z|]+", ErrorMessage = "Naziv smije sadr�avati samo slova i razmake!")]
+        [RegularExpression(@"[A-Ž| |a-ž|]+", ErrorMessage = "Naziv smije sadržavati samo slova i razmake!")]
         public String Naziv { get; set; }
 
         [Required(ErrorMessage = "Opis proizvoda je obavezan!")]

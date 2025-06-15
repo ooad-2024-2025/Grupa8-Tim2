@@ -84,7 +84,7 @@
 }
 else
 {
-    <h1>Uredite Vašu narudžbu</h1>
+    <h1>Uredite status narudžbe</h1>
     <h4>Narudzba</h4>
     <hr />
     <div class="row">
@@ -98,7 +98,10 @@ else
                 {
                     <div class="form-group">
                         <label asp-for="StatusNarudzbe" class="control-label"></label>
-                    <select asp-for="StatusNarudzbe" class="form-control" asp-items="Html.GetEnumSelectList<StatusNarudzbe>()"></select>
+                        <select asp-for="StatusNarudzbe" class="form-control">
+                            <option value="Potvrdjena" selected="@(Model.StatusNarudzbe == StatusNarudzbe.Potvrdjena)">Potvrdjena</option>
+                            <option value="Gotova" selected="@(Model.StatusNarudzbe == StatusNarudzbe.Gotova)">Gotova</option>
+                        </select>
                     <span asp-validation-for="StatusNarudzbe" class="text-danger"></span>
                 </div>
                 }

@@ -30,6 +30,7 @@ namespace K_K.Controllers
         {
             // Ovdje je ključno da se Korisnik učita da ne bi bio null u viewu
             var recenzije = await _dataContext.Recenzija
+                                            .Include(r => r.Korisnik)
                                             .Where(r => r.ProizvodId == proizvodId)
                                             .OrderByDescending(r => r.DatumDodavanja)
                                             .ToListAsync();
