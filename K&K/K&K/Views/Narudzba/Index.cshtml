@@ -303,10 +303,13 @@
                 <div class="alert alert-info text-center">
                     <i class="fas fa-info-circle"></i>
                     <h4>Nema narudžbi</h4>
-                    <p>Još uvijek nemate napravljenih narudžbi.</p>
-                    <a asp-controller="Proizvod" asp-action="Index" class="btn btn-primary">
-                        <i class="fas fa-shopping-cart"></i> Počni kupovinu
-                    </a>
+                    @if (User.IsInRole("Korisnik"))
+                    {
+                        <p>Još uvijek nemate napravljenih narudžbi.</p>
+                        <a asp-controller="Proizvod" asp-action="Index" class="btn btn-primary">
+                            <i class="fas fa-shopping-cart"></i> Počni kupovinu
+                        </a>
+                    }
                 </div>
             }
             else
@@ -406,15 +409,16 @@
                                            class="btn btn-outline-primary btn-sm">
                                             <i class="fas fa-eye"></i> Detalji
                                         </a>
-
+                                        @if (User.IsInRole("Korisnik"))
+                                        {
                                         <form asp-controller="Korpa" asp-action="dodajIzNarudzbe" method="post" class="d-inline">
                                             <input type="hidden" name="narudzbaId" value="@narudzba.Id" />
                                             <button type="submit" class="btn btn-outline-success btn-sm">
                                                 <i class="fas fa-shopping-cart"></i> Dodaj u korpu
                                             </button>
                                         </form>
-
-                                        @if (narudzba.StatusNarudzbe.ToString() == "Potvrdjena")
+                                        }
+                                        @if (narudzba.StatusNarudzbe.ToString() == "Potvrdjena" && (User.IsInRole("Radnik") || User.IsInRole("Administrator")))
                                         {
                                             <a asp-action="Edit" asp-route-id="@narudzba.Id"
                                                class="btn btn-outline-warning btn-sm">
@@ -422,13 +426,13 @@
                                             </a>
                                         }
 
-                                        @if ((narudzba.StatusNarudzbe.ToString() == "Potvrdjena" || narudzba.StatusNarudzbe.ToString() == "Potvrdjena") && (User.IsInRole("Radnik") || User.IsInRole("Administrator")))
+                                      @*  @if ((narudzba.StatusNarudzbe.ToString() == "Potvrdjena" || narudzba.StatusNarudzbe.ToString() == "Potvrdjena") && (User.IsInRole("Radnik") || User.IsInRole("Administrator")))
                                         {
                                             <button type="button" class="btn btn-outline-danger btn-sm"
                                                     data-bs-toggle="modal" data-bs-target="#deleteModal-@narudzba.Id">
                                                 <i class="fas fa-trash"></i> Otkaži
                                             </button>
-                                        }
+                                        }*@
                                     </div>
                                 </div>
                             </div>

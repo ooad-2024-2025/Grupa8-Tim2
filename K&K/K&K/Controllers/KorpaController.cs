@@ -1,5 +1,6 @@
 ﻿using K_K.Data;
 using K_K.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace K_K.Controllers
 {
+    
     public class KorpaController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -25,21 +27,37 @@ namespace K_K.Controllers
 
 
         }
-
+        [Authorize(Roles = "Administrator")]
         // GET: Korpa
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Korpa.Include(k => k.Korisnik);
+            var korpe = await _context.Korpa
+                .Include(k => k.Korisnik) // Učitava korisnika povezano sa korpom
+                .Include(k => k.Stavke)   // Učitava stavke korpe
+                    .ThenInclude(s => s.Proizvod) // Učitava proizvod za svaku stavku
+                .ToListAsync();
 
-            // return View(await applicationDbContext.ToListAsync());
-            //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            //int korisnikId = int.Parse(userId);
-            /*var korpa = await _context.Korpa
-                .Include(k => k.Korisnik)
-                .FirstOrDefaultAsync(k => k.KorisnikId == korisnikId);*/
-            return View(await applicationDbContext.ToListAsync());
+            // Opcionalno: automatski izračunaj ukupnu cijenu i broj proizvoda ako nije ažurirano u bazi
+            foreach (var korpa in korpe)
+            {
+                if (korpa.Stavke != null && korpa.Stavke.Any())
+                {
+                    korpa.brojProizvoda = korpa.Stavke.Sum(s => s.Kolicina);
+                    korpa.ukupnaCijena = korpa.Stavke.Sum(s => s.Kolicina * s.Cijena);
+                }
+                else
+                {
+                    korpa.brojProizvoda = 0;
+                    korpa.ukupnaCijena = 0;
+                }
+            }
 
+            return View(korpe);
         }
+
+
+
+
         public async Task<IActionResult> dodajIzNarudzbe(int narudzbaId)
         {
             var korisnik = await _userManager.GetUserAsync(User);
@@ -120,6 +138,8 @@ namespace K_K.Controllers
 
             return RedirectToAction("KorpaView", "Korpa");
         }
+
+        [Authorize(Roles = "Korisnik")]
         public async Task<IActionResult> KorpaView()
         {
             var korisnik = await _userManager.GetUserAsync(User);
@@ -191,7 +211,7 @@ namespace K_K.Controllers
             if (postojecaStavka != null)
             {
                 postojecaStavka.Kolicina++;
-                postojecaStavka.Cijena = postojecaStavka.Kolicina * proizvod.Cijena;
+                postojecaStavka.Cijena = Math.Round(postojecaStavka.Kolicina * proizvod.Cijena,2);
             }
             else
             {
@@ -237,7 +257,7 @@ namespace K_K.Controllers
                 {
 
                     stavka.Kolicina = kolicina;
-                    stavka.Cijena = kolicina * proizvod.Cijena;
+                    stavka.Cijena = Math.Round(kolicina * proizvod.Cijena,2);
 
                     await _context.SaveChangesAsync();
                     await AzurirajKorpu(korpaId);
@@ -586,7 +606,7 @@ namespace K_K.Controllers
             if (postojecaStavka != null)
             {
                 postojecaStavka.Kolicina++;
-                postojecaStavka.Cijena = postojecaStavka.Kolicina * proizvod.Cijena;
+                postojecaStavka.Cijena = Math.Round(postojecaStavka.Kolicina * proizvod.Cijena,2);
             }
             else
             {
