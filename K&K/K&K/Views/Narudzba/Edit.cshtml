@@ -94,7 +94,7 @@ else
                 <input type="hidden" asp-for="Id" />
 
                 @*Ovo bi trebalo samo da radnik moze promijeniti*@
-                @if ((narudzba.StatusNarudzbe.ToString() == "Potvrdjena" || narudzba.StatusNarudzbe.ToString() == "NaCekanju") && (User.IsInRole("Radnik") || User.IsInRole("Admin")))
+                @if ((narudzba.StatusNarudzbe.ToString() == "Potvrdjena" ) && (User.IsInRole("Radnik") || User.IsInRole("Administrator")))
                 {
                     <div class="form-group">
                         <label asp-for="StatusNarudzbe" class="control-label"></label>
@@ -102,6 +102,7 @@ else
                     <span asp-validation-for="StatusNarudzbe" class="text-danger"></span>
                 </div>
                 }
+                @*
                 @if ((narudzba.StatusNarudzbe.ToString() == "Potvrdjena" || narudzba.StatusNarudzbe.ToString() == "NaCekanju") && (!User.IsInRole("Radnik") && !User.IsInRole("Administrator")))
                 {
                     <div class="form-group">
@@ -109,7 +110,8 @@ else
                     <select asp-for="NacinPlacanja" class="form-control" asp-items="Html.GetEnumSelectList<VrstaPlacanja>()"></select>
                     <span asp-validation-for="NacinPlacanja" class="text-danger"></span>
                 </div>
-                }
+                }*@
+                @*
                 @if ((narudzba.StatusNarudzbe.ToString() == "Potvrdjena" || narudzba.StatusNarudzbe.ToString() == "NaCekanju") && (!User.IsInRole("Radnik") && !User.IsInRole("Administrator")))
                 {
                     <div class="form-group">
@@ -118,7 +120,8 @@ else
                     <span asp-validation-for="NacinPreuzimanja" class="text-danger"></span>
                 </div>
                 }
-               
+               *@
+               @*
                 @if ((narudzba.StatusNarudzbe.ToString() == "Potvrdjena" || narudzba.StatusNarudzbe.ToString() == "NaCekanju") && (!User.IsInRole("Radnik") && !User.IsInRole("Administrator")))
                 {
                     <div class="form-group">
@@ -126,15 +129,15 @@ else
                     <input asp-for="AdresaDostave" class="form-control" />
                     <span asp-validation-for="AdresaDostave" class="text-danger"></span>
                 </div>
-                }
+                }*@
                
                 
                     <div class="form-group mt-3 pt-2">
                         <input type="submit" value="Sačuvaj izmjene" class="btn btn-primary" />
-                    @if ((narudzba.StatusNarudzbe.ToString() == "Potvrdjena" || narudzba.StatusNarudzbe.ToString() == "NaCekanju") && (User.IsInRole("Radnik") && User.IsInRole("Administrator")))
+                    @*if ((narudzba.StatusNarudzbe.ToString() == "Potvrdjena" || narudzba.StatusNarudzbe.ToString() == "NaCekanju") && (User.IsInRole("Radnik") && User.IsInRole("Administrator")))
                     {
                         <a asp-action="Index" class="btn btn-secondary">Otkaži</a>
-                    }
+                    }*@
                 </div>
                 
             </form>

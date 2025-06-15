@@ -98,12 +98,12 @@
                                 <i class="fas fa-info-circle"></i> Osnovne Informacije
                             </h6>
 
-                           @*
+                           
                             <div class="mb-3">
                                 <strong><i class="fas fa-calendar"></i> Datum narudžbe:</strong><br>
                                 <span class="text-muted">@Model.DatumNarudzbe.ToString("dd.MM.yyyy HH:mm")</span>
                             </div>
-                            *@
+                            
                            
                             <div class="mb-3">
                                 <strong><i class="fas fa-credit-card"></i> Način plaćanja:</strong><br>
@@ -146,7 +146,7 @@
                                     }
                                 </span>
                             </div>
-                            @*
+                           
                             @if (Model.Radnik != null)
                             {
                                 <div class="mb-3">
@@ -156,7 +156,7 @@
                                         <br><small>@Model.Radnik.Email</small>
                                     </span>
                                 </div>
-                            }*@
+                            }
                             
                         </div>
                     </div>
@@ -234,7 +234,7 @@
             <!-- Akcijska dugmad -->
             <div class="card shadow-sm">
                 <div class="card-body text-center">
-                    @if (Model.StatusNarudzbe.ToString() == "Potvrdjena")
+                    @if (Model.StatusNarudzbe.ToString() == "Potvrdjena" && (User.IsInRole("Radnik") || User.IsInRole("Administrator")))
                     {
                         <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning me-2">
                             <i class="fas fa-edit"></i> Uredi Narudžbu
