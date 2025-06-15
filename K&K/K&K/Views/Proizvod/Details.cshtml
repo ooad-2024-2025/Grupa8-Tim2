@@ -183,56 +183,6 @@
                 </div>
             </div>
 
-            @*   @*RECENZIJE PREGLED
-            @if (ViewBag.Recenzije != null)
-            {
-                <div class="card shadow-sm">
-                    <div class="card-header bg-light">
-                        <h6 class="mb-0">
-                            <i class="fas fa-star"></i> Recenzije
-                            <span class="badge bg-primary">@ViewBag.BrojRecenzija</span>
-                        </h6>
-                    </div>
-                    <div class="card-body">
-                        @if (ViewBag.BrojRecenzija > 0)
-                        {
-                            <div class="mb-3">
-                                <h5 class="text-warning">
-                                    @for (int i = 1; i <= 5; i++)
-                                    {
-                                        if (i <= ViewBag.ProsjecnaOcjena)
-                                        {
-                                            <i class="fas fa-star"></i>
-                                        }
-                                        else
-                                        {
-                                            <i class="far fa-star"></i>
-                                        }
-                                    }
-                                    <small class="text-muted">(@ViewBag.ProsjecnaOcjena.ToString("F1"))</small>
-                                </h5>
-                            </div>
-
-
-                            @if (ViewBag.BrojRecenzija > 3)
-                            {
-                                <small class="text-muted">i još @(ViewBag.BrojRecenzija - 3) recenzija...</small>
-                            }
-                        }
-                        else
-                        {
-                            <p class="text-muted">Nema recenzija za ovaj proizvod.</p>
-                        }
-                    </div>
-                </div>
-            }
-        </div>
-    </div>
-</div>
-
-
-
-
 @* KONTENER ZA SVE RECENZIJE - OVO JE OVDJE DA PRIKAZUJE SVE, NE SAMO PRVE 3 *@
             <div class="card mt-4">
                 <div class="card-header bg-light">

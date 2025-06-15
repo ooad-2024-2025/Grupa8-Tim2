@@ -1,7 +1,6 @@
 ﻿@model IEnumerable<K_K.Models.Recenzija>
 
 @{
-    // Morate osigurati da su ove varijable proslijeđene u PartialView kroz ViewData ili Model
     // (Ovaj dio je ostao za provjeru Uredi/Obriši, ali "Detalji" dugme ne zavisi od njih)
     int proizvodId = (int)(ViewData["ProizvodId"] ?? 0);
     string trenutniKorisnikId = ViewData["KorisnikId"]?.ToString() ?? "";
