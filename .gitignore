@@ -1,6 +1,13 @@
-# Ignoriši Visual Studio fajlove
+.idea/
 .vs/
+*.user
+*.suo
+.DS_Store
 
-# Ignoriši build direktorijume
+# Ignore build output
 bin/
 obj/
+
+# Ignore other temp crap
+*.vsidx
+*.db
