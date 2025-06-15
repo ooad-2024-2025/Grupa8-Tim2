@@ -24,7 +24,8 @@
 
 @if (TempData["Poruka"] != null)
 {
-    <div class="alert alert-info">ik 
+    <div class="alert alert-info">
+        ik
         @TempData["Poruka"]
     </div>
 }
@@ -54,12 +55,16 @@ else
                         <small class="text-muted">Dodano: @item.DatumDodavanja.ToShortDateString()</small>
                         <br />
 
-                        @if (trenutniKorisnikId == item.KorisnikId || isAdmin)
+                        @if (trenutniKorisnikId == item.KorisnikId)
                         {
-                            <a asp-action="UrediRecenziju" asp-route-id="@item.Id" class="btn btn-sm btn-primary mt-2">Uredi</a>
+                            <a asp-action="UrediRecenziju" asp-route-id="@item.Id" class="btn btn-sm btn-primary">Uredi</a>
+                        }
+
+                        @if (trenutniKorisnikId == item.KorisnikId || User.IsInRole("Administrator"))
+                        {
                             <form asp-action="IzbrisiRecenziju" asp-route-id="@item.Id" method="post" class="d-inline">
                                 @Html.AntiForgeryToken()
-                                <button type="submit" class="btn btn-sm btn-danger mt-2"
+                                <button type="submit" class="btn btn-sm btn-danger"
                                         onclick="return confirm('Jeste li sigurni da želite obrisati ovu recenziju?');">
                                     Obriši
                                 </button>

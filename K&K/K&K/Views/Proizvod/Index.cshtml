@@ -24,11 +24,11 @@
                 <div class="col-md-3">
                     <label for="searchTerm" class="form-label">Pretraži</label>
                     <input type="text"
-                    name="searchTerm"
-                    id="searchTerm"
-                    value="@ViewBag.SearchTerm"
-                    placeholder="Naziv ili opis proizvoda..."
-                    class="form-control" />
+                           name="searchTerm"
+                           id="searchTerm"
+                           value="@ViewBag.SearchTerm"
+                           placeholder="Naziv ili opis proizvoda..."
+                           class="form-control" />
                 </div>
 
                 @*Tip proizvoda*@
@@ -72,26 +72,26 @@
                 <div class="col-md-1">
                     <label for="minPrice" class="form-label">Min KM</label>
                     <input type="number"
-                    name="minPrice"
-                    id="minPrice"
-                    value="@ViewBag.MinPrice"
-                    placeholder="0.00"
-                    class="form-control"
-                    step="0.01"
-                    min="0" />
+                           name="minPrice"
+                           id="minPrice"
+                           value="@ViewBag.MinPrice"
+                           placeholder="0.00"
+                           class="form-control"
+                           step="0.01"
+                           min="0" />
                 </div>
 
                 @*Maksimalna cijena*@
                 <div class="col-md-1">
                     <label for="maxPrice" class="form-label">Max KM</label>
                     <input type="number"
-                    name="maxPrice"
-                    id="maxPrice"
-                    value="@ViewBag.MaxPrice"
-                    placeholder="100.00"
-                    class="form-control"
-                    step="0.01"
-                    min="0" />
+                           name="maxPrice"
+                           id="maxPrice"
+                           value="@ViewBag.MaxPrice"
+                           placeholder="100.00"
+                           class="form-control"
+                           step="0.01"
+                           min="0" />
                 </div>
 
                 @*Sortiranje*@
@@ -257,8 +257,8 @@
 
                                 <div class="btn-group" role="group">
                                     <a asp-action="Details" asp-route-id="@proizvod.Id"
-                                    class="btn btn-outline-primary btn-sm"
-                                    title="Detalji">
+                                       class="btn btn-outline-primary btn-sm"
+                                       title="Detalji">
                                         <i class="fas fa-eye"></i>
                                     </a>
 
@@ -275,20 +275,22 @@
                                             <i class="fas fa-trash"></i>
                                         </a>
                                     }
-                             
 
-                                    @*@if (User.Identity.IsAuthenticated)*@
-                                    @*ovo sam dodala da popravim korpu popraviti cu*@
-                                  <form asp-controller="Korpa"
-                                        asp-action="DodajUKorpu"
-                                        asp-route-id="@proizvod.Id"
-                                        method="post"
-                                        class="d-inline">
-                                        <input type="hidden" name="proizvodId" value="@proizvod.Id" />
-                                    <button type="submit" class="btn btn-primary btn-sm" title="Dodaj u korpu">
-                                        <i class="fas fa-shopping-cart"></i>
-                                    </button>
-                                </form>   
+
+                                    @if (User.Identity.IsAuthenticated && User.IsInRole("Korisnik"))
+                                    {
+
+                                        <form asp-controller="Korpa"
+                                              asp-action="DodajUKorpu"
+                                              asp-route-id="@proizvod.Id"
+                                              method="post"
+                                              class="d-inline">
+                                            <input type="hidden" name="proizvodId" value="@proizvod.Id" />
+                                            <button type="submit" class="btn btn-primary btn-sm" title="Dodaj u korpu">
+                                                <i class="fas fa-shopping-cart"></i>
+                                            </button>
+                                        </form>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -398,14 +400,14 @@
         document.getElementById('tipProizvoda').addEventListener('change', function() {
             const podkategorija = document.getElementById('podkategorija');
             const tipValue = this.value;
-            
-            
+
+
             const optgroups = podkategorija.querySelectorAll('optgroup');
             optgroups.forEach(group => {
                 group.style.display = 'none';
             });
-            
-            
+
+
             if (tipValue === 'Hrana') {
                 podkategorija.querySelector('optgroup[label="Hrana"]').style.display = 'block';
             } else if (tipValue === 'Pice') {
@@ -416,7 +418,7 @@
                     group.style.display = 'block';
                 });
             }
-            
+
             // Reset odabira kategorije
             podkategorija.value = '';
         });

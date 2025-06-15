@@ -131,15 +131,17 @@
                                 </div>
 
                                 @*DUGMAD DODAJ, DELETE, EDIT*@
+
                                 <div class="d-flex flex-wrap gap-2">
-
-                                    <a asp-controller="Korpa"
-                                    asp-action="DodajUKorpu"
-                                    asp-route-id="@Model.Id"
-                                    class="btn btn-success btn-lg">
-                                        <i class="fas fa-shopping-cart"></i> Dodaj u korpu
-                                    </a>
-
+                                    @if (User.IsInRole("Korisnik"))
+                                    { @*ne znam jel treba i provjera User.Identity.IsAuthenticated*@
+                                        <a asp-controller="Korpa"
+                                           asp-action="DodajUKorpu"
+                                           asp-route-id="@Model.Id"
+                                           class="btn btn-success btn-lg">
+                                            <i class="fas fa-shopping-cart"></i> Dodaj u korpu
+                                        </a>
+                                    }
                                     @*SAMO ADMINISTRATOR CE MOCI DA VIDI UREDI I OBRISI*@
                                     @if (User.IsInRole("Administrator"))
                                     {
@@ -181,7 +183,7 @@
                 </div>
             </div>
 
-        @*   @*RECENZIJE PREGLED
+            @*   @*RECENZIJE PREGLED
             @if (ViewBag.Recenzije != null)
             {
                 <div class="card shadow-sm">
@@ -232,98 +234,98 @@
 
 
 @* KONTENER ZA SVE RECENZIJE - OVO JE OVDJE DA PRIKAZUJE SVE, NE SAMO PRVE 3 *@
-<div class="card mt-4">
-    <div class="card-header bg-light">
-        <h6>Sve recenzije</h6>
-    </div>
-    <div class="card-body" id="allReviewsContainer">
-        <p class="text-muted">Učitavam sve recenzije...</p>
-    </div>
-</div>
+            <div class="card mt-4">
+                <div class="card-header bg-light">
+                    <h6>Sve recenzije</h6>
+                </div>
+                <div class="card-body" id="allReviewsContainer">
+                    <p class="text-muted">Učitavam sve recenzije...</p>
+                </div>
+            </div>
 
-@section Scripts {
-    <script>
-        function dodajUKorpu(proizvodId) {
+            @section Scripts {
+                <script>
+                    function dodajUKorpu(proizvodId) {
 
-            alert('Proizvod je dodan u korpu! ID: ' + proizvodId);
-        }
-
-        $(document).ready(function() {
-            // Učitaj sve recenzije prilikom učitavanja stranice
-            loadAllReviews(@Model.Id);
-
-            // Učitaj summary recenzija
-            loadReviewSummary(@Model.Id);
-
-            // AJAX form za dodavanje recenzije
-            $('#recenzijaForm').on('submit', function(e) {
-                e.preventDefault(); // Spriječi normalno slanje forme
-
-                var formData = {
-                    ProizvodId: $('#ProizvodId').val(),
-                    NarudzbaId: $('#NarudzbaId').val(),
-                    Ocjena: $('#Ocjena').val(),
-                    Tekst: $('#Tekst').val()
-                };
-
-                // Dohvati anti-forgery token
-                var token = $('input[name="__RequestVerificationToken"]').val();
-
-                $.ajax({
-                    url: '@Url.Action("OstaviRecenziju", "Recenzija")',
-                    type: 'POST',
-                    data: JSON.stringify(formData),
-                    contentType: 'application/json; charset=utf-8',
-                    headers: {
-                        'RequestVerificationToken': token
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            // Prikaži poruku o uspjehu
-                            alert(response.message);
-
-                            // Resetuj formu
-                            $('#recenzijaForm')[0].reset();
-
-                            // Osvježi prikaz recenzija
-                            loadAllReviews(@Model.Id);
-                            loadReviewSummary(@Model.Id);
-                        } else {
-                            // Prikaži greške
-                            alert('Greška: ' + response.message);
-                            if (response.errors) {
-                                console.log('Validacijske greške:', response.errors);
-                            }
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.log('AJAX greška:', error);
-                        alert('Došlo je do greške prilikom slanja recenzije.');
+                        alert('Proizvod je dodan u korpu! ID: ' + proizvodId);
                     }
-                });
-            });
-        });
 
-        // Funkcija za učitavanje svih recenzija
-        function loadAllReviews(proizvodId) {
-            $.get('@Url.Action("PrikaziRecenziju", "Recenzija")', { proizvodId: proizvodId }, function(data) {
-                $('#allReviewsContainer').html(data);
-            }).fail(function() {
-                $('#allReviewsContainer').html('<p class="text-danger">Greška pri učitavanju recenzija.</p>');
-            });
-        }
+                    $(document).ready(function() {
+                        // Učitaj sve recenzije prilikom učitavanja stranice
+                        loadAllReviews(@Model.Id);
 
-        // Funkcija za učitavanje summary-ja recenzija
-        function loadReviewSummary(proizvodId) {
-            $.get('@Url.Action("GetReviewSummary", "Recenzija")', { proizvodId: proizvodId }, function(data) {
-                // Ažuriraj summary dio u bočnoj koloni
-                $('.card-body').has('#prosjecnaOcjenaStars').html(data);
-            }).fail(function() {
-                console.log('Greška pri učitavanju summary-ja recenzija');
-            });
-        }
-    </script>
-}
+                        // Učitaj summary recenzija
+                        loadReviewSummary(@Model.Id);
+
+                        // AJAX form za dodavanje recenzije
+                        $('#recenzijaForm').on('submit', function(e) {
+                            e.preventDefault(); // Spriječi normalno slanje forme
+
+                            var formData = {
+                                ProizvodId: $('#ProizvodId').val(),
+                                NarudzbaId: $('#NarudzbaId').val(),
+                                Ocjena: $('#Ocjena').val(),
+                                Tekst: $('#Tekst').val()
+                            };
+
+                            // Dohvati anti-forgery token
+                            var token = $('input[name="__RequestVerificationToken"]').val();
+
+                            $.ajax({
+                                url: '@Url.Action("OstaviRecenziju", "Recenzija")',
+                                type: 'POST',
+                                data: JSON.stringify(formData),
+                                contentType: 'application/json; charset=utf-8',
+                                headers: {
+                                    'RequestVerificationToken': token
+                                },
+                                success: function(response) {
+                                    if (response.success) {
+                                        // Prikaži poruku o uspjehu
+                                        alert(response.message);
+
+                                        // Resetuj formu
+                                        $('#recenzijaForm')[0].reset();
+
+                                        // Osvježi prikaz recenzija
+                                        loadAllReviews(@Model.Id);
+                                        loadReviewSummary(@Model.Id);
+                                    } else {
+                                        // Prikaži greške
+                                        alert('Greška: ' + response.message);
+                                        if (response.errors) {
+                                            console.log('Validacijske greške:', response.errors);
+                                        }
+                                    }
+                                },
+                                error: function(xhr, status, error) {
+                                    console.log('AJAX greška:', error);
+                                    alert('Došlo je do greške prilikom slanja recenzije.');
+                                }
+                            });
+                        });
+                    });
+
+                    // Funkcija za učitavanje svih recenzija
+                    function loadAllReviews(proizvodId) {
+                        $.get('@Url.Action("PrikaziRecenziju", "Recenzija")', { proizvodId: proizvodId }, function(data) {
+                            $('#allReviewsContainer').html(data);
+                        }).fail(function() {
+                            $('#allReviewsContainer').html('<p class="text-danger">Greška pri učitavanju recenzija.</p>');
+                        });
+                    }
+
+                    // Funkcija za učitavanje summary-ja recenzija
+                    function loadReviewSummary(proizvodId) {
+                        $.get('@Url.Action("GetReviewSummary", "Recenzija")', { proizvodId: proizvodId }, function(data) {
+                            // Ažuriraj summary dio u bočnoj koloni
+                            $('.card-body').has('#prosjecnaOcjenaStars').html(data);
+                        }).fail(function() {
+                            console.log('Greška pri učitavanju summary-ja recenzija');
+                        });
+                    }
+                </script>
+            }
 
 
 
