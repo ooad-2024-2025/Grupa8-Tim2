@@ -23,7 +23,7 @@ public class KarticnoPlacanjeController : Controller
 
 
     [HttpGet]
-    [Authorize(Roles = "Korisnik")]
+    [Authorize(Roles = "Korisnik")] // ovo moramo dodati
     public async Task<IActionResult> Unos(int id) // Primamo ID narudžbe
     {
 
@@ -120,7 +120,8 @@ public class KarticnoPlacanjeController : Controller
         // Ako dođe do ovdje, znači da je validacija neuspješna ili je narudžba null
         return View(karticnoPlacanje);
     }
-
+  
+    [Authorize(Roles = "Korisnik")]
     public IActionResult Uspjeh()
     {
         // Prikazuje poruku o uspješnom kartičnom plaćanju
