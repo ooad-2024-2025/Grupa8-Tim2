@@ -38,6 +38,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+//app.UseAuthentication(); //dodala sam ovo
 
 app.UseAuthorization();
 
