@@ -1,5 +1,6 @@
 ﻿using K_K.Data;
 using K_K.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace K_K.Controllers
 {
+    
     public class KorpaController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -25,21 +27,37 @@ namespace K_K.Controllers
 
 
         }
-
+        [Authorize(Roles = "Administrator")]
         // GET: Korpa
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Korpa.Include(k => k.Korisnik);
+            var korpe = await _context.Korpa
+                .Include(k => k.Korisnik) // Učitava korisnika povezano sa korpom
+                .Include(k => k.Stavke)   // Učitava stavke korpe
+                    .ThenInclude(s => s.Proizvod) // Učitava proizvod za svaku stavku
+                .ToListAsync();
 
-            // return View(await applicationDbContext.ToListAsync());
-            //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            //int korisnikId = int.Parse(userId);
-            /*var korpa = await _context.Korpa
-                .Include(k => k.Korisnik)
-                .FirstOrDefaultAsync(k => k.KorisnikId == korisnikId);*/
-            return View(await applicationDbContext.ToListAsync());
+            // Opcionalno: automatski izračunaj ukupnu cijenu i broj proizvoda ako nije ažurirano u bazi
+            foreach (var korpa in korpe)
+            {
+                if (korpa.Stavke != null && korpa.Stavke.Any())
+                {
+                    korpa.brojProizvoda = korpa.Stavke.Sum(s => s.Kolicina);
+                    korpa.ukupnaCijena = korpa.Stavke.Sum(s => s.Cijena);
+                }
+                else
+                {
+                    korpa.brojProizvoda = 0;
+                    korpa.ukupnaCijena = 0;
+                }
+            }
 
+            return View(korpe);
         }
+
+
+
+
         public async Task<IActionResult> dodajIzNarudzbe(int narudzbaId)
         {
             var korisnik = await _userManager.GetUserAsync(User);
@@ -120,6 +138,8 @@ namespace K_K.Controllers
 
             return RedirectToAction("KorpaView", "Korpa");
         }
+
+        [Authorize(Roles = "Korisnik")]
         public async Task<IActionResult> KorpaView()
         {
             var korisnik = await _userManager.GetUserAsync(User);
@@ -191,7 +211,7 @@ namespace K_K.Controllers
             if (postojecaStavka != null)
             {
                 postojecaStavka.Kolicina++;
-                postojecaStavka.Cijena = postojecaStavka.Kolicina * proizvod.Cijena;
+                postojecaStavka.Cijena = Math.Round(postojecaStavka.Kolicina * proizvod.Cijena,2);
             }
             else
             {
@@ -237,7 +257,7 @@ namespace K_K.Controllers
                 {
 
                     stavka.Kolicina = kolicina;
-                    stavka.Cijena = kolicina * proizvod.Cijena;
+                    stavka.Cijena = Math.Round(kolicina * proizvod.Cijena,2);
 
                     await _context.SaveChangesAsync();
                     await AzurirajKorpu(korpaId);
@@ -359,137 +379,7 @@ namespace K_K.Controllers
             return RedirectToAction("KorpaView", new { korisnikId = korisnikId });
         }
 
-        // GET: Korpa/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var korpa = await _context.Korpa
-                .Include(k => k.Korisnik)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (korpa == null)
-            {
-                return NotFound();
-            }
-
-            return View(korpa);
-        }
-
-        // GET: Korpa/Create
-        public IActionResult Create()
-        {
-            ViewData["KorisnikId"] = new SelectList(_context.Users, "Id", "Email");
-            return View();
-        }
-
-        // POST: Korpa/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,KorisnikId")] Korpa korpa)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(korpa);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["KorisnikId"] = new SelectList(_context.Users, "Id", "Email", korpa.KorisnikId);
-            return View(korpa);
-        }
-
-
-        // GET: Korpa/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var korpa = await _context.Korpa.FindAsync(id);
-            if (korpa == null)
-            {
-                return NotFound();
-            }
-            ViewData["KorisnikId"] = new SelectList(_context.Users, "Id", "Email", korpa.KorisnikId);
-            return View(korpa);
-        }
-
-        // POST: Korpa/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,KorisnikId")] Korpa korpa)
-        {
-            if (id != korpa.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(korpa);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!KorpaExists(korpa.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["KorisnikId"] = new SelectList(_context.Users, "Id", "Email", korpa.KorisnikId);
-            return View(korpa);
-        }
-
-        // GET: Korpa/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var korpa = await _context.Korpa
-                .Include(k => k.Korisnik)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (korpa == null)
-            {
-                return NotFound();
-            }
-
-            return View(korpa);
-        }
-
-        // POST: Korpa/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var korpa = await _context.Korpa.FindAsync(id);
-            if (korpa != null)
-            {
-                _context.Korpa.Remove(korpa);
-            }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
+        
         private bool KorpaExists(int id)
         {
             return _context.Korpa.Any(e => e.Id == id);
@@ -586,7 +476,7 @@ namespace K_K.Controllers
             if (postojecaStavka != null)
             {
                 postojecaStavka.Kolicina++;
-                postojecaStavka.Cijena = postojecaStavka.Kolicina * proizvod.Cijena;
+                postojecaStavka.Cijena = Math.Round(postojecaStavka.Kolicina * proizvod.Cijena,2);
             }
             else
             {

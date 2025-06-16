@@ -30,14 +30,14 @@ namespace K_K.Controllers
             _userManager = userManager;
             _emailSender = emailSender;
         }
-
+        [Authorize(Roles = "Administrator,Korisnik,Radnik")] 
         // GET: Narudzba
         public async Task<IActionResult> Index()
         {
             
             List<Narudzba> narudzbe;
 
-            if (!User.IsInRole("Admin") && !User.IsInRole("Radnik"))
+            if (User.IsInRole("Korisnik"))
             {
                 // Obični korisnik - vidi samo svoje narudžbe
                 var korisnik = await _userManager.GetUserAsync(User);
@@ -52,7 +52,7 @@ namespace K_K.Controllers
                     .Where(n => n.KorisnikId == korisnik.Id)
                     .ToListAsync();
             }
-            else if (User.IsInRole("Admin"))
+            else if (User.IsInRole("Administrator"))
             {
                 //admin vidi sve narudzbe 
                 narudzbe = await _context.Narudzba
@@ -72,7 +72,7 @@ namespace K_K.Controllers
 
             return View(narudzbe);
         }
-
+        [Authorize(Roles = "Administrator,Korisnik,Radnik")]
         // GET: Narudzba/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -85,12 +85,13 @@ namespace K_K.Controllers
             {
                 return Unauthorized();
             }
-            /* var narudzba = await _context.Narudzba
+             var narudzba = await _context.Narudzba
              .Include(n => n.Korisnik)
-             //.Include(n => n.Radnik)
-             .FirstOrDefaultAsync(n => n.Id == id);*/
-            var narudzba = await _context.Narudzba.
-                FindAsync(id);
+             .Include(n => n.Radnik)
+             .FirstOrDefaultAsync(n => n.Id == id);
+
+           // var narudzba = await _context.Narudzba.
+             //   FindAsync(id);
 
             if (narudzba == null)
             {
@@ -111,7 +112,7 @@ namespace K_K.Controllers
             return View(narudzba);
         }
 
-
+        [Authorize(Roles = "Administrator,Korisnik")]
         // GET: Narudzba/Create
         public async Task<IActionResult> Create()
         {
@@ -156,7 +157,7 @@ namespace K_K.Controllers
             };
             return View(narudzba);
         }
-
+        [Authorize(Roles = "Administrator,Korisnik")]
         // POST: Narudzba/Create (Jedinstvena akcija za oba načina plaćanja)
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -259,12 +260,13 @@ namespace K_K.Controllers
         }
 
         // Akcija za uspjeh nakon gotovinskog plaćanja
+        [Authorize(Roles = "Administrator,Korisnik")]
         public IActionResult Uspjeh()
         {
             // Ova akcija će prikazati poruku o uspješnoj narudžbi
             return View();
         }
-
+        [Authorize(Roles = "Administrator, Radnik")]
         // GET: Narudzba/Edit/5
         public async Task<IActionResult> Edit(int? id)
         { 
@@ -300,6 +302,7 @@ namespace K_K.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         //Id,KorisnikId,RadnikId, ovo sam izbacila iz Bind dodati ako bude trebalo
+        [Authorize(Roles = "Administrator, Radnik")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("StatusNarudzbe,NacinPlacanja,NacinPreuzimanja,DatumNarudzbe,AdresaDostave")] Narudzba narudzba)
@@ -387,7 +390,7 @@ namespace K_K.Controllers
            
 
         }
-
+        [Authorize(Roles = "Administrator")]
         // GET: Narudzba/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -407,6 +410,8 @@ namespace K_K.Controllers
 
             return View(narudzba);
         }
+
+        [Authorize(Roles = "Administrator")]
 
         // POST: Narudzba/Delete/5
         [HttpPost, ActionName("Delete")]

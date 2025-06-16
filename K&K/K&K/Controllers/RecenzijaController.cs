@@ -2,6 +2,7 @@
 
 using K_K.Data;
 using K_K.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +30,7 @@ namespace K_K.Controllers
         {
             // Ovdje je ključno da se Korisnik učita da ne bi bio null u viewu
             var recenzije = await _dataContext.Recenzija
+                                            .Include(r => r.Korisnik)
                                             .Where(r => r.ProizvodId == proizvodId)
                                             .OrderByDescending(r => r.DatumDodavanja)
                                             .ToListAsync();
@@ -122,6 +124,7 @@ namespace K_K.Controllers
         // GET: Recenzija/OstaviRecenziju?proizvodId=X&narudzbaId=Y
         // Akcija za prikaz forme za ostavljanje recenzije
         //int proizvodId, int narudzbaId
+        [Authorize(Roles = "Korisnik")]
         public async Task<IActionResult> OstaviRecenziju(int proizvodId)
         {
             var korisnik = await _userManager.GetUserAsync(User);
@@ -131,7 +134,7 @@ namespace K_K.Controllers
                 return Redirect("/Identity/Account/Register");
             }
             var postojiProizvod = await _dataContext.Proizvod.AnyAsync(p => p.Id == proizvodId);
-            if(!postojiProizvod)
+            if (!postojiProizvod)
             {
                 TempData["ProizvodNotFound"] = "Proizvod nije pronađen!";
                 return RedirectToAction("Index", "Proizvod");
@@ -139,9 +142,9 @@ namespace K_K.Controllers
             var imaLiNarudzbu = await _dataContext.StavkaNarudzbe.
                 Include(s => s.Narudzba)
                 .AnyAsync(s => s.ProizvodId == proizvodId &&
-                            s.Narudzba.KorisnikId == korisnik.Id && 
+                            s.Narudzba.KorisnikId == korisnik.Id &&
                             s.Narudzba.StatusNarudzbe == StatusNarudzbe.Gotova);
-            if(!imaLiNarudzbu)
+            if (!imaLiNarudzbu)
             {
                 TempData["RecenzijaGreska"] = "Možete ostaviti recenziju samo za proizvode koje ste naručili.";
                 return RedirectToAction("Details", "Proizvod", new { id = proizvodId });
@@ -149,7 +152,7 @@ namespace K_K.Controllers
             var imaLiRecenziju = await _dataContext.Recenzija.
                         AnyAsync(r => r.ProizvodId == proizvodId &&
                                  r.KorisnikId == korisnik.Id);
-            if(imaLiRecenziju)
+            if (imaLiRecenziju)
             {
                 TempData["RecenzijaGreska"] = "Već ste ostavili recenziju za ovaj proizvod";
                 return RedirectToAction("Details", "Proizvod", new { id = proizvodId });
@@ -183,9 +186,8 @@ namespace K_K.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Korisnik")]
 
-        // Bindirajte samo polja koja korisnik unosi. KorisnikId, DatumDodavanja postavljamo mi.
-        //ProizvodId,NarudzbaId,Ocjena,Tekst,DatumDodavanja,KorisnikI
         public async Task<IActionResult> OstaviRecenziju([Bind("ProizvodId,NarudzbaId,Ocjena,Tekst,DatumDodavanja")] Recenzija recenzija)
         {
             var korisnik = await _userManager.GetUserAsync(User);
@@ -234,7 +236,7 @@ namespace K_K.Controllers
             ModelState.Remove("DatumDodavanja");
 
 
-         
+
 
             if (ModelState.IsValid)
             {
@@ -266,6 +268,7 @@ namespace K_K.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Administrator, Korisnik, Radnik")]
         public async Task<IActionResult> DetaljiRecenzije(int id)
         {
             var recenzija = await _dataContext.Recenzija
@@ -288,7 +291,7 @@ namespace K_K.Controllers
                 if (currentUser != null)
                 {
                     currentUserId = currentUser.Id;
-                    isAdmin = await _userManager.IsInRoleAsync(currentUser, "Admin");
+                    isAdmin = await _userManager.IsInRoleAsync(currentUser, "Administrator");
                 }
             }
 
@@ -301,6 +304,7 @@ namespace K_K.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Korisnik")]
         public async Task<IActionResult> UrediRecenziju(int id)
         {
             var korisnik = await _userManager.GetUserAsync(User);
@@ -319,7 +323,7 @@ namespace K_K.Controllers
             }
 
             // SIGURNOSNA PROVJERA: Dozvoli uređivanje samo sopstvene recenzije (ili ako je korisnik Admin)
-            if (recenzija.KorisnikId != korisnik.Id && !await _userManager.IsInRoleAsync(korisnik, "Admin"))
+            if (recenzija.KorisnikId != korisnik.Id && !await _userManager.IsInRoleAsync(korisnik, "Administrator"))
             {
                 TempData["RecenzijaEditError"] = "Nemate dozvolu za uređivanje ove recenzije.";
                 return RedirectToAction("DetaljiRecenzije", new { id = recenzija.Id }); // Vratite korisnika na detalje recenzije
@@ -337,6 +341,7 @@ namespace K_K.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Korisnik")]
         public async Task<IActionResult> UrediRecenziju(int id, [Bind("Id,ProizvodId,Ocjena,Tekst,NarudzbaId,KorisnikId")] Recenzija recenzija) // DODANO KorisnikId
         {
             if (id != recenzija.Id)
@@ -360,7 +365,7 @@ namespace K_K.Controllers
                 return NotFound();
             }
 
-            if (originalRecenzija.KorisnikId != korisnik.Id && !await _userManager.IsInRoleAsync(korisnik, "Admin"))
+            if (originalRecenzija.KorisnikId != korisnik.Id) // uklonila sam && !await _userManager.IsInRoleAsync(korisnik, "Administrator"
             {
                 TempData["RecenzijaEditError"] = "Nemate dozvolu za ažuriranje ove recenzije.";
                 return RedirectToAction("DetaljiRecenzije", new { id = originalRecenzija.Id });
@@ -416,8 +421,10 @@ namespace K_K.Controllers
         }
 
         // POST: Recenzija/IzbrisiRecenziju/5
+
         [HttpPost, ActionName("IzbrisiRecenziju")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator Korisnik")]
         public async Task<IActionResult> IzbrisiRecenzijuConfirmed(int id)
         {
             var korisnik = await _userManager.GetUserAsync(User);
@@ -433,7 +440,7 @@ namespace K_K.Controllers
                 return NotFound();
             }
 
-            if (recenzija.KorisnikId != korisnik.Id && !await _userManager.IsInRoleAsync(korisnik, "Admin"))
+            if (recenzija.KorisnikId != korisnik.Id && !await _userManager.IsInRoleAsync(korisnik, "Administrator"))
             {
                 TempData["RecenzijaDeleteError"] = "Nemate dozvolu za brisanje ove recenzije.";
                 return RedirectToAction("Details", "Proizvod", new { id = recenzija.ProizvodId });
@@ -475,5 +482,3 @@ namespace K_K.Controllers
 
     }
 }
-
-

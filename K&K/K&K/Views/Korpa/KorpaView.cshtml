@@ -101,25 +101,7 @@
         <span class="visually-hidden">Loading...</span>
     </div>
 </div>
-<!-- Na kraju KorpaView.cshtml, dodaj: -->
-@if (ViewBag.IsGuest == true)
-{
-    <!-- Za guest korisnike -->
-    <div class="text-center mt-3">
-        <a asp-action="ZavrsiKupovinu" class="btn btn-success btn-lg">
-            <i class="fas fa-check"></i> Završi narudžbu
-        </a>
-    </div>
-}
-else
-{
-   /* <!-- Za prijavljene korisnike -->
-    <div class="text-center mt-3">
-        <a asp-controller="Narudzba" asp-action="Create" class="btn btn-success btn-lg">
-            <i class="fas fa-check"></i> Kreiraj narudžbu
-        </a>
-    </div>*/
-}
+
 @section Scripts {
     <script>
         @if (Model != null && Model.Id > 0)

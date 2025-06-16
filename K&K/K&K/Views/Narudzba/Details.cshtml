@@ -1,72 +1,4 @@
-﻿@*
-@model K_K.Models.Narudzba
-
-@{
-    ViewData["Title"] = "Details";
-}
-
-<h1>Details</h1>
-
-<div>
-    <h4>Narudzba</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Korisnik)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Korisnik.Email)
-        </dd>
-
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Radnik)
-        </dt>
-
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Radnik.Email)
-        </dd>
-
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.StatusNarudzbe)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.StatusNarudzbe)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NacinPlacanja)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NacinPlacanja)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NacinPreuzimanja)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NacinPreuzimanja)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DatumNarudzbe)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DatumNarudzbe)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AdresaDostave)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AdresaDostave)
-        </dd>
-
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
-*@
-
-
-@model K_K.Models.Narudzba
+﻿@model K_K.Models.Narudzba
 @{
     ViewData["Title"] = "Detalji Narudžbe";
     var stavke = ViewData["stavke"] as List<K_K.Models.StavkaNarudzbe>;
@@ -98,12 +30,12 @@
                                 <i class="fas fa-info-circle"></i> Osnovne Informacije
                             </h6>
 
-                           @*
+                           
                             <div class="mb-3">
                                 <strong><i class="fas fa-calendar"></i> Datum narudžbe:</strong><br>
                                 <span class="text-muted">@Model.DatumNarudzbe.ToString("dd.MM.yyyy HH:mm")</span>
                             </div>
-                            *@
+                            
                            
                             <div class="mb-3">
                                 <strong><i class="fas fa-credit-card"></i> Način plaćanja:</strong><br>
@@ -146,7 +78,7 @@
                                     }
                                 </span>
                             </div>
-                            @*
+                           
                             @if (Model.Radnik != null)
                             {
                                 <div class="mb-3">
@@ -156,7 +88,7 @@
                                         <br><small>@Model.Radnik.Email</small>
                                     </span>
                                 </div>
-                            }*@
+                            }
                             
                         </div>
                     </div>
@@ -180,7 +112,7 @@
                                         <th scope="col">#</th>
                                         <th scope="col">Proizvod</th>
                                         <th scope="col" class="text-center">Količina</th>
-                                        <th scope="col" class="text-end">Cijena</th>
+                                        <th scope="col" class="text-end">Cijena po kom.</th>
                                         <th scope="col" class="text-end">Ukupno</th>
                                     </tr>
                                 </thead>
@@ -202,7 +134,7 @@
                                             <td class="text-center">
                                                 <span class="badge bg-light text-dark">@stavka.Kolicina</span>
                                             </td>
-                                            <td class="text-end">@stavka.Cijena.ToString("F2") KM</td>
+                                            <td class="text-end">@((stavka.Cijena / stavka.Kolicina).ToString("F2")) KM</td>
                                             <td class="text-end">
                                                 <strong>@stavka.Cijena.ToString("F2") KM</strong>
                                             </td>
@@ -234,7 +166,7 @@
             <!-- Akcijska dugmad -->
             <div class="card shadow-sm">
                 <div class="card-body text-center">
-                    @if (Model.StatusNarudzbe.ToString() == "Potvrdjena")
+                    @if (Model.StatusNarudzbe.ToString() == "Potvrdjena" && (User.IsInRole("Radnik") || User.IsInRole("Administrator")))
                     {
                         <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning me-2">
                             <i class="fas fa-edit"></i> Uredi Narudžbu

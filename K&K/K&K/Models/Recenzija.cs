@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
@@ -16,10 +16,10 @@ namespace K_K.Models
         public String KorisnikId { get; set; } 
 
         [ForeignKey("Narudzba")]
-        public int NarudzbaId { get; set; } // Ovdje ne treba [Required] jer je int i nije nullable.
+        public int NarudzbaId { get; set; } // Ovdje ne treba [Required] jer je int i nije nullable
 
         [Required]
-        [Range(1, 5, ErrorMessage = "Ocjena mora biti izme?u 1 i 5.")]
+        [Range(1, 5, ErrorMessage = "Ocjena mora biti između 1 i 5.")]
         public int Ocjena { get; set; }
 
         [Required]
@@ -28,16 +28,14 @@ namespace K_K.Models
 
         public DateTime DatumDodavanja { get; set; } = DateTime.Now;
 
-        // NEMA [Required] na navigacijskim svojstvima!
-
-        //ovo moze biti VELIKA GRESKA
-        [ValidateNever] // Dodajte ovo!
+        // NEMA [Required] na navigacijskim svojstvima
+        [ValidateNever]
         public Proizvod Proizvod { get; set; }
 
         [ValidateNever] // Dodajte ovo!
-        public Osoba Korisnik { get; set; } // Pretpostavljam da je Osoba va� korisni?ki model
+        public Osoba Korisnik { get; set; }
 
-        [ValidateNever] // Dodajte ovo!
+        [ValidateNever]
         public Narudzba Narudzba { get; set; }
     }
 }

@@ -2,60 +2,71 @@
 
 @{
     ViewData["Title"] = "Ostavi recenziju";
+    bool jePrijavljenKorisnik = User.Identity.IsAuthenticated && User.IsInRole("Korisnik");
 }
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8 col-lg-7">
-            <div class="card shadow-lg border-0 rounded-lg">
-                <div class="card-header bg-dark text-white text-center py-4">
-                    <h3 class="fw-light my-2">Napiši recenziju za proizvod: "@ViewBag.ProizvodNaziv"</h3>
-                </div>
-                <div class="card-body p-4 p-md-5">
-                    <form asp-action="OstaviRecenziju" method="post" class="needs-validation" novalidate>
-                        @Html.AntiForgeryToken()
-                        <input type="hidden" asp-for="ProizvodId" />
-                        <input type="hidden" asp-for="DatumDodavanja" /> @* Sakriveno polje za datum, postavlja se u kontroleru *@
-                        <input type="hidden" asp-for="KorisnikId" /> @* Sakriveno polje za korisnika, postavlja se u kontroleru *@
+@if (!jePrijavljenKorisnik)
+{
+    <div class="alert alert-danger text-center mt-5">
+        <h4>Samo registrovani korisnici mogu ostaviti recenziju.</h4>
+        <a class="btn btn-primary mt-3" href="/Identity/Account/Login">Prijavi se</a>
+    </div>
+}
+else
+{
 
-                        @* Prikaz općih grešaka (npr. iz ModelState.AddModelError(string.Empty, ...)) *@
-                        <div asp-validation-summary="ModelOnly" class="alert alert-danger text-danger mb-4" role="alert"></div>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-7">
+                <div class="card shadow-lg border-0 rounded-lg">
+                    <div class="card-header bg-dark text-white text-center py-4">
+                        <h3 class="fw-light my-2">Napiši recenziju za proizvod: "@ViewBag.ProizvodNaziv"</h3>
+                    </div>
+                    <div class="card-body p-4 p-md-5">
+                        <form asp-action="OstaviRecenziju" method="post" class="needs-validation" novalidate>
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" asp-for="ProizvodId" />
+                            <input type="hidden" asp-for="DatumDodavanja" /> @* Sakriveno polje za datum, postavlja se u kontroleru *@
+                            <input type="hidden" asp-for="KorisnikId" /> @* Sakriveno polje za korisnika, postavlja se u kontroleru *@
 
-                        <div class="mb-4">
-                            <label asp-for="Ocjena" class="form-label fs-5 fw-bold text-muted d-block mb-2">Ocjena (1-5)</label>
-                            <select asp-for="Ocjena" class="form-select form-select-lg" required>
-                                <option value="">-- Odaberite ocjenu --</option>
-                                @for (int i = 1; i <= 5; i++)
-                                {
-                                    <option value="@i">@i</option>
-                                }
-                            </select>
-                            <span asp-validation-for="Ocjena" class="text-danger small mt-1 d-block"></span>
-                        </div>
+                            @* Prikaz općih grešaka (npr. iz ModelState.AddModelError(string.Empty, ...)) *@
+                            <div asp-validation-summary="ModelOnly" class="alert alert-danger text-danger mb-4" role="alert"></div>
 
-                       
+                            <div class="mb-4">
+                                <label asp-for="Ocjena" class="form-label fs-5 fw-bold text-muted d-block mb-2">Ocjena (1-5)</label>
+                                <select asp-for="Ocjena" class="form-select form-select-lg" required>
+                                    <option value="">-- Odaberite ocjenu --</option>
+                                    @for (int i = 1; i <= 5; i++)
+                                    {
+                                        <option value="@i">@i</option>
+                                    }
+                                </select>
+                                <span asp-validation-for="Ocjena" class="text-danger small mt-1 d-block"></span>
+                            </div>
 
-                        <div class="mb-4">
-                            <label asp-for="Tekst" class="form-label fs-5 fw-bold text-muted">Vaša recenzija</label>
-                            <textarea asp-for="Tekst" class="form-control" rows="6" placeholder="Napišite svoju recenziju ovdje..." required></textarea>
-                            <span asp-validation-for="Tekst" class="text-danger small mt-1"></span>
-                        </div>
 
-                        <div class="d-grid mt-4">
-                            <button type="submit" class="btn btn-primary btn-lg fw-bold">Pošalji recenziju <i class="fas fa-paper-plane ms-2"></i></button>
-                        </div>
-                    </form>
-                </div>
-                <div class="card-footer text-center py-3">
-                    <a asp-action="PrikaziRecenziju" asp-controller="Recenzija" asp-route-proizvodId="@Model.ProizvodId" class="text-decoration-none text-secondary">
-                        <i class="fas fa-arrow-left me-2"></i> Vrati se na recenzije proizvoda
-                    </a>
+
+                            <div class="mb-4">
+                                <label asp-for="Tekst" class="form-label fs-5 fw-bold text-muted">Vaša recenzija</label>
+                                <textarea asp-for="Tekst" class="form-control" rows="6" placeholder="Napišite svoju recenziju ovdje..." required></textarea>
+                                <span asp-validation-for="Tekst" class="text-danger small mt-1"></span>
+                            </div>
+
+                            <div class="d-grid mt-4">
+                                <button type="submit" class="btn btn-primary btn-lg fw-bold">Pošalji recenziju <i class="fas fa-paper-plane ms-2"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card-footer text-center py-3">
+                        <a asp-action="PrikaziRecenziju" asp-controller="Recenzija" asp-route-proizvodId="@Model.ProizvodId" class="text-decoration-none text-secondary">
+                            <i class="fas fa-arrow-left me-2"></i> Vrati se na recenzije proizvoda
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
+}
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 
@@ -119,7 +130,7 @@
                     star.addEventListener('click', function () {
                         const value = parseInt(this.getAttribute('data-value'));
                         if (selectElement) {
-                            selectElement.value = value; // Postavi vrijednost u skriveni select
+                            selectElement.value = value; // Postavljanje vrijednostii u skriveni select
                             // Trigger validation event manually if needed (for client-side validation libraries)
                             // const event = new Event('change');
                             // selectElement.dispatchEvent(event);

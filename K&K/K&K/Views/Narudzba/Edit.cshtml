@@ -1,73 +1,4 @@
-﻿@*
-@model K_K.Models.Narudzba
-
-@{
-    ViewData["Title"] = "Edit";
-}
-
-<h1>Uredite Vašu narudžbu</h1>
-
-<h4>Narudzba</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            @*<div class="form-group">
-                <label asp-for="KorisnikId" class="control-label"></label>
-                <select asp-for="KorisnikId" class="form-control" asp-items="ViewBag.KorisnikId"></select>
-                <span asp-validation-for="KorisnikId" class="text-danger"></span>
-            </div>
-            @*Ovo bi trebalo samo da radnik moze promijeniti
-            
-            <div class="form-group">
-                <label asp-for="RadnikId" class="control-label"></label>
-                <select asp-for="RadnikId" class="form-control" asp-items="ViewBag.RadnikId"></select>
-                <span asp-validation-for="RadnikId" class="text-danger"></span>
-            </div>
-            @*Ovo bi trebalo samo da radnik moze promijeniti
-            <div class="form-group">
-                <label asp-for="StatusNarudzbe" class="control-label"></label>
-                <select asp-for="StatusNarudzbe" class="form-control" asp-items="Html.GetEnumSelectList<StatusNarudzbe>()"></select>
-                <span asp-validation-for="StatusNarudzbe" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NacinPlacanja" class="control-label"></label>
-                <select asp-for="NacinPlacanja" class="form-control" asp-items="Html.GetEnumSelectList<VrstaPlacanja>()"></select>
-                <span asp-validation-for="NacinPlacanja" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NacinPreuzimanja" class="control-label"></label>
-                <select asp-for="NacinPreuzimanja" class="form-control" asp-items="Html.GetEnumSelectList<VrstaPreuzimanja>()"></select>
-                <span asp-validation-for="NacinPreuzimanja" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DatumNarudzbe" class="control-label"></label>
-                <input asp-for="DatumNarudzbe" class="form-control" />
-                <span asp-validation-for="DatumNarudzbe" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AdresaDostave" class="control-label"></label>
-                <input asp-for="AdresaDostave" class="form-control" />
-                <span asp-validation-for="AdresaDostave" class="text-danger"></span>
-            </div>
-            <div class="form-group mt-3 pt-2">
-                <input type="submit" value="Edit" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
-*@
-@model K_K.Models.Narudzba
+﻿@model K_K.Models.Narudzba
 @{
     var narudzba = TempData["narudzba"] as K_K.Models.Narudzba;
 }
@@ -84,7 +15,7 @@
 }
 else
 {
-    <h1>Uredite Vašu narudžbu</h1>
+    <h1>Uredite status narudžbe</h1>
     <h4>Narudzba</h4>
     <hr />
     <div class="row">
@@ -94,47 +25,24 @@ else
                 <input type="hidden" asp-for="Id" />
 
                 @*Ovo bi trebalo samo da radnik moze promijeniti*@
-                @if ((narudzba.StatusNarudzbe.ToString() == "Potvrdjena" || narudzba.StatusNarudzbe.ToString() == "NaCekanju") && (User.IsInRole("Radnik") || User.IsInRole("Admin")))
+                @if ((narudzba.StatusNarudzbe.ToString() == "Potvrdjena" ) && (User.IsInRole("Radnik") || User.IsInRole("Administrator")))
                 {
                     <div class="form-group">
                         <label asp-for="StatusNarudzbe" class="control-label"></label>
-                    <select asp-for="StatusNarudzbe" class="form-control" asp-items="Html.GetEnumSelectList<StatusNarudzbe>()"></select>
+                        <select asp-for="StatusNarudzbe" class="form-control">
+                            <option value="Potvrdjena" selected="@(Model.StatusNarudzbe == StatusNarudzbe.Potvrdjena)">Potvrdjena</option>
+                            <option value="Gotova" selected="@(Model.StatusNarudzbe == StatusNarudzbe.Gotova)">Gotova</option>
+                        </select>
                     <span asp-validation-for="StatusNarudzbe" class="text-danger"></span>
                 </div>
                 }
-                @if ((narudzba.StatusNarudzbe.ToString() == "Potvrdjena" || narudzba.StatusNarudzbe.ToString() == "NaCekanju") && (!User.IsInRole("Radnik") && !User.IsInRole("Administrator")))
-                {
-                    <div class="form-group">
-                        <label asp-for="NacinPlacanja" class="control-label"></label>
-                    <select asp-for="NacinPlacanja" class="form-control" asp-items="Html.GetEnumSelectList<VrstaPlacanja>()"></select>
-                    <span asp-validation-for="NacinPlacanja" class="text-danger"></span>
-                </div>
-                }
-                @if ((narudzba.StatusNarudzbe.ToString() == "Potvrdjena" || narudzba.StatusNarudzbe.ToString() == "NaCekanju") && (!User.IsInRole("Radnik") && !User.IsInRole("Administrator")))
-                {
-                    <div class="form-group">
-                        <label asp-for="NacinPreuzimanja" class="control-label"></label>
-                    <select asp-for="NacinPreuzimanja" class="form-control" asp-items="Html.GetEnumSelectList<VrstaPreuzimanja>()"></select>
-                    <span asp-validation-for="NacinPreuzimanja" class="text-danger"></span>
-                </div>
-                }
-               
-                @if ((narudzba.StatusNarudzbe.ToString() == "Potvrdjena" || narudzba.StatusNarudzbe.ToString() == "NaCekanju") && (!User.IsInRole("Radnik") && !User.IsInRole("Administrator")))
-                {
-                    <div class="form-group">
-                        <label asp-for="AdresaDostave" class="control-label"></label>
-                    <input asp-for="AdresaDostave" class="form-control" />
-                    <span asp-validation-for="AdresaDostave" class="text-danger"></span>
-                </div>
-                }
-               
-                
+
                     <div class="form-group mt-3 pt-2">
                         <input type="submit" value="Sačuvaj izmjene" class="btn btn-primary" />
-                    @if ((narudzba.StatusNarudzbe.ToString() == "Potvrdjena" || narudzba.StatusNarudzbe.ToString() == "NaCekanju") && (User.IsInRole("Radnik") && User.IsInRole("Administrator")))
+                    @*if ((narudzba.StatusNarudzbe.ToString() == "Potvrdjena" || narudzba.StatusNarudzbe.ToString() == "NaCekanju") && (User.IsInRole("Radnik") && User.IsInRole("Administrator")))
                     {
                         <a asp-action="Index" class="btn btn-secondary">Otkaži</a>
-                    }
+                    }*@
                 </div>
                 
             </form>

@@ -31,9 +31,19 @@
                             </ul>
                         </div>
                         <a class="nav-link" asp-controller="Home" asp-action="Privacy">Privatnost</a>
-                        <a asp-controller="Korpa" asp-action="KorpaView" class="nav-link-cart">
-                            Korpa
-                        </a>
+                        @if (User.IsInRole("Korisnik"))
+                        {
+
+                            <a asp-controller="Korpa" asp-action="KorpaView" class="nav-link-cart">
+                                Korpa
+                            </a>
+                        }
+                        @if (User.IsInRole("Administrator"))
+                        {
+                            <a asp-controller="Korpa" asp-action="Index" class="nav-link-cart">
+                                Sve Korpe
+                            </a>
+                        }
                     </div>
                     @if(User.Identity.IsAuthenticated)
                     {
@@ -60,7 +70,7 @@
             <div class="row text-center text-md-start">
                 <div class="col-md-4 mb-3">
                     <h5><i class="fas fa-info-circle"></i> O nama</h5>
-                    <p>K&K kafić je mjesto gdje se spajaju aroma i tradicija afričke kae u toploj atmosferi.</p>
+                    <p>K&K kafić je mjesto gdje se spajaju aroma i tradicija afričke kafe u toploj atmosferi.</p>
                 </div>
                 <div class="col-md-4 mb-3">
                     <h5><i class="fas fa-phone"></i> Kontakt</h5>
