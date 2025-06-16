@@ -320,13 +320,13 @@
         }
 
         //SUMBIT NAKON 500ms ako korisnik prestane tipkat
-        let timeout;
-        document.getElementById('searchTerm').addEventListener('input', function() {
-            clearTimeout(timeout);
-            timeout = setTimeout(function() {
-                document.querySelector('form').submit();
-            }, 500);
-        });
+        //let timeout;
+        //document.getElementById('searchTerm').addEventListener('input', function() {
+           // clearTimeout(timeout);
+            //timeout = setTimeout(function() {
+               // document.querySelector('form').submit();
+           // }, 500);
+        //});
 
         //kategorije ovisno o proizvodu
         document.getElementById('tipProizvoda').addEventListener('change', function() {

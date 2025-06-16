@@ -46,6 +46,8 @@
                         }
                     </div>
                     @if(User.Identity.IsAuthenticated)
+                   // @if (User?.Identity != null && User.IsInRole("Administrator"))
+
                     {
                         @if (!User.IsInRole("Radnik") && !User.IsInRole("Administrator"))
                         {
