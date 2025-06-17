@@ -78,22 +78,6 @@ namespace K_K.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<IActionResult> MojeRecenzije()
-        {
-            /*var recenzije = await _dataContext.Recenzija
-                .Include(r => r.Korisnik)
-                .Where(r => r.ProizvodId == proizvodId)
-                .OrderByDescending(r => r.DatumDodavanja)
-                .ToListAsync();*/
-            var recenzije = await _dataContext.Recenzija
-                .ToListAsync();
-
-            return View(recenzije); // šaljemo listu u view
-        }
-
-
-
 
         [HttpGet]
         public async Task<IActionResult> GetReviewSummary(int proizvodId)
