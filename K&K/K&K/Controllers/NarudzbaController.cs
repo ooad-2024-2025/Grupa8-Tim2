@@ -90,8 +90,6 @@ namespace K_K.Controllers
              .Include(n => n.Radnik)
              .FirstOrDefaultAsync(n => n.Id == id);
 
-           // var narudzba = await _context.Narudzba.
-             //   FindAsync(id);
 
             if (narudzba == null)
             {
@@ -145,18 +143,17 @@ namespace K_K.Controllers
             ViewData["KorpaStavke"] = stavke;
             ViewData["KorpaId"] = korpa.Id;
             // Ne treba SelectList za KorisnikId i RadnikId jer ih postavljamo automatski
-            // ViewData["KorisnikId"] = new SelectList(_context.Users, "Id", "Email");
-            // ViewData["RadnikId"] = new SelectList(_context.Users, "Id", "Email");
 
             // Ne treba SelectList za NacinPlacanja jer će korisnik birati dugmetom
             ViewData["NacinPreuzimanja"] = new SelectList(Enum.GetValues(typeof(VrstaPreuzimanja)));
-            //ViewData["DanasnjiDatum"] = DateTime.Now.ToString("dd-MM-yyyy");
+            
             var narudzba = new Narudzba
             {
                 DatumNarudzbe = DateTime.Now
             };
             return View(narudzba);
         }
+
         [Authorize(Roles = "Administrator,Korisnik")]
         // POST: Narudzba/Create (Jedinstvena akcija za oba načina plaćanja)
         [HttpPost]
@@ -187,14 +184,13 @@ namespace K_K.Controllers
             var radnikId = radnici.FirstOrDefault()?.Id;
             narudzba.RadnikId = radnikId;
             narudzba.DatumNarudzbe = DateTime.Now;
-            //narudzba.RadnikId = "fac1ec38-8f12-4245-b2cd-99384264863b"; // Hardkodiran radnik ID
 
-            // Ukloni greske validacije za polja koja postavljamo rucno
+            // Uklanjamo greske validacije za polja koja postavljamo rucno
             ModelState.Remove("Korisnik");
             ModelState.Remove("Radnik");
             ModelState.Remove("KorisnikId");
             ModelState.Remove("RadnikId");
-            ModelState.Remove("NacinPlacanja"); // Ukloni NacinPlacanja jer se postavlja na osnovu dugmeta
+            ModelState.Remove("NacinPlacanja"); //postavlja se na osnovu dugmeta
 
             // Postavi NacinPlacanja i StatusNarudzbe na osnovu kliknutog dugmeta
             if (submitButton == "gotovina")
@@ -205,8 +201,7 @@ namespace K_K.Controllers
             else if (submitButton == "kartica")
             {
                 narudzba.NacinPlacanja = VrstaPlacanja.Kartica;
-                narudzba.StatusNarudzbe = StatusNarudzbe.NaCekanju; 
-              //  narudzba.StatusNarudzbe = StatusNarudzbe.NaCekanjuPlacanja; // Na čekanju za karticu
+                narudzba.StatusNarudzbe = StatusNarudzbe.NaCekanju;
             }
             else
             {
@@ -250,7 +245,7 @@ namespace K_K.Controllers
                 }
             }
 
-            // Ako model nije validan, vratite korisnika na formu
+            // Ako model nije validan, vrati korisnika na formu
             double ukupnaCijena = korpa?.ukupnaCijena ?? 0;
             ViewData["Cijena"] = ukupnaCijena;
             ViewData["KorpaStavke"] = stavkeUKorpi;
@@ -285,13 +280,9 @@ namespace K_K.Controllers
             {
                 return NotFound();
             }
-           /* if (!User.IsInAnyRole("Admin", "Radnik"))
-            {
-
-            }*/
-
-                ViewData["KorisnikId"] = new SelectList(_context.Users, "Id", "Email", narudzba.KorisnikId);
-           ViewData["RadnikId"] = new SelectList(_context.Users, "Id", "Email", narudzba.RadnikId);
+           
+            ViewData["KorisnikId"] = new SelectList(_context.Users, "Id", "Email", narudzba.KorisnikId);
+            ViewData["RadnikId"] = new SelectList(_context.Users, "Id", "Email", narudzba.RadnikId);
             ViewData["NacinPlacanja"] = new SelectList(Enum.GetValues(typeof(VrstaPlacanja)), narudzba.NacinPlacanja);
 
             return View(narudzba);
@@ -324,7 +315,6 @@ namespace K_K.Controllers
             narudzba.Id = id;
             narudzba.KorisnikId = postojeca.KorisnikId;
             var korisnikNarudzbe = await _userManager.FindByIdAsync(narudzba.KorisnikId);
-            //narudzba.KorisnikId = korisnik.Id;
             var radnici = await _userManager.GetUsersInRoleAsync("Radnik");
             var radnikId = radnici.FirstOrDefault()?.Id;
             narudzba.RadnikId = radnikId;
@@ -380,9 +370,8 @@ namespace K_K.Controllers
                 }
             }
 
-            // If we get here, model validation failed - return to Edit view
             ViewData["KorisnikId"] = new SelectList(_context.Users, "Id", "Email", narudzba.KorisnikId);
-           ViewData["RadnikId"] = new SelectList(_context.Users, "Id", "Email", narudzba.RadnikId);
+            ViewData["RadnikId"] = new SelectList(_context.Users, "Id", "Email", narudzba.RadnikId);
             ViewData["NacinPlacanja"] = new SelectList(Enum.GetValues(typeof(VrstaPlacanja)), narudzba.NacinPlacanja);
             ViewData["NacinPreuzimanja"] = new SelectList(Enum.GetValues(typeof(VrstaPreuzimanja)), narudzba.NacinPreuzimanja);
 

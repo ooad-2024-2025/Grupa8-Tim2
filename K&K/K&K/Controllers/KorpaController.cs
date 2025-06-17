@@ -37,7 +37,6 @@ namespace K_K.Controllers
                     .ThenInclude(s => s.Proizvod) // Učitava proizvod za svaku stavku
                 .ToListAsync();
 
-            // Opcionalno: automatski izračunaj ukupnu cijenu i broj proizvoda ako nije ažurirano u bazi
             foreach (var korpa in korpe)
             {
                 if (korpa.Stavke != null && korpa.Stavke.Any())
@@ -123,10 +122,6 @@ namespace K_K.Controllers
                 }
             }
 
-            // ukupne vrijednosti
-            //korpa.brojProizvoda = korpa.Stavke.Sum(s => s.Kolicina);
-            //korpa.ukupnaCijena = korpa.Stavke.Sum(s => s.Cijena * s.Kolicina);
-
             //TempData umjesto ViewBag (zbog RedirectToAction)
             TempData["DodatnaKolicina"] = dodatnaKolicina.ToString();
             TempData["DodatnaCijena"] = dodatnaCijena.ToString();
@@ -175,14 +170,14 @@ namespace K_K.Controllers
                 return DodajUKorpuGost(Id);
             }
 
-            // Pronađi proizvod
+            //Trazimo proizvod
             var proizvod = await _context.Proizvod.FirstOrDefaultAsync(m => m.Id == Id);
             if (proizvod == null)
             {
                 return NotFound();
             }
 
-            // Pronađi ili kreiraj korpu
+            //Trazimo/kreiramo korpu
             var korpa = await _context.Korpa
                 .Include(k => k.Stavke)
                 .FirstOrDefaultAsync(k => k.KorisnikId == korisnik.Id);
@@ -197,10 +192,9 @@ namespace K_K.Controllers
                     Stavke = new List<StavkaKorpe>()
                 };
                 _context.Korpa.Add(korpa);
-                await _context.SaveChangesAsync(); // Sačuvaj da dobiješ ID
+                await _context.SaveChangesAsync(); //sacuvamo da dobijemo ID
             }
 
-            // Osiguraj da Stavke nisu null
             if (korpa.Stavke == null)
             {
                 korpa.Stavke = new List<StavkaKorpe>();
@@ -227,16 +221,10 @@ namespace K_K.Controllers
                 korpa.Stavke.Add(novaStavka); // Dodaj u lokalnu kolekciju
             }
             await _context.SaveChangesAsync();
-            // Izračunaj totale
-            //korpa.brojProizvoda = korpa.Stavke.Sum(s => s.Kolicina);
-            //korpa.ukupnaCijena = korpa.Stavke.Sum(s => s.Cijena);
+           
             await AzurirajKorpu(korpa.Id);
 
-            //await DodajProizvodUKorpu(korisnik.Id, Id); da se ne dupla KOD
-
             return RedirectToAction("KorpaView", new { korisnikId = korisnik.Id });
-            //ovdje mozda: return RedirectToAction("KorpaView");
-
         }
 
 
@@ -406,7 +394,7 @@ namespace K_K.Controllers
                 return RedirectToAction("Index", "Proizvod");
             }
 
-            //Očuvanje podataka između ciklusa
+            //Očuvanje podataka između ciklusa!!!
             TempData.Keep("GuestCartKey");
             TempData.Keep(guestCartKey);
 

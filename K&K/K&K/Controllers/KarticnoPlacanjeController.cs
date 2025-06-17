@@ -92,7 +92,7 @@ public class KarticnoPlacanjeController : Controller
                 _context.Update(narudzba); // Ažuriraj narudžbu u bazi
                 await _context.SaveChangesAsync();
 
-                // Sada kada je plaćanje uspješno, obriši stavke iz korpe
+                // Sada kada je plaćanje uspješno, obrisi stavke iz korpe
                 var korisnik = await _userManager.GetUserAsync(User);
                 var korpa = await _context.Korpa.FirstOrDefaultAsync(k => k.KorisnikId == korisnik.Id);
                 if (korpa != null)
@@ -104,12 +104,11 @@ public class KarticnoPlacanjeController : Controller
                     await _context.SaveChangesAsync();
                 }
 
-                // Dodaj podatke o kartičnom plaćanju u bazu ako želite čuvati te transakcije
                 _context.Add(karticnoPlacanje);
                 await _context.SaveChangesAsync();
 
                 TempData["KarticnoPlacanjeSuccess"] = "Uspješno ste platili narudžbu!";
-                return RedirectToAction("Uspjeh"); // Preusmjeri na Uspjeh akciju unutar KarticnoPlacanjeController-a
+                return RedirectToAction("Uspjeh"); // Preusmjeravanje na Uspjeh akciju unutar KarticnoPlacanjeController-a
             }
             else
             {
@@ -135,7 +134,7 @@ public class KarticnoPlacanjeController : Controller
     [Authorize(Roles = "Korisnik")]
     public async Task<IActionResult> IzvrsiUplatu(KarticnoPlacanje placanje)
     {
-        // Debug ispis svih validacijskih grešaka
+        // Debug
         foreach (var entry in ModelState)
         {
             var field = entry.Key;
@@ -147,15 +146,11 @@ public class KarticnoPlacanjeController : Controller
         }
 
 
-        // ... (prvi dio koda, uključujući provjeru ModelState.IsValid za Data Annotations) ...
-
         if (!ModelState.IsValid)
         {
             ViewBag.NarudzbaId = placanje.NarudzbaId;
-            return View("Unos", placanje); // Vraćanje na formu ako Data Annotations nisu prošle
+            return View("Unos", placanje); 
         }
-
-        // --- OVDJE JE KLJUČNI DIO ZA PRIKAZ GREŠKE NA EKRANU ---
 
         string specificnaGreska = null; // Promjenljiva za poruku o grešci na ekranu
 
@@ -181,10 +176,9 @@ public class KarticnoPlacanjeController : Controller
             specificnaGreska = "Datum isteka kartice je u prošlosti. Molimo unesite budući datum.";
         }
 
-        // Ako je specificnaGreska postavljena, to znači da postoji greška u poslovnoj logici
+        // Ako je specificnaGreska postavljena, greška u poslovnoj logici
         if (specificnaGreska != null)
         {
-            // Dodajemo ovu poruku u ModelState, što je način da je proslijedimo View-u
             // string.Empty znači da se greška odnosi na cijelu formu, ne na specifično polje
             ModelState.AddModelError(string.Empty, specificnaGreska);
 
@@ -219,7 +213,6 @@ public class KarticnoPlacanjeController : Controller
             _context.Update(narudzba);
         }
 
-        // ... (ostatak koda ako je plaćanje uspješno: snimanje u bazu, preusmjeravanje na Uspjeh) ...
         placanje.VrijemePlacanja = DateTime.Now;
         placanje.Uspjesno = true;
 
@@ -271,7 +264,6 @@ public class KarticnoPlacanjeController : Controller
 
     private bool LuhnValidacija(string brojKartice)
     {
-        // Provjera da li je broj kartice prazan ili null na početku
         if (string.IsNullOrEmpty(brojKartice))
             return false;
 

@@ -191,7 +191,7 @@ namespace K_K.Controllers
                         return View(proizvod);
                     }
 
-                    // Konverzija u Base64-sa laba
+                    // Konverzija u Base64- sa laba
                     using (var memoryStream = new MemoryStream())
                     {
                         await slikaFile.CopyToAsync(memoryStream);

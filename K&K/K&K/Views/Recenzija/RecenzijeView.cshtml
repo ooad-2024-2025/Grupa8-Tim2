@@ -18,8 +18,14 @@
 
 <h1>Recenzije za Proizvod</h1>
 
+@if (User.IsInRole("Korisnik"))
+{
+    <p>
+        <a asp-action="OstaviRecenziju" asp-route-proizvodId="@proizvodId" class="btn btn-success">Ostavi novu recenziju</a>
+    </p>
+}
 <p>
-    <a asp-action="OstaviRecenziju" asp-route-proizvodId="@proizvodId" class="btn btn-success">Ostavi novu recenziju</a>
+    <a asp-controller="Proizvod" asp-action="Details" asp-route-id="@proizvodId" class="btn btn-success">Nazad na proizvod</a>
 </p>
 
 @if (TempData["Poruka"] != null)
