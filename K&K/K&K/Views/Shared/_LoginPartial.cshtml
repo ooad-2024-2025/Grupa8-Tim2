@@ -5,11 +5,11 @@
 <ul class="navbar-nav d-flex flex-row align-items-center gap-3">
     @if (SignInManager.IsSignedIn(User))
     {
-        var user = await UserManager.GetUserAsync(User);
+        
        //if (user != null) // dodala sam samo ovu liniju
         {
             <li class="nav d-flex align-items-center">
-                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Zdravo, @user.Ime</a>
+                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Zdravo</a>
             </li>
             <li class="nav-item">
                 <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
