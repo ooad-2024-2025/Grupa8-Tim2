@@ -98,9 +98,9 @@
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "K\u0026K\\Views\\Shared\\_Layout.cshtml",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Views\\Shared\\_Layout.cshtml",
-              "RelativeToolTip": "K\u0026K\\Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Views\\Shared\\_Layout.cshtml*",
+              "RelativeToolTip": "K\u0026K\\Views\\Shared\\_Layout.cshtml*",
+              "ViewState": "AgIAABoAAAAAAAAAAAAgwC8AAABvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-06-17T21:52:57.925Z",
               "EditorCaption": ""
@@ -113,7 +113,7 @@
               "RelativeDocumentMoniker": "K\u0026K\\Views\\Shared\\_LoginPartial.cshtml",
               "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Views\\Shared\\_LoginPartial.cshtml*",
               "RelativeToolTip": "K\u0026K\\Views\\Shared\\_LoginPartial.cshtml*",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-06-17T21:52:57.059Z",
               "EditorCaption": ""
@@ -141,7 +141,8 @@
               "RelativeToolTip": "K\u0026K\\Views\\Recenzija\\RecenzijeView.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-17T18:52:14.578Z"
+              "WhenOpened": "2025-06-17T18:52:14.578Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -153,7 +154,8 @@
               "RelativeToolTip": "K\u0026K\\Controllers\\KorpaController.cs",
               "ViewState": "AgIAABICAAAAAAAAAAAlwIwBAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-16T16:06:55.215Z"
+              "WhenOpened": "2025-06-16T16:06:55.215Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -189,7 +191,8 @@
               "RelativeToolTip": "K\u0026K\\Controllers\\NarudzbaController.cs",
               "ViewState": "AgIAAIkBAAAAAAAAAAAlwHUBAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T23:16:49.401Z"
+              "WhenOpened": "2025-06-15T23:16:49.401Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -226,7 +229,8 @@
               "RelativeToolTip": "K\u0026K\\Controllers\\RecenzijaController.cs",
               "ViewState": "AgIAAEIAAAAAAAAAAAAawE4AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-16T16:07:13.541Z"
+              "WhenOpened": "2025-06-16T16:07:13.541Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -298,7 +302,8 @@
               "RelativeToolTip": "K\u0026K\\Views\\Narudzba\\Edit.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-15T23:21:12.707Z"
+              "WhenOpened": "2025-06-15T23:21:12.707Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -310,7 +315,8 @@
               "RelativeToolTip": "K\u0026K\\Views\\Narudzba\\Details.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-15T23:17:20.46Z"
+              "WhenOpened": "2025-06-15T23:17:20.46Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
