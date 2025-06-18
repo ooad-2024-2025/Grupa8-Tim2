@@ -45,4 +45,4 @@ Password=OOAD2025
 
 
 
-Napomena: Branch *implementacija* korištena je isključivo za testiranje pojedinih funkcionalnosti i ne predstavlja dio konačnog rješenja. Cjelokupan projekt je razvijan i implementiran na main grani.
+Napomena: Branch *implementacija* korištena je isključivo za testiranje pojedinih funkcionalnosti i ne predstavlja dio konačnog rješenja. Cjelokupan projekt je razvijan i implementiran na main branchu.
