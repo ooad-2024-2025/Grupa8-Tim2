@@ -387,7 +387,7 @@ namespace K_K.Controllers
 
         [HttpPost, ActionName("IzbrisiRecenziju")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrator Korisnik")]
+        [Authorize(Roles = "Administrator, Korisnik")]
         public async Task<IActionResult> IzbrisiRecenzijuConfirmed(int id)
         {
             var korisnik = await _userManager.GetUserAsync(User);

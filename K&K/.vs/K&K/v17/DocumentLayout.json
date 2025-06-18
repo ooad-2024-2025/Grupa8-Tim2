@@ -3,6 +3,26 @@
   "WorkspaceRootPath": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|c:\\users\\user\\source\\repos\\grupa8-tim2\\k\u0026k\\k\u0026k\\views\\proizvod\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|solutionrelative:k\u0026k\\views\\proizvod\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|c:\\users\\user\\source\\repos\\grupa8-tim2\\k\u0026k\\k\u0026k\\controllers\\recenzijacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|solutionrelative:k\u0026k\\controllers\\recenzijacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|c:\\users\\user\\source\\repos\\grupa8-tim2\\k\u0026k\\k\u0026k\\areas\\identity\\pages\\account\\login.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|solutionrelative:k\u0026k\\areas\\identity\\pages\\account\\login.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|c:\\users\\user\\source\\repos\\grupa8-tim2\\k\u0026k\\k\u0026k\\areas\\identity\\pages\\account\\register.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|solutionrelative:k\u0026k\\areas\\identity\\pages\\account\\register.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|c:\\users\\user\\source\\repos\\grupa8-tim2\\k\u0026k\\k\u0026k\\views\\recenzija\\_recenzijelistapartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|solutionrelative:k\u0026k\\views\\recenzija\\_recenzijelistapartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|c:\\users\\user\\source\\repos\\grupa8-tim2\\k\u0026k\\k\u0026k\\views\\shared\\_loginpartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|solutionrelative:k\u0026k\\views\\shared\\_loginpartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
@@ -23,20 +43,12 @@
       "RelativeMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|solutionrelative:k\u0026k\\views\\proizvod\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|c:\\users\\user\\source\\repos\\grupa8-tim2\\k\u0026k\\k\u0026k\\controllers\\recenzijacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|solutionrelative:k\u0026k\\controllers\\recenzijacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|c:\\users\\user\\source\\repos\\grupa8-tim2\\k\u0026k\\k\u0026k\\views\\recenzija\\recenzijeview.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|solutionrelative:k\u0026k\\views\\recenzija\\recenzijeview.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|c:\\users\\user\\source\\repos\\grupa8-tim2\\k\u0026k\\k\u0026k\\controllers\\narudzbacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|solutionrelative:k\u0026k\\controllers\\narudzbacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|c:\\users\\user\\source\\repos\\grupa8-tim2\\k\u0026k\\k\u0026k\\controllers\\korpacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|solutionrelative:k\u0026k\\controllers\\korpacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|c:\\users\\user\\source\\repos\\grupa8-tim2\\k\u0026k\\k\u0026k\\views\\proizvod\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -49,10 +61,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|c:\\users\\user\\source\\repos\\grupa8-tim2\\k\u0026k\\k\u0026k\\views\\proizvod\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|solutionrelative:k\u0026k\\views\\proizvod\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|c:\\users\\user\\source\\repos\\grupa8-tim2\\k\u0026k\\k\u0026k\\views\\proizvod\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|solutionrelative:k\u0026k\\views\\proizvod\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1D43C191-4508-44B1-9A74-839BD46EDCAB}|K\u0026K\\K\u0026K.csproj|c:\\users\\user\\source\\repos\\grupa8-tim2\\k\u0026k\\k\u0026k\\views\\proizvod\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -90,29 +98,28 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 6,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "K\u0026K\\Views\\Shared\\_Layout.cshtml",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Views\\Shared\\_Layout.cshtml*",
-              "RelativeToolTip": "K\u0026K\\Views\\Shared\\_Layout.cshtml*",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "K\u0026K\\Views\\Shared\\_Layout.cshtml",
               "ViewState": "AgIAABoAAAAAAAAAAAAgwC8AAABvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-17T21:52:57.925Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-17T21:52:57.925Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 5,
               "Title": "_LoginPartial.cshtml",
               "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Views\\Shared\\_LoginPartial.cshtml",
               "RelativeDocumentMoniker": "K\u0026K\\Views\\Shared\\_LoginPartial.cshtml",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Views\\Shared\\_LoginPartial.cshtml*",
-              "RelativeToolTip": "K\u0026K\\Views\\Shared\\_LoginPartial.cshtml*",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Views\\Shared\\_LoginPartial.cshtml",
+              "RelativeToolTip": "K\u0026K\\Views\\Shared\\_LoginPartial.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-06-17T21:52:57.059Z",
@@ -120,7 +127,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 7,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\appsettings.json",
               "RelativeDocumentMoniker": "K\u0026K\\appsettings.json",
@@ -128,12 +135,11 @@
               "RelativeToolTip": "K\u0026K\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-06-17T21:46:37.617Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-17T21:46:37.617Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 10,
               "Title": "RecenzijeView.cshtml",
               "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Views\\Recenzija\\RecenzijeView.cshtml",
               "RelativeDocumentMoniker": "K\u0026K\\Views\\Recenzija\\RecenzijeView.cshtml",
@@ -141,25 +147,11 @@
               "RelativeToolTip": "K\u0026K\\Views\\Recenzija\\RecenzijeView.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-17T18:52:14.578Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-17T18:52:14.578Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "KorpaController.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Controllers\\KorpaController.cs",
-              "RelativeDocumentMoniker": "K\u0026K\\Controllers\\KorpaController.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Controllers\\KorpaController.cs",
-              "RelativeToolTip": "K\u0026K\\Controllers\\KorpaController.cs",
-              "ViewState": "AgIAABICAAAAAAAAAAAlwIwBAAAxAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-16T16:06:55.215Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 14,
               "Title": "Edit.cshtml",
               "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Views\\Proizvod\\Edit.cshtml",
               "RelativeDocumentMoniker": "K\u0026K\\Views\\Proizvod\\Edit.cshtml",
@@ -171,19 +163,72 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 1,
+              "Title": "RecenzijaController.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Controllers\\RecenzijaController.cs",
+              "RelativeDocumentMoniker": "K\u0026K\\Controllers\\RecenzijaController.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Controllers\\RecenzijaController.cs",
+              "RelativeToolTip": "K\u0026K\\Controllers\\RecenzijaController.cs",
+              "ViewState": "AgIAAG4BAAAAAAAAAAASwH8BAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-16T16:07:13.541Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Login.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Areas\\Identity\\Pages\\Account\\Login.cshtml.cs",
+              "RelativeDocumentMoniker": "K\u0026K\\Areas\\Identity\\Pages\\Account\\Login.cshtml.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Areas\\Identity\\Pages\\Account\\Login.cshtml.cs",
+              "RelativeToolTip": "K\u0026K\\Areas\\Identity\\Pages\\Account\\Login.cshtml.cs",
+              "ViewState": "AgIAADkAAAAAAAAAAAAowEsAAAA+AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-18T16:20:24.807Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "Details.cshtml",
               "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Views\\Proizvod\\Details.cshtml",
               "RelativeDocumentMoniker": "K\u0026K\\Views\\Proizvod\\Details.cshtml",
               "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Views\\Proizvod\\Details.cshtml",
               "RelativeToolTip": "K\u0026K\\Views\\Proizvod\\Details.cshtml",
-              "ViewState": "AgIAAMAAAAAAAAAAAAAAALcAAAASAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-15T23:29:00.909Z"
+              "WhenOpened": "2025-06-15T23:29:00.909Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 4,
+              "Title": "_RecenzijeListaPartial.cshtml",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Views\\Recenzija\\_RecenzijeListaPartial.cshtml",
+              "RelativeDocumentMoniker": "K\u0026K\\Views\\Recenzija\\_RecenzijeListaPartial.cshtml",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Views\\Recenzija\\_RecenzijeListaPartial.cshtml",
+              "RelativeToolTip": "K\u0026K\\Views\\Recenzija\\_RecenzijeListaPartial.cshtml",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAqwFUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-18T16:12:06.14Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Register.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Areas\\Identity\\Pages\\Account\\Register.cshtml.cs",
+              "RelativeDocumentMoniker": "K\u0026K\\Areas\\Identity\\Pages\\Account\\Register.cshtml.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Areas\\Identity\\Pages\\Account\\Register.cshtml.cs",
+              "RelativeToolTip": "K\u0026K\\Areas\\Identity\\Pages\\Account\\Register.cshtml.cs",
+              "ViewState": "AgIAAEMAAAAAAAAAAAA5wFMAAAA/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-18T16:20:15.751Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
               "Title": "NarudzbaController.cs",
               "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Controllers\\NarudzbaController.cs",
               "RelativeDocumentMoniker": "K\u0026K\\Controllers\\NarudzbaController.cs",
@@ -191,12 +236,11 @@
               "RelativeToolTip": "K\u0026K\\Controllers\\NarudzbaController.cs",
               "ViewState": "AgIAAIkBAAAAAAAAAAAlwHUBAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T23:16:49.401Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-15T23:16:49.401Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 8,
               "Title": "ProizvodController.cs",
               "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Controllers\\ProizvodController.cs",
               "RelativeDocumentMoniker": "K\u0026K\\Controllers\\ProizvodController.cs",
@@ -204,12 +248,11 @@
               "RelativeToolTip": "K\u0026K\\Controllers\\ProizvodController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-16T15:42:50.265Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-16T15:42:50.265Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 9,
               "Title": "Create.cshtml",
               "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Views\\Proizvod\\Create.cshtml",
               "RelativeDocumentMoniker": "K\u0026K\\Views\\Proizvod\\Create.cshtml",
@@ -221,20 +264,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "RecenzijaController.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Controllers\\RecenzijaController.cs",
-              "RelativeDocumentMoniker": "K\u0026K\\Controllers\\RecenzijaController.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Controllers\\RecenzijaController.cs",
-              "RelativeToolTip": "K\u0026K\\Controllers\\RecenzijaController.cs",
-              "ViewState": "AgIAAEIAAAAAAAAAAAAawE4AAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-16T16:07:13.541Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 13,
               "Title": "UspjehRecenzije.cshtml",
               "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Views\\Recenzija\\UspjehRecenzije.cshtml",
               "RelativeDocumentMoniker": "K\u0026K\\Views\\Recenzija\\UspjehRecenzije.cshtml",
@@ -246,7 +276,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 12,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Views\\Proizvod\\Index.cshtml",
               "RelativeDocumentMoniker": "K\u0026K\\Views\\Proizvod\\Index.cshtml",
@@ -258,7 +288,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 15,
               "Title": "Delete.cshtml",
               "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Views\\Proizvod\\Delete.cshtml",
               "RelativeDocumentMoniker": "K\u0026K\\Views\\Proizvod\\Delete.cshtml",
@@ -270,7 +300,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 16,
               "Title": "Uspjeh.cshtml",
               "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Views\\Narudzba\\Uspjeh.cshtml",
               "RelativeDocumentMoniker": "K\u0026K\\Views\\Narudzba\\Uspjeh.cshtml",
@@ -282,7 +312,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 17,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Views\\Narudzba\\Index.cshtml",
               "RelativeDocumentMoniker": "K\u0026K\\Views\\Narudzba\\Index.cshtml",
@@ -294,7 +324,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 18,
               "Title": "Edit.cshtml",
               "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Views\\Narudzba\\Edit.cshtml",
               "RelativeDocumentMoniker": "K\u0026K\\Views\\Narudzba\\Edit.cshtml",
@@ -302,12 +332,11 @@
               "RelativeToolTip": "K\u0026K\\Views\\Narudzba\\Edit.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-15T23:21:12.707Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-15T23:21:12.707Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 20,
               "Title": "Details.cshtml",
               "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Views\\Narudzba\\Details.cshtml",
               "RelativeDocumentMoniker": "K\u0026K\\Views\\Narudzba\\Details.cshtml",
@@ -315,12 +344,11 @@
               "RelativeToolTip": "K\u0026K\\Views\\Narudzba\\Details.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-15T23:17:20.46Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-15T23:17:20.46Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 21,
               "Title": "Delete.cshtml",
               "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Views\\Narudzba\\Delete.cshtml",
               "RelativeDocumentMoniker": "K\u0026K\\Views\\Narudzba\\Delete.cshtml",
@@ -332,7 +360,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 19,
               "Title": "Create.cshtml",
               "DocumentMoniker": "C:\\Users\\User\\source\\repos\\Grupa8-Tim2\\K\u0026K\\K\u0026K\\Views\\Narudzba\\Create.cshtml",
               "RelativeDocumentMoniker": "K\u0026K\\Views\\Narudzba\\Create.cshtml",

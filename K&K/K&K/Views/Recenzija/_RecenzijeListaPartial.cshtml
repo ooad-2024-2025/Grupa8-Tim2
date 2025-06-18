@@ -25,6 +25,14 @@
 }
 else
 {
+    double prosjecnaOcjena = Model.Average(r => r.Ocjena);
+    int brojRecenzija = Model.Count();
+
+    <div class="p-3 mb-3 rounded" style="background-color: #f8f5f0; border: 1px solid #ddd;">
+        <strong style="color: #5c4033;">Prosječna ocjena:</strong> @prosjecnaOcjena.ToString("0.00") / 5<br />
+        <strong style="color: #5c4033;">Ukupan broj recenzija:</strong> @brojRecenzija
+    </div>
+
     <div class="row">
         @foreach (var item in Model)
         {
