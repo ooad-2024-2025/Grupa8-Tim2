@@ -66,7 +66,7 @@ namespace K_K.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required(ErrorMessage = "Ovo polje je obavezno!")]
-            [EmailAddress]
+            [EmailAddress(ErrorMessage = "Email adresa nije u ispravnom formatu.")]
             public string Email { get; set; }
 
             /// <summary>

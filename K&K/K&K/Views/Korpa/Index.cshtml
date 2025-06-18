@@ -30,7 +30,7 @@
                                         </div>
                                         <div class="col-md-6 text-right">
                                             <span class="badge-dark">
-                                                Ukupno: @korpa.ukupnaCijena.ToString("C")
+                                                Ukupno: @korpa.ukupnaCijena.ToString("F2") KM
                                             </span>
                                         </div>
                                     </div>
@@ -64,7 +64,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <strong>Ukupna cijena:</strong><br>
-                                            <span class="h5 text-success">@korpa.ukupnaCijena.ToString("C")</span>
+                                            <span class="h5 text-success">@korpa.ukupnaCijena.ToString("F2") KM</span>
                                         </div>
                                     </div>
 
@@ -110,10 +110,10 @@
                                                                         <span class="badge-dark">@stavka.Kolicina</span>
                                                                     </td>
                                                                     <td class="text-right">
-                                                                        @((stavka.Cijena / stavka.Kolicina).ToString("C"))
+                                                                        @((stavka.Cijena / stavka.Kolicina).ToString("F2")) KM
                                                                     </td>
                                                                     <td class="text-right font-weight-bold">
-                                                                        @stavka.Cijena.ToString("C")
+                                                                        @stavka.Cijena.ToString("F2") KM
                                                                     </td>
                                                                 </tr>
                                                                 brojStavke++;
@@ -125,7 +125,7 @@
                                                                     <strong>Ukupno za korpu:</strong>
                                                                 </td>
                                                                 <td class="text-right font-weight-bold text-success">
-                                                                    <strong>@korpa.ukupnaCijena.ToString("C")</strong>
+                                                                    <strong>@korpa.ukupnaCijena.ToString("F2") KM</strong>
                                                                 </td>
                                                             </tr>
                                                         </tfoot>
