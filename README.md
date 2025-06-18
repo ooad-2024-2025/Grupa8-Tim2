@@ -17,7 +17,7 @@
 |-----------------------------|---------------|------------|
 | kandk.radnik@gmail.com      | Radnik123!     | Radnik     |
 | kandkkorisnik@gmail.com     | Korisnik123!   | Korisnik   |
-| kandk.moderator@gmail.com   | Admin123!      | Moderator  |
+| kandk.moderator@gmail.com   | Admin123!      | Admin      |
 
 ## 🛢️ Baza podataka
 
