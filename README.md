@@ -39,3 +39,10 @@ Password=OOAD2025
 
 - **User Name:** 11249399  
 - **Password:** 60-dayfreetrial
+
+
+
+
+
+
+Napomena: Branch *implementacija* korištena je isključivo za testiranje pojedinih funkcionalnosti i ne predstavlja dio konačnog rješenja. Cjelokupan projekt je razvijan i implementiran na main grani.
