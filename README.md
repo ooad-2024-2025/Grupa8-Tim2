@@ -41,7 +41,13 @@ Password=OOAD2025
 - **Password:** 60-dayfreetrial
 
 
+## 💳 Testne kartice za Luhn validaciju
 
+Za potrebe testiranja validacije broja kartice pomoću **Luhn algoritma**, možete koristiti sljedeće validne brojeve:
+
+- `4111 1111 1111 1111`  
+- `1234 5678 1234 5670`  
+- `4539 5787 6362 1486`
 
 
 
